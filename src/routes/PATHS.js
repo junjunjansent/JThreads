@@ -7,7 +7,7 @@ export const PATHS = {
   },
   USER: (userId) => ({
     ABOUT: `/${userId}/about`,
-    BUYER_ID: {
+    BUYER: {
       BUY_ALL: `/${userId}/buy`,
       BUY_ONE: (productId) => `/${userId}/buy/${productId}`,
       CART: `not yet defined`,

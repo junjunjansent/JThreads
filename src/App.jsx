@@ -1,9 +1,13 @@
+import NavBar from "./components/NavBar";
+import AppRoutes from "./routes/AppRoutes";
+
 import "./App.css";
 
 const App = () => {
   return (
     <>
-      <h1>JThreads</h1>
+      <NavBar />
+      <AppRoutes />
     </>
   );
 };
