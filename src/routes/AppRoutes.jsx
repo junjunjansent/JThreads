@@ -3,7 +3,7 @@ import { PATHS } from "./PATHS";
 
 import HomePage from "../pages/HomePage";
 import RegisterPage from "../pages/RegisterPage";
-import LoginPage from "../pages/LoginPage";
+import LoginPage from "../pages/LoginPage/LoginPage";
 import PublicBuyPage from "../pages/PublicBuyPage";
 import AboutPage from "../pages/user/AboutPage";
 import BuyAllPage from "../pages/user/buyer/BuyAllPage";
