@@ -1,0 +1,19 @@
+.page {
+  display: flex;
+  justify-content: center;
+}
+
+.searchbar {
+  width: 50%;
+}
+
+.inputfield {
+  justify-content: center;
+  color: inherit;
+  font-size: 14px;
+  margin: 8px 0px 0px 0px;
+  /* box-sizing: border-box; */
+  border: none;
+  border-bottom: 1.5px solid grey;
+  background-color: inherit;
+}
