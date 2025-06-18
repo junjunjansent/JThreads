@@ -5,10 +5,12 @@ import "./App.css";
 
 const App = () => {
   return (
-    <>
-      <NavBar />
+    <main>
+      <section className="navbar">
+        <NavBar />
+      </section>
       <AppRoutes />
-    </>
+    </main>
   );
 };
 
