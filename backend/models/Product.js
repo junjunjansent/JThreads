@@ -5,6 +5,11 @@ import { ProductVariation } from "./ProductVariation";
 
 // note capitalisation, it is an object wrapper type
 const productSchema = new mongoose.Schema({
+  productname: {
+    type: String,
+    unique: true,
+    required: [true, "product name needs to be defined"],
+  },
   productdetails: [ProductVariation],
   productdesc: {
     type: String,

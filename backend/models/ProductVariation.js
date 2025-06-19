@@ -1,11 +1,6 @@
 import mongoose from "mongoose";
 
 const productVariationSchema = new mongoose.Schema({
-  productname: {
-    type: String,
-    unique: true,
-    required: [true, "product name needs to be defined"],
-  },
   productsize: {
     type: String,
     //   unique: ** we probably will want sizes to be unique at the product name level **
