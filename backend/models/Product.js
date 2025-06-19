@@ -1,9 +1,6 @@
-// temporary use import because vite installed "type": "module" in package.json
-// const mongoose = require("mongoose");
-import mongoose from "mongoose";
-import { ProductVariation } from "./ProductVariation";
+const mongoose = require("mongoose");
+import { ProductVariation } from "./ProductVariation"; // TODO: To Amend
 
-// note capitalisation, it is an object wrapper type
 const productSchema = new mongoose.Schema({
   productdetails: [ProductVariation],
   productdesc: {
@@ -23,5 +20,4 @@ const productSchema = new mongoose.Schema({
 const Product = mongoose.model("Product", productSchema);
 
 // Export the model:
-// module.exports = User;
-export { Product };
+module.exports = Product;
