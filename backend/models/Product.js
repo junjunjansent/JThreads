@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 import { ProductVariation } from "./ProductVariation"; // TODO: To Amend
 
 const productSchema = new mongoose.Schema({
+  productname: {
+    type: String,
+    unique: true,
+    required: [true, "product name needs to be defined"],
+  },
   productdetails: [ProductVariation],
   productdesc: {
     type: String,
