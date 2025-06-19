@@ -4,7 +4,7 @@ const BuySearchBar = ({ styles }) => {
       <form>
         <input
           className={styles.inputfield}
-          type="text"
+          type="search"
           placeholder="WHAT ARE YOU LOOKING FOR TODAY?"
         ></input>
       </form>
