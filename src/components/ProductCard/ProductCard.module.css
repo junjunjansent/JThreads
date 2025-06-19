@@ -1,0 +1,20 @@
+.productCard {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  width: 200px;
+  margin: 0px 10px 20px 15px;
+}
+
+.productImage {
+  height: 90%;
+  overflow: hidden;
+}
+
+.productName {
+  font-size: 12px;
+}
+
+.productPrice {
+  font-size: 12px;
+}

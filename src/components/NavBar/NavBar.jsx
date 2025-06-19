@@ -28,7 +28,7 @@ const NavBar = () => {
             <NavLink to={PATHS.USER(1).BUYER.ORDER_ALL}>Orders (Buyer)</NavLink>
           </li>
           <li>
-            <NavLink to={PATHS.USER(1).SELLER.SELL_ALL}>Sell (Seller)</NavLink>
+            <NavLink to={PATHS.USER(1).SELLER.SELL_ALL}>Seller Panel</NavLink>
           </li>
           <li>
             <NavLink to={PATHS.USER(1).SELLER.ORDER_ALL}>
