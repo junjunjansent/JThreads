@@ -13,6 +13,9 @@ const NavBar = () => {
             <NavLink to={PATHS.PUBLIC.HOME}>Home Page</NavLink>
           </li>
           <li>
+            <NavLink to={PATHS.PUBLIC.REGISTER}>Register</NavLink>
+          </li>
+          <li>
             <NavLink to={PATHS.PUBLIC.LOGIN}>Login</NavLink>
           </li>
           <li>
