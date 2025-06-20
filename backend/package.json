@@ -2,7 +2,10 @@
   "name": "backend",
   "private": true,
   "devDependencies": {
-    "@types/bun": "latest"
+    "@eslint/js": "^9.29.0",
+    "@types/bun": "latest",
+    "eslint": "^9.29.0",
+    "globals": "^16.2.0"
   },
   "peerDependencies": {
     "typescript": "^5"
