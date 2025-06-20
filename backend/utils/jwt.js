@@ -4,11 +4,10 @@ dotenv.config();
 
 const jwtSecret = process.env.JWT_SECRET;
 
-const getTokenFromBody = (req, res) => {
+const getTokenFromReq = (req) => {
   const authHeader = req.header("Authorization");
   if (!authHeader || !authHeader.startsWith("Bearer")) {
-    res.status(401).json({ error: "Not authorised" });
-    return;
+    return null;
   }
   return authHeader.split(" ")[1];
 };
@@ -33,4 +32,4 @@ const decodeJWT = (token) => {
   return decoded;
 };
 
-export { getTokenFromBody, createJWT, decodeJWT };
+export { getTokenFromReq, createJWT, decodeJWT };

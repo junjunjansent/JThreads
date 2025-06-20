@@ -29,6 +29,7 @@
 
 // app.use("/", publicRoutes);
 // app.use(isSignedIn);
+// // make sure that specific routes are placed before this, if not :userId will anyhow identify them
 // app.use("/:userId", userRoutes);
 
 // // routes
