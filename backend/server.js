@@ -7,7 +7,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 // Import routers
-// const authRouter = require("./controllers/auth");
+const authRouter = require("./routes/authRoutes");
 // const testJwtRouter = require("./controllers/test-jwt");
 // const usersRouter = require("./controllers/users");
 
@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(logger("dev"));
 
 // Routes
-// app.use("/auth", authRouter);
+app.use("", authRouter);
 // app.use("/test-jwt", testJwtRouter);
 // app.use("/users", usersRouter);
 
