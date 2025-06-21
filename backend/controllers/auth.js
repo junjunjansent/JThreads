@@ -8,14 +8,19 @@ const saltRounds = 12;
 const signUp = async (req, res) => {
   try {
     const userInDatabase = await User.findOne({ username: req.body.username });
-
     if (userInDatabase) {
       return res.status(409).json({ err: "Username already taken." });
     }
 
     const user = await User.create({
       username: req.body.username,
-      hashedPassword: bcrypt.hashSync(req.body.password, saltRounds),
+      password: bcrypt.hashSync(req.body.password, saltRounds),
+      email: req.body.email,
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      age: req.body.age,
+      gender: req.body.gender,
+      phoneNumber: req.body.phoneNumber,
     });
 
     const payload = { username: user.username, _id: user._id };
