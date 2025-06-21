@@ -2,7 +2,7 @@ import { Outlet, Routes, Route } from "react-router";
 import { PATHS } from "./PATHS";
 
 import HomePage from "../pages/HomePage";
-import RegisterPage from "../pages/RegisterPage";
+import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import PublicBuyPage from "../pages/PublicBuyPage/PublicBuyPage";
 import AboutPage from "../pages/user/AboutPage";

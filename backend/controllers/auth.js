@@ -20,7 +20,7 @@ const signUp = async (req, res) => {
       lastname: req.body.lastname,
       age: req.body.age,
       gender: req.body.gender,
-      phoneNumber: req.body.phoneNumber,
+      phoneNumber: req.body.phoneNumber, // not sure why this is not being captured in mongo
     });
 
     const payload = { username: user.username, _id: user._id };
