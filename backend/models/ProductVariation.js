@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const productVariationSchema = new mongoose.Schema({
   productsize: {
@@ -29,4 +29,4 @@ const ProductVariation = mongoose.model(
   productVariationSchema
 );
 
-export { ProductVariation };
+module.exports = ProductVariation;

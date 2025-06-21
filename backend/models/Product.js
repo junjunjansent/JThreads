@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-import { ProductVariation } from "./ProductVariation"; // TODO: To Amend
+const ProductVariation = require("./ProductVariation");
 
 const productSchema = new mongoose.Schema({
   productname: {
