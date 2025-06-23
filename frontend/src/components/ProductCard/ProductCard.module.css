@@ -15,6 +15,24 @@
   font-size: 12px;
 }
 
-.productPrice {
+.productSubContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.productPriceRange,
+.productCategory {
   font-size: 12px;
+  width: 50%;
+}
+
+.productSeller,
+.productQuantity {
+  font-size: 12px;
+  width: 50%;
+}
+
+.productCategory,
+.productSeller {
+  font-weight: bold;
 }
