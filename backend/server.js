@@ -1,37 +1,57 @@
 const express = require("express");
 const app = express();
-const mongoose = require("mongoose");
 const cors = require("cors");
 const logger = require("morgan");
+const { errorHandler } = require("./utils/errorHandler");
+
+// ----- dotenv config
 const dotenv = require("dotenv");
 dotenv.config();
+const port = process.env.BACKEND_PORT || 3000;
 
-// Import routers
-const authRouter = require("./routes/authRoutes");
-// const testJwtRouter = require("./controllers/test-jwt");
+// ----- Import routers
+const publicRouter = require("./routes/publicRoutes");
 // const usersRouter = require("./controllers/users");
 
-// Connect to MongoDB
+// ----- Connect to MongoDB
+const mongoose = require("mongoose");
 mongoose.connect(process.env.MONGODB_URI);
 mongoose.set("debug", true);
 mongoose.connection.on("connected", () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
 
-// Middleware
+// ----- Middleware
 app.use(cors());
 app.use(express.json());
 app.use(logger("dev"));
 
-// Routes
-app.use("", authRouter);
-// app.use("/test-jwt", testJwtRouter);
-// app.use("/users", usersRouter);
-
-// Start the server and listen on port 3000
-app.listen(3000, () => {
-  console.log("The express app is ready!");
+// ----- Request checker
+app.use((req, res, next) => {
+  console.log("Received request:", req.method, req.url);
+  next();
 });
+
+// ----- Routes
+app.use("/api", publicRouter);
+// app.use("/api/users", usersRouter);
+// app.use("/api/products", productRouter);
+app.use(errorHandler);
+
+// ----- Listen to port
+const handleServerError = (err) => {
+  if (err.code === "EADDRINUSE") {
+    console.log(`Warning! Port ${port} is already in use!`);
+  } else {
+    console.log("Error:", err);
+  }
+};
+
+app
+  .listen(port, () => {
+    console.log(`The express app is ready on port ${port}!`);
+  })
+  .on("error", handleServerError);
 
 // import express from "express";
 // // const express = require("express");

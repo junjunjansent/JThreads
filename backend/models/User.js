@@ -8,42 +8,70 @@ const mongoose = require("mongoose");
 // - Transaction History & Status
 
 // note capitalisation, it is an object wrapper type
-const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    unique: true, //TODO, workout unique validator errors
-    required: [true, "Username is required"],
-  },
-  email: {
-    type: String,
-    unique: true, //TODO, workout unique validator errors
-    required: [true, "Email is required"],
-    match: [
-      /^[-.\w]+@[-.\w]+\.[-.\w]{2,}$/,
-      `Email needs to be in correct format`,
-    ],
-  },
-  password: { type: String, required: true },
-  firstName: String,
-  lastName: String,
-  age: { type: Number, min: 0 },
-  gender: {
-    type: String,
-    enum: {
-      values: ["M", "F"],
-      message: 'Gender must be either "M" or "F"',
+const userSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      unique: true, //TODO, workout unique validator errors
+      required: [true, "Username is required"],
+      lowercase: true,
+      trim: true,
     },
-  },
-  phoneNumber: {
-    type: String, //cause can have leading zeros
-    match: [/^\d{7,12}$/, `Expected 7-12 digit phone number`],
-  },
-  orders: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Order", //TODO: To define in Order.js
+    email: {
+      type: String,
+      unique: true, //TODO, workout unique validator errors
+      required: [true, "Email is required"],
+      trim: true,
+      match: [
+        /^[-.\w]+@[-.\w]+\.[-.\w]{2,}$/,
+        `Email needs to be in correct format`,
+      ],
     },
-  ],
+    password: {
+      type: String,
+      required: [true, "Password is required"],
+    },
+    firstName: {
+      type: String,
+      required: true,
+      trim: true,
+      minLength: [2, "Expecting min. 2 characters"],
+    },
+    lastName: {
+      type: String,
+      required: true,
+      trim: true,
+      minLength: [2, "Expecting min. 2 characters"],
+    },
+    birthday: {
+      type: Date,
+      min: "1900-01-01", // TODO: fix hardcoded dates
+      max: "2025-01-01",
+    },
+    gender: {
+      type: String,
+      trim: true,
+      enum: {
+        values: ["M", "F", "X"],
+        message: 'Gender must be either "M" or "F" or "X"',
+      },
+    },
+    phoneNumber: {
+      type: String, //cause can have leading zeros
+      trim: true,
+      match: [/^\d{7,12}$/, `Expected 7-12 digit phone number`],
+    },
+    profilePhoto: { type: String },
+    defaultShippingAddress: { type: String },
+  },
+  { timestamps: true }
+);
+
+// Remove password
+userSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    delete returnedObject.password;
+  },
 });
 
 // Compile the schema into a model:

@@ -1,8 +1,7 @@
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-dotenv.config();
+const jwt = require("jsonwebtoken");
 
-const jwtSecret = process.env.JWT_SECRET;
+const dotenv = require("dotenv");
+dotenv.config();
 
 const getTokenFromReq = (req) => {
   const authHeader = req.header("Authorization");
@@ -32,4 +31,4 @@ const decodeJWT = (token) => {
   return decoded;
 };
 
-export { getTokenFromReq, createJWT, decodeJWT };
+module.exports = { getTokenFromReq, createJWT, decodeJWT };

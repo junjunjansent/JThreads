@@ -10,3 +10,11 @@
 // publicRoutes.post("/login", loginUser);
 
 // export default publicRoutes;
+
+const express = require("express");
+const router = express.Router();
+const { signUp } = require("../controllers/publicController");
+
+router.post("/sign-up", signUp);
+
+module.exports = router;

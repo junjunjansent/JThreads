@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+const bcrypt = require("bcrypt");
 
 const saltRounds = 10;
 const salt = bcrypt.genSaltSync(saltRounds);
@@ -12,4 +12,4 @@ const isPasswordBCryptValidated = (passwordToCheck, aHashedPassword) => {
   return bcrypt.compareSync(passwordToCheck, aHashedPassword);
 };
 
-export { bcryptPassword, isPasswordBCryptValidated };
+module.exports = { bcryptPassword, isPasswordBCryptValidated };
