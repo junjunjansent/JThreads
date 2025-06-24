@@ -1,7 +1,7 @@
 const User = require("../models/User");
 const { ApiError } = require("../utils/errorHandler");
 const { bcryptPassword } = require("../utils/bcrypt");
-const { createJWT } = require("../utils/jwt");
+// const { createJWT } = require("../utils/jwt");
 
 const signUp = async (req, res, next) => {
   try {
@@ -10,12 +10,10 @@ const signUp = async (req, res, next) => {
 
     if (userExisting) {
       throw new ApiError({
-        status: {
-          status: "409",
-          source: { pointer: "publicController.js" },
-          title: "User Exists",
-          detail: "Username already taken.",
-        },
+        status: 409,
+        source: { pointer: "publicController.js" },
+        title: "User Exists",
+        detail: "Username already taken.",
       });
     }
 
@@ -23,19 +21,19 @@ const signUp = async (req, res, next) => {
       username: username,
       password: bcryptPassword(password),
       email: email,
-      // JANSEN COMMENTS - all these should be optional first
-      //   firstname: req.body.firstname,
-      //   lastname: req.body.lastname,
-      //   birthday: req.body.age,
-
-      //   gender: req.body.gender,
-      //   phoneNumber: req.body.phoneNumber, // not sure why this is not being captured in mongo
     });
+    // JANSEN COMMENTS - all these should be optional first
+    //   firstname: req.body.firstname,
+    //   lastname: req.body.lastname,
+    //   birthday: req.body.age,
+
+    //   gender: req.body.gender,
+    //   phoneNumber: req.body.phoneNumber, // not sure why this is not being captured in mongo
 
     if (!newUser) {
       throw new ApiError({
         status: {
-          status: "400",
+          status: 400,
           source: { pointer: "publicController.js" },
           title: "Invalid User",
           detail: "User could not be created.",
@@ -43,16 +41,16 @@ const signUp = async (req, res, next) => {
       });
     }
 
-    const payload = { username: newUser.username, _id: newUser._id };
-    const token = createJWT(payload);
+    // JANSEN COMMENTs - no need for sign in
+    // const payload = { username: newUser.username, _id: newUser._id };
+    // const token = createJWT(payload);
 
-    res.status(201).json({ data: { token } });
+    res.status(201).json({ data: { user: newUser } });
   } catch (err) {
+    console.log(err);
     next(err);
   }
 };
-
-module.exports = { signUp };
 
 // // import { Recipe } from "../models/Recipe";
 // import { User } from "../models/User";
@@ -86,6 +84,8 @@ module.exports = { signUp };
 //   }
 // };
 
+// const signIn = (res, req, next) => {};
+
 // const loginUser = async (req, res) => {
 //   try {
 //     const { username, password } = req.body;
@@ -107,4 +107,4 @@ module.exports = { signUp };
 //   }
 // };
 
-// export { registerUser, loginUser };
+module.exports = { signUp };

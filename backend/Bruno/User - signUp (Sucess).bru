@@ -1,19 +1,19 @@
 meta {
-  name: Sign Up
+  name: User - signUp (Sucess)
   type: http
   seq: 1
 }
 
 post {
-  url: http://localhost:3000/sign-up
+  url: http://localhost:3000/api/sign-up
   body: json
   auth: inherit
 }
 
 body:json {
   {
-    "username":"jt1234567",
-    "email":"jacob1123@gmail.com",
+    "username":"test123",
+    "email":"test@gmail.com",
     "password":"12345678",
     "firstname":"J",
     "lastname":"T",

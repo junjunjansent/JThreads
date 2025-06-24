@@ -33,13 +33,11 @@ const userSchema = new mongoose.Schema(
     },
     firstName: {
       type: String,
-      required: true,
       trim: true,
       minLength: [2, "Expecting min. 2 characters"],
     },
     lastName: {
       type: String,
-      required: true,
       trim: true,
       minLength: [2, "Expecting min. 2 characters"],
     },

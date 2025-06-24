@@ -1,4 +1,5 @@
-const bcrypt = require("bcrypt");
+// not sure why but had to use bcryptjs instead of bcrypt
+const bcrypt = require("bcryptjs");
 
 const saltRounds = 10;
 const salt = bcrypt.genSaltSync(saltRounds);
