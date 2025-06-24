@@ -11,7 +11,8 @@ const port = process.env.BACKEND_PORT || 3000;
 
 // ----- Import routers
 const publicRouter = require("./routes/publicRoutes");
-// const usersRouter = require("./controllers/users");
+const authenticateUser = require("./middlwares/authenticator");
+const usersRouter = require("./controllers/users");
 
 // ----- Connect to MongoDB
 const mongoose = require("mongoose");
@@ -34,17 +35,16 @@ app.use((req, res, next) => {
 
 // ----- Routes
 app.use("/api", publicRouter);
-// app.use("/api/users", usersRouter);
+app.use(authenticateUser);
+app.use("/api/users", usersRouter);
 // app.use("/api/products", productRouter);
 app.use((req, res, next) => {
   next(
     new ApiError({
-      status: {
-        status: "404",
-        source: { pointer: "server.js" },
-        title: "Invalid Route",
-        detail: "Route does not exist",
-      },
+      status: 404,
+      source: { pointer: "server.js" },
+      title: "Invalid Route",
+      detail: "Route does not exist",
     })
   );
 });

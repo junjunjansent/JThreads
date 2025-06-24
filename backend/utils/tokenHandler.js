@@ -11,13 +11,21 @@ const getTokenFromReq = (req) => {
   return authHeader.split(" ")[1];
 };
 
+const saveUserToRequest = (req, decodedUser) => {
+  req.user = decodedUser;
+};
+
+const getUserFromRequest = (req) => {
+  return req.user.id;
+};
+
 // takes in object or string
 const createJWT = (payload) => {
   if (!process.env.JWT_SECRET) {
     throw new Error("Check JWT_SECRET definition");
   }
   const token = jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn: "2 days",
+    expiresIn: "7 days",
   });
   return token;
 };
@@ -31,4 +39,10 @@ const decodeJWT = (token) => {
   return decoded;
 };
 
-module.exports = { getTokenFromReq, createJWT, decodeJWT };
+module.exports = {
+  getTokenFromReq,
+  createJWT,
+  decodeJWT,
+  saveUserToRequest,
+  getUserFromRequest,
+};

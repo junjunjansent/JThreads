@@ -13,19 +13,21 @@ class ApiError extends Error {
     this.name = this.constructor.name;
     this.status = status || 500;
     this.source = source || {};
-    this.title = title || "Error";
-    this.detail = detail || "An error occurred"; // duplicated, but its ok based on desired ErrorType
+    this.title = title || "Server Error";
+    this.detail = detail || "Something went wrong"; // duplicated, but its ok based on desired ErrorType
   }
 }
 
 // eslint-disable-next-line no-unused-vars
 const errorHandler = (err, req, res, next) => {
+  const statusCode = Number(err.status) || 500;
+
   if (err instanceof ApiError) {
     return res.status(err.status).json({
       errors: [
         // can help handle multiple errors, defined by JSON:API convention but too complicated lol
         {
-          status: String(err.status),
+          status: String(statusCode),
           source: err.source,
           title: err.title,
           detail: err.message,
@@ -33,12 +35,15 @@ const errorHandler = (err, req, res, next) => {
       ],
     });
   } else {
-    return res.status(500).json({
+    return res.status(statusCode).json({
       errors: [
         {
-          status: "500",
-          title: "Server Error",
-          detail: "Something went wrong.",
+          status: String(statusCode),
+          source: err.stack
+            ? { pointer: err.stack.split("at ")[1]?.trim() }
+            : {},
+          title: err.name || "Server Error",
+          detail: err.message || "Something went wrong.",
         },
       ],
     });
