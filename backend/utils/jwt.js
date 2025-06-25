@@ -1,5 +1,5 @@
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
 dotenv.config();
 
 const jwtSecret = process.env.JWT_SECRET;
@@ -14,10 +14,10 @@ const getTokenFromReq = (req) => {
 
 // takes in object or string
 const createJWT = (payload) => {
-  if (!process.env.JWT_SECRET) {
+  if (!jwtSecret) {
     throw new Error("Check JWT_SECRET definition");
   }
-  const token = jwt.sign(payload, process.env.JWT_SECRET, {
+  const token = jwt.sign(payload, jwtSecret, {
     expiresIn: "2 days",
   });
   return token;
@@ -25,11 +25,11 @@ const createJWT = (payload) => {
 
 // takes in string
 const decodeJWT = (token) => {
-  if (!process.env.JWT_SECRET) {
+  if (!jwtSecret) {
     throw new Error("Check JWT_SECRET definition");
   }
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  const decoded = jwt.verify(token, jwtSecret);
   return decoded;
 };
 
-export { getTokenFromReq, createJWT, decodeJWT };
+module.export = { getTokenFromReq, createJWT, decodeJWT };
