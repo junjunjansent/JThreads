@@ -1,12 +1,31 @@
-const User = require("./models/user");
-// const Hoot = require("./models/hoot");
-// const categories = require("./models/categories");
+// run this only in backend folder
+
+const User = require("../models/User");
 const { faker } = require("@faker-js/faker");
+const { bcryptPassword } = require("../utils/bcrypt");
 
 const registerUsersForDeveloper = async () => {
   const usersData = [
-    { username: faker.person.firstName(), password: faker.string.sample() },
-    { username: faker.person.firstName(), password: faker.string.sample() },
+    {
+      username: "user1",
+      email: "user1@test.com",
+      password: bcryptPassword("12345678"),
+    },
+    ...Array.from({ length: 4 }, () => ({
+      username: faker.internet.username(),
+      email: faker.internet.email(),
+      password: bcryptPassword("12345678"),
+    })),
+    ...Array.from({ length: 5 }, () => ({
+      username: faker.internet.username(),
+      email: faker.internet.email(),
+      password: bcryptPassword("12345678"),
+      birthday: faker.date.birthdate(),
+      gender: faker.helpers.arrayElement(["M", "F", "X"]),
+      phoneNumber: faker.phone.number({ style: "international" }),
+      profilePhoto: faker.internet.url(),
+      defaultShippingAddress: faker.location.streetAddress(),
+    })),
   ];
   try {
     await User.deleteMany({});
@@ -60,10 +79,11 @@ dotenv.config();
 const mongoose = require("mongoose");
 
 const connect = async () => {
-  // Connect to MongoDB using the MONGODB_URI specified in our .env file.
-  await mongoose.connect(`${process.env.MONGODB_URI}`);
+  await mongoose.connect(process.env.MONGODB_URI);
   mongoose.set("debug", true);
-  console.log("Connected to MongoDB to recreate Hoot Base");
+  mongoose.connection.on("connected", () => {
+    console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
+  });
 
   // Call the runQueries function, which will eventually hold functions to work
   // with data in our db.

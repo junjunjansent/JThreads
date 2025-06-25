@@ -57,7 +57,10 @@ const userSchema = new mongoose.Schema(
     phoneNumber: {
       type: String, //cause can have leading zeros
       trim: true,
-      match: [/^\d{7,12}$/, `Expected 7-12 digit phone number`],
+      match: [
+        /^\+?[1-9]\d{6,14}$/,
+        "Expected valid international phone number",
+      ],
     },
     profilePhoto: { type: String },
     defaultShippingAddress: { type: String },
