@@ -1,8 +1,7 @@
 import styles from "./RegisterPage.module.css";
 import { useContext } from "react";
-import { UserContext } from "../../contexts/UserContext";
 
-const signUp = async (data) => {
+const SignUp = async (data) => {
   const { setUser } = useContext(UserContext);
 
   const url = `${import.meta.env.VITE_BACK_END_SERVER_URL}/sign-up`;
@@ -19,6 +18,7 @@ const signUp = async (data) => {
     }
 
     const json = await response.json();
+    setUser(json);
     console.log(json);
   } catch (error) {
     console.error(error.message);
@@ -33,7 +33,7 @@ const RegisterPage = () => {
     const data = Object.fromEntries(formData);
     console.log(data);
 
-    await signUp(data);
+    await SignUp(data);
   };
   return (
     <div className={styles.page}>
