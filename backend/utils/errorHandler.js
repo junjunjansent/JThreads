@@ -18,9 +18,17 @@ class ApiError extends Error {
   }
 }
 
+const mongooseErrors = ["CastError", "ValidationError", "ValidatorError"];
+const jwtErrors = ["JsonWebTokenError", "TokenExpiredError"];
+
 // eslint-disable-next-line no-unused-vars
 const errorHandler = (err, req, res, next) => {
-  const statusCode = Number(err.status) || 500;
+  const statusCode =
+    Number(err.status) ||
+    mongooseErrors.includes(err.name) ||
+    jwtErrors.includes(err.name)
+      ? 400
+      : 500;
 
   if (err instanceof ApiError) {
     return res.status(err.status).json({

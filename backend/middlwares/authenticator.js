@@ -17,7 +17,7 @@ function authenticateUser(req, res, next) {
       });
     }
     const decoded = decodeJWT(token);
-    if (!decoded || !decoded.oneUser) {
+    if (!decoded.user) {
       throw new ApiError({
         status: 401,
         source: { pointer: "Token that was provided" },
@@ -26,7 +26,7 @@ function authenticateUser(req, res, next) {
       });
     }
 
-    saveUserToRequest(req, decoded.oneUser);
+    saveUserToRequest(req, decoded.user);
 
     next();
   } catch (err) {

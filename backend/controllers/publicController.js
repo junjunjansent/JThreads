@@ -9,16 +9,25 @@ const { createJWT } = require("../utils/tokenHandler");
 const signUp = async (req, res, next) => {
   try {
     const { username, password, email } = req.body;
-    const userExisting = await User.findOne({ username: username }).select(
+    const usernameExisting = await User.findOne({ username }).select(
       "username"
     );
-
-    if (userExisting) {
+    if (usernameExisting) {
       throw new ApiError({
         status: 409,
         source: { pointer: "publicController.js" },
         title: "Conflict: User Exists",
         detail: "Username already taken.",
+      });
+    }
+
+    const emailExisting = await User.findOne({ email }).select("username");
+    if (emailExisting) {
+      throw new ApiError({
+        status: 409,
+        source: { pointer: "publicController.js" },
+        title: "Conflict: User Exists",
+        detail: "Email already taken.",
       });
     }
 
@@ -51,7 +60,7 @@ const signIn = async (req, res, next) => {
     const { usernameOrEmail, password } = req.body;
     const oneUser = await User.findOne({
       $or: [{ username: usernameOrEmail }, { email: usernameOrEmail }],
-    }).select("username email password");
+    }).select("username email password createdAt");
 
     if (!oneUser || !isPasswordBCryptValidated(password, oneUser.password)) {
       throw new ApiError({
@@ -62,8 +71,8 @@ const signIn = async (req, res, next) => {
       });
     }
 
-    // Login user - with id, username, and email
-    const userToken = createJWT({ oneUser });
+    // Login user - with id, username, and email, createdAt
+    const userToken = createJWT({ user: oneUser });
 
     res.status(200).json({ data: { user: { oneUser, token: userToken } } });
   } catch (err) {

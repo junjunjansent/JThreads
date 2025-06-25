@@ -12,7 +12,7 @@ const port = process.env.BACKEND_PORT || 3000;
 // ----- Import routers
 const publicRouter = require("./routes/publicRoutes");
 const authenticateUser = require("./middlwares/authenticator");
-const usersRouter = require("./controllers/users");
+const usersRouter = require("./routes/userRoutes");
 
 // ----- Connect to MongoDB
 const mongoose = require("mongoose");

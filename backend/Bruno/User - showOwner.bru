@@ -1,0 +1,22 @@
+meta {
+  name: User - showOwner
+  type: http
+  seq: 5
+}
+
+get {
+  url: http://localhost:3000/api/users/owner
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY4NWFkZTg3MmU5MzIxMjFhYzliNjEyOSIsInVzZXJuYW1lIjoiMTIzIiwiZW1haWwiOiJ0ZXN0MTIzQGdtYWlsLmNvbSIsImNyZWF0ZWRBdCI6IjIwMjUtMDYtMjRUMTc6MjE6MTEuMDE4WiJ9LCJpYXQiOjE3NTA4MzM3MTksImV4cCI6MTc1MTQzODUxOX0.IVvQcC_ZUo9GJGM86QEha6dozgPFppaBQDHziTQsxss
+}
+
+body:json {
+  {
+    "usernameOrEmail":"test123@gmail.com",
+    "password":"12345678"
+  }
+}

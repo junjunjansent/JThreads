@@ -16,11 +16,11 @@ const saveUserToRequest = (req, decodedUser) => {
 };
 
 const getUserFromRequest = (req) => {
-  return req.user.id;
+  return req.user;
 };
 
 // takes in object or string
-const createJWT = (payload) => {
+const createJWT = async (payload) => {
   if (!process.env.JWT_SECRET) {
     throw new Error("Check JWT_SECRET definition");
   }
