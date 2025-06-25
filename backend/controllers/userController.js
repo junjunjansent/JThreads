@@ -109,10 +109,15 @@ const updateOwnerPassword = async (req, res, next) => {
     //   { ...userFull, password: bcryptPassword(newPassword) },
     //   { new: true }
     // );
-    userFull.password = await bcryptPassword(newPassword);
-    await userFull.save();
+    const updatedUser = await User.findByIdAndUpdate(
+      user._id,
+      {
+        password: bcryptPassword(newPassword),
+      },
+      { new: true }
+    );
 
-    res.status(201).json({ data: { userFull } });
+    res.status(201).json({ data: { updatedUser } });
   } catch (err) {
     next(err);
   }
