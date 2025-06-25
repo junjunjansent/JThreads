@@ -1,8 +1,7 @@
 const jwt = require("jsonwebtoken");
+
 const dotenv = require("dotenv");
 dotenv.config();
-
-const jwtSecret = process.env.JWT_SECRET;
 
 const getTokenFromReq = (req) => {
   const authHeader = req.header("Authorization");
@@ -12,24 +11,38 @@ const getTokenFromReq = (req) => {
   return authHeader.split(" ")[1];
 };
 
+const saveUserToRequest = (req, decodedUser) => {
+  req.user = decodedUser;
+};
+
+const getUserFromRequest = (req) => {
+  return req.user;
+};
+
 // takes in object or string
-const createJWT = (payload) => {
+const createJWT = async (payload) => {
   if (!process.env.JWT_SECRET) {
     throw new Error("Check JWT_SECRET definition");
   }
-  const token = jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn: "2 days",
+  const token = await jwt.sign(payload, process.env.JWT_SECRET, {
+    expiresIn: "7 days",
   });
   return token;
 };
 
 // takes in string
-const decodeJWT = (token) => {
+const decodeJWT = async (token) => {
   if (!process.env.JWT_SECRET) {
     throw new Error("Check JWT_SECRET definition");
   }
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  const decoded = await jwt.verify(token, process.env.JWT_SECRET);
   return decoded;
 };
 
-module.export = { getTokenFromReq, createJWT, decodeJWT };
+module.exports = {
+  getTokenFromReq,
+  createJWT,
+  decodeJWT,
+  saveUserToRequest,
+  getUserFromRequest,
+};

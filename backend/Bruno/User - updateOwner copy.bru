@@ -1,0 +1,22 @@
+meta {
+  name: User - updateOwner copy
+  type: http
+  seq: 7
+}
+
+put {
+  url: http://localhost:3000/api/users/owner
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY4NWJkNjhhMzE3NWRkODdjNTY3ODhjYyIsInVzZXJuYW1lIjoidXNlcjEiLCJlbWFpbCI6InVzZXIxQHRlc3QuY29tIiwiY3JlYXRlZEF0IjoiMjAyNS0wNi0yNVQxMDo1OToyMi44MTFaIn0sImlhdCI6MTc1MDg0OTIxOSwiZXhwIjoxNzUxNDU0MDE5fQ.Ts368-VgpmDIbyP0hWMGJeZXkagUyPdo7VCDow8a7rY
+}
+
+body:json {
+  {
+    "oldPassword": "12345678",
+    "newPassword": "12345678"
+  }
+}
