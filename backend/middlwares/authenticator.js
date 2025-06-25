@@ -5,7 +5,7 @@ const {
 } = require("../utils/tokenHandler");
 const { ApiError } = require("../utils/errorHandler");
 
-function authenticateUser(req, res, next) {
+const authenticateUser = async (req, res, next) => {
   try {
     const token = getTokenFromReq(req);
     if (!token) {
@@ -16,7 +16,7 @@ function authenticateUser(req, res, next) {
         detail: "Unable to get token from Authorization Header",
       });
     }
-    const decoded = decodeJWT(token);
+    const decoded = await decodeJWT(token);
     if (!decoded.user) {
       throw new ApiError({
         status: 401,
@@ -32,6 +32,6 @@ function authenticateUser(req, res, next) {
   } catch (err) {
     next(err);
   }
-}
+};
 
 module.exports = authenticateUser;

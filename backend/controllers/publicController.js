@@ -72,7 +72,16 @@ const signIn = async (req, res, next) => {
     }
 
     // Login user - with id, username, and email, createdAt
-    const userToken = createJWT({ user: oneUser });
+    const userToken = await createJWT({ user: oneUser });
+
+    if (!userToken) {
+      throw new ApiError({
+        status: 503,
+        source: { pointer: "publicController.js" },
+        title: "Service Unavailable: Token Generation",
+        detail: "Server having issue generating token.",
+      });
+    }
 
     res.status(200).json({ data: { user: { oneUser, token: userToken } } });
   } catch (err) {
