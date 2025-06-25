@@ -1,31 +1,48 @@
 const mongoose = require("mongoose");
-const ProductVariation = require("./ProductVariation");
+// const ProductVariation = require("./ProductVariation");
 
 const productSchema = new mongoose.Schema(
   {
-    productname: {
+    productName: {
       type: String,
-      unique: true,
-      required: [true, "product name needs to be defined"],
+      // unique: true, // I think its ok that it isnt unique, but they will be difficult to find
+      required: [true, "Product name needs to be defined"],
+      trim: true,
     },
-    productdetails: [ProductVariation],
-    productdesc: {
+    productIsActive: { type: Boolean, default: true },
+    productDescription: {
       type: String,
-      required: [true, "product description needs to be filled"],
+      trim: true,
     },
-    productcategory: {
+    productCategory: {
       type: String,
+      required: [true, "Product needs to belong in a category."],
+      trim: true,
       enum: {
         values: ["Tops", "Bottoms", "Headwear", "Bags", "Accessories", "Misc"],
         message: "Products sold must fall in one of these categories",
       },
     },
+    productOwner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: [true, "All products sold must have an owner."],
+    },
+    productDisplayPhoto: {
+      type: String,
+      default:
+        "https://pixabay.com/illustrations/box-packaging-mockup-paper-box-6345764/",
+    },
+    productDefaultDeliveryTime: {
+      // in days
+      type: Number,
+      default: 30,
+      min: [1, "Delivery Time should not be less than a day."],
+    },
   },
   { timestamps: true }
 );
 
-// Compile the schema into a model:
 const Product = mongoose.model("Product", productSchema);
 
-// Export the model:
 module.exports = Product;
