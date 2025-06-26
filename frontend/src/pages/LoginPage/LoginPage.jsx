@@ -4,6 +4,7 @@ import { UserContext } from "../../contexts/UserContext";
 
 import styles from "./LoginPage.module.css";
 import { toast } from "react-toastify";
+import logoImg from "../../assets/JThreads_logo.png";
 
 import { signIn } from "../../services/publicServices";
 import { errorUtil } from "../../utils/errorUtil";
@@ -56,6 +57,21 @@ const LoginPage = () => {
             <p>Create an account</p>
           </a>
         </form>
+      </div>
+
+      <div>
+        <img
+          src={logoImg}
+          alt="Logo"
+          style={{
+            width: "100%",
+            maxWidth: "20rem", // limit max width to 400px
+            maxHeight: "20rem", // limit max height to 300px
+            objectFit: "contain", // keep aspect ratio, no cropping
+            borderRadius: "12px",
+            boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+          }}
+        />
       </div>
     </div>
   );

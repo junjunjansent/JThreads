@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router";
 import { useContext } from "react";
-
 import { UserContext } from "../../contexts/UserContext";
+
 import styles from "./RegisterPage.module.css";
 import { toast } from "react-toastify";
+import logoImg from "../../assets/JThreads_logo.png";
 
 // import debug from "debug";
 // const log = debug("JThreads:file destination");
@@ -64,6 +65,20 @@ const RegisterPage = () => {
             <p>Already have an account, log in now!</p>
           </a>
         </form>
+      </div>
+      <div>
+        <img
+          src={logoImg}
+          alt="Logo"
+          style={{
+            width: "100%",
+            maxWidth: "20rem", // limit max width to 400px
+            maxHeight: "20rem", // limit max height to 300px
+            objectFit: "contain", // keep aspect ratio, no cropping
+            borderRadius: "12px",
+            boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+          }}
+        />
       </div>
     </div>
   );
