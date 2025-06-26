@@ -1,39 +1,24 @@
+import { useNavigate } from "react-router";
 import styles from "./RegisterPage.module.css";
-// import { useContext } from "react";
+import debug from "debug";
+const log = debug("JThreads:file destination");
 
-const SignUp = async (data) => {
-  // const { setUser } = useContext(UserContext);
-
-  const url = `${import.meta.env.VITE_BACK_END_SERVER_URL}/sign-up`;
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
-    }
-
-    const json = await response.json();
-    // setUser(json);
-    console.log(json);
-  } catch (error) {
-    console.error(error.message);
-  }
-};
+import { signUp } from "../../services/publicServices";
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    log("happening");
 
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-    console.log(data);
+    log(data);
 
-    await SignUp(data);
+    const { newUser, token } = await signUp(data);
+    //TODO: put token into local storage and set user
+    navigate(`/${newUser.username}`);
   };
   return (
     <div className={styles.page}>
@@ -58,7 +43,7 @@ const RegisterPage = () => {
           ></input>
           <input
             className={styles.inputfield}
-            type="text"
+            type="password"
             name="password"
             placeholder="PASSWORD"
           ></input>
