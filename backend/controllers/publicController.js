@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Product = require("../models/Product");
 const { ApiError } = require("../utils/errorHandler");
 const {
   bcryptPassword,
@@ -89,4 +90,16 @@ const signIn = async (req, res, next) => {
   }
 };
 
-module.exports = { signUp, signIn };
+const index = async (req, res, next) => {
+  try {
+    const allProducts = await Product.find({});
+    if (!allProducts) {
+      return res.json("Msg: No products available"); // we can remove this once we handle the state change front end to display a message
+    }
+    res.json(allProducts);
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { signUp, signIn, index };

@@ -1,6 +1,7 @@
-// run this only in backend folder
+// run this only in backend root folder
 
 const User = require("../models/User");
+const Product = require("../models/Product");
 const { faker } = require("@faker-js/faker");
 const { bcryptPassword } = require("../utils/bcrypt");
 
@@ -36,43 +37,33 @@ const registerUsersForDeveloper = async () => {
   }
 };
 
-// const createHootsForDeveloper = async () => {
-//   const users = await User.find({});
-
-//   const commentsData = [
-//     { text: faker.lorem.text(), author: users[0]._id },
-//     { text: faker.lorem.text(), author: users[0]._id },
-//     { text: faker.lorem.text(), author: users[1]._id },
-//     { text: faker.lorem.text(), author: users[1]._id },
-//     { text: faker.lorem.text(), author: users[1]._id },
-//     { text: faker.lorem.text(), author: users[1]._id },
-//   ];
-
-//   const hootData = [
-//     {
-//       title: faker.food.dish(),
-//       text: faker.food.description(),
-//       category: faker.helpers.arrayElement(categories),
-//       author: users[0]._id,
-//       comments: [commentsData[0], commentsData[1]],
-//     },
-//     {
-//       title: faker.food.dish(),
-//       text: faker.food.description(),
-//       category: faker.helpers.arrayElement(categories),
-//       author: users[1]._id,
-//       comments: [commentsData[2], commentsData[3], commentsData[4]],
-//     },
-//   ];
-
-//   try {
-//     await Hoot.deleteMany({});
-//     const newHoot = await Hoot.create(hootData);
-//     console.log(newHoot);
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
+const inputTestProducts = async () => {
+  const productData = [
+    ...Array.from({ length: 20 }, () => ({
+      productName: faker.commerce.product(),
+      productIsActive: true,
+      productDescription: faker.commerce.productDescription(),
+      productCategory: faker.helpers.arrayElement([
+        "Tops",
+        "Bottoms",
+        "Headwear",
+        "Bags",
+        "Accessories",
+        "Misc",
+      ]),
+      productOwner: "685ccc6a6563a8614e11fec3", // adjust to make this tied to User objectID later
+      productDisplayPhoto: faker.image.urlPicsumPhotos(),
+      productDefaultDeliveryTime: 30,
+    })),
+  ];
+  try {
+    await Product.deleteMany({});
+    const newProducts = await Product.create(productData);
+    console.log(newProducts);
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 const dotenv = require("dotenv");
 dotenv.config();
@@ -88,6 +79,7 @@ const connect = async () => {
   // Call the runQueries function, which will eventually hold functions to work
   // with data in our db.
   await registerUsersForDeveloper();
+  await inputTestProducts();
   //   await createHootsForDeveloper();
 
   // Disconnect our app from MongoDB after our queries run.
