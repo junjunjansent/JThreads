@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
-const cors = require("cors");
-// const logger = require("morgan");
+
 const { ApiError, errorHandler } = require("./utils/errorHandler");
 
 // ----- dotenv config
@@ -23,9 +22,14 @@ mongoose.connection.on("connected", () => {
 });
 
 // ----- Middleware
+// cors
+const cors = require("cors");
 app.use(cors());
+// morgan
+const logger = require("morgan");
+app.use(logger("dev"));
+
 app.use(express.json());
-// app.use(logger("dev"));
 
 // ----- Request checker
 app.use((req, res, next) => {

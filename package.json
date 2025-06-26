@@ -13,8 +13,6 @@
     "typescript": "^5"
   },
   "dependencies": {
-    "bcryptjs": "^3.0.2",
-    "concurrently": "^9.1.2",
-    "cors": "^2.8.5"
+    "concurrently": "^9.1.2"
   }
 }
