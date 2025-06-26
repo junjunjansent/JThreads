@@ -7,7 +7,7 @@ const ProductCard = ({ key, name, category, photo, owner, isActive }) => {
       <div className={styles.productName}>{name}</div>
       <div className={styles.productSubContainer}>
         <div className={styles.productCategory}>{category}</div>
-        <div className={styles.productSeller}>Seller: {owner}</div>
+        <div className={styles.productSeller}>{owner.username}</div>
       </div>
       <div className={styles.productSubContainer}>
         <div className={styles.productPriceRange}>S$ 15.90</div>
