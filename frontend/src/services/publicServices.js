@@ -38,8 +38,18 @@ const signUp = async (bodyData) => {
 
   try {
     const resData = await fetchJson(url, "POST", bodyData);
-    const { newUser, token } = resData.user;
-    return { newUser, token };
+    return resData;
+  } catch (err) {
+    throw new ApiError(err);
+  }
+};
+
+const signIn = async (bodyData) => {
+  const url = `${publicService_BASE_URL}/sign-in`;
+
+  try {
+    const resData = await fetchJson(url, "POST", bodyData);
+    return resData;
   } catch (err) {
     throw new ApiError(err);
   }
@@ -98,6 +108,7 @@ const getInfoFromToken = (token) => {
 
 export {
   signUp,
+  signIn,
   saveTokenToLocalStorage,
   getTokenFromLocalStorage,
   getInfoFromToken,

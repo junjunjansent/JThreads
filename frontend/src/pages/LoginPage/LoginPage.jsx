@@ -1,6 +1,31 @@
+import { useNavigate } from "react-router";
+
 import styles from "./LoginPage.module.css";
+import { toast } from "react-toastify";
+
+import { signIn } from "../../services/publicServices";
+import { errorUtil } from "../../utils/errorUtil";
+import { saveTokenToLocalStorage } from "../../services/publicServices";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
+    try {
+      event.preventDefault();
+      toast.info("Signing Up for you...");
+
+      const formData = new FormData(event.target);
+      const data = Object.fromEntries(formData);
+
+      const { user, token } = await signIn(data);
+      saveTokenToLocalStorage(token);
+      navigate(`/${user.username}`);
+      toast.success(`Welcome, ${user.username}`);
+    } catch (err) {
+      errorUtil(err);
+    }
+  };
   return (
     <div className={styles.page}>
       <div className={styles.loginarea}>
@@ -9,16 +34,16 @@ const LoginPage = () => {
           Log in to enjoy a personalized experience and to access all our
           services.
         </p>
-        <form>
+        <form onSubmit={handleSubmit}>
           <input
             className={styles.inputfield}
             type="text"
-            name="username"
-            placeholder="USERNAME"
+            name="usernameOrEmail"
+            placeholder="USERNAME or EMAIL"
           ></input>
           <input
             className={styles.inputfield}
-            type="text"
+            type="password"
             name="password"
             placeholder="PASSWORD"
           ></input>

@@ -2,8 +2,8 @@ import { useNavigate } from "react-router";
 import styles from "./RegisterPage.module.css";
 import { toast } from "react-toastify";
 
-import debug from "debug";
-const log = debug("JThreads:file destination");
+// import debug from "debug";
+// const log = debug("JThreads:file destination");
 
 import { signUp, saveTokenToLocalStorage } from "../../services/publicServices";
 import { errorUtil } from "../../utils/errorUtil";
@@ -19,10 +19,10 @@ const RegisterPage = () => {
       const formData = new FormData(event.target);
       const data = Object.fromEntries(formData);
 
-      const { newUser, token } = await signUp(data);
+      const { user, token } = await signUp(data);
       saveTokenToLocalStorage(token);
-      navigate(`/${newUser.username}`);
-      toast.success(`Welcome, ${newUser.username}`);
+      navigate(`/${user.username}`);
+      toast.success(`Welcome, ${user.username}`);
     } catch (err) {
       errorUtil(err);
     }

@@ -60,7 +60,7 @@ const signUp = async (req, res, next) => {
       });
     }
 
-    res.status(201).json({ user: { newUser, token: userToken } });
+    res.status(201).json({ user: newUser, token: userToken });
   } catch (err) {
     next(err);
   }
@@ -95,7 +95,7 @@ const signIn = async (req, res, next) => {
       });
     }
 
-    res.status(200).json({ user: { oneUser, token: userToken } });
+    res.status(200).json({ user: oneUser, token: userToken });
   } catch (err) {
     next(err);
   }
