@@ -43,8 +43,11 @@ const userSchema = new mongoose.Schema(
     },
     birthday: {
       type: Date,
-      min: "1900-01-01", // TODO: fix hardcoded dates
-      max: "2025-01-01",
+      min: [
+        new Date(Date.now() - 100 * 365 * 24 * 60 * 60 * 1000),
+        "Birthday is unexpectedly too old",
+      ], // but this is talking about 100 years before when schema is defined
+      max: [Date.now, "Birthday can't be in the future"],
     },
     gender: {
       type: String,
@@ -62,8 +65,12 @@ const userSchema = new mongoose.Schema(
         "Expected valid international phone number",
       ],
     },
-    profilePhoto: { type: String },
-    defaultShippingAddress: { type: String },
+    profilePhoto: {
+      type: String,
+      default:
+        "https://pixabay.com/vectors/blank-profile-picture-mystery-man-973460/",
+    },
+    defaultShippingAddress: { type: String, trim: true },
   },
   { timestamps: true }
 );
@@ -75,8 +82,6 @@ userSchema.set("toJSON", {
   },
 });
 
-// Compile the schema into a model:
 const User = mongoose.model("User", userSchema);
 
-// Export the model:
 module.exports = User;
