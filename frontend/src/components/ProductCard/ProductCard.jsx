@@ -1,5 +1,5 @@
 import styles from "./ProductCard.module.css";
-const ProductCard = () => {
+const ProductCard = ({ allProducts }) => {
   return (
     <>
       <div className={styles.productCard}>

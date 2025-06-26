@@ -28,7 +28,7 @@ const showOne = async (req, res, next) => {
 };
 
 // show products when searching by category
-const indexCat = async (req, res, next) => {
+const indexCategory = async (req, res, next) => {
   try {
     const allProductByCategory = await Product.find({
       productcategory: req.query,
@@ -49,8 +49,4 @@ const detailedProductDetails = async (req, res) => {
   } catch (err) {}
 };
 
-module.exports = {
-  displayAllProduct,
-  displayOneProduct,
-  displayAllProductByCategory,
-};
+module.exports = { index, showOne, indexCategory };
