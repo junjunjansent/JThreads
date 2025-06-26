@@ -49,7 +49,18 @@ const signUp = async (req, res, next) => {
     // const payload = { username: newUser.username, _id: newUser._id };
     // const token = createJWT(payload);
 
-    res.status(201).json({ data: { user: newUser } });
+    // Login user - with id, username, and email, createdAt
+    const userToken = await createJWT({ user: newUser });
+    if (!userToken) {
+      throw new ApiError({
+        status: 503,
+        source: { pointer: "publicController.js" },
+        title: "Service Unavailable: Token Generation",
+        detail: "Server having issue generating token.",
+      });
+    }
+
+    res.status(201).json({ user: { newUser, token: userToken } });
   } catch (err) {
     next(err);
   }
@@ -84,7 +95,7 @@ const signIn = async (req, res, next) => {
       });
     }
 
-    res.status(200).json({ data: { user: { oneUser, token: userToken } } });
+    res.status(200).json({ user: { oneUser, token: userToken } });
   } catch (err) {
     next(err);
   }

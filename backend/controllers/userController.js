@@ -12,7 +12,7 @@ const show = async (req, res, next) => {
     const userExisting = await User.findOne({ username: userUsername }).select(
       "username createdAt"
     );
-    res.status(200).json({ data: { user: userExisting } });
+    res.status(200).json({ user: userExisting });
   } catch (err) {
     next(err);
   }
@@ -22,7 +22,7 @@ const showOwner = async (req, res, next) => {
   try {
     const user = getUserFromRequest(req);
     const userFull = await User.findById(user._id);
-    res.status(200).json({ data: { userFull } });
+    res.status(200).json({ userFull });
   } catch (err) {
     next(err);
   }
@@ -80,7 +80,7 @@ const updateOwner = async (req, res, next) => {
       { new: true }
     );
 
-    res.status(201).json({ data: { user: updatedUser } });
+    res.status(201).json({ user: updatedUser });
   } catch (err) {
     next(err);
   }
@@ -117,7 +117,7 @@ const updateOwnerPassword = async (req, res, next) => {
       { new: true }
     );
 
-    res.status(201).json({ data: { updatedUser } });
+    res.status(201).json({ updatedUser });
   } catch (err) {
     next(err);
   }
