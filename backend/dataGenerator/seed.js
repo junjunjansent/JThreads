@@ -1,7 +1,7 @@
 // run this only in backend root folder
-
 const User = require("../models/User");
 const Product = require("../models/Product");
+const ProductVariant = require("../models/ProductVariation");
 const { faker } = require("@faker-js/faker");
 const { bcryptPassword } = require("../utils/bcrypt");
 
@@ -61,6 +61,31 @@ const inputTestProducts = async (users) => {
     await Product.deleteMany({});
     const newProducts = await Product.create(productData);
     console.log(newProducts);
+    return newProducts;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const inputTestProductVariants = async (products) => {
+  const maxInventoryQty = faker.number.int({ min: 1 });
+  const productVariationData = [
+    ...Array.from({ length: 50 }, () => ({
+      mainProduct: faker.helpers.arrayElement(products)._id,
+      productVarDesign: faker.commerce.product(),
+      productVarInventoryQty: maxInventoryQty,
+      productVarAvailableQty: faker.number.int({
+        min: 0,
+        max: maxInventoryQty,
+      }),
+      productVarPrice: faker.number.float({ fractionDigits: 2, min: 0 }),
+      productVarDisplayPhoto: faker.image.urlPicsumPhotos(),
+    })),
+  ];
+  try {
+    await ProductVariant.deleteMany({});
+    await ProductVariant.create(productVariationData);
+    console.log(productVariationData);
   } catch (err) {
     console.log(err);
   }
@@ -80,7 +105,9 @@ const connect = async () => {
   // Call the runQueries function, which will eventually hold functions to work
   // with data in our db.
   const createdUsers = await registerUsersForDeveloper();
-  await inputTestProducts(createdUsers);
+  const createdProducts = await inputTestProducts(createdUsers);
+  await inputTestProductVariants(createdProducts);
+
   //   await createHootsForDeveloper();
 
   // Disconnect our app from MongoDB after our queries run.

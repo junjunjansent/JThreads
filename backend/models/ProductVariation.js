@@ -41,7 +41,7 @@ const productVariantSchema = new mongoose.Schema({
   productVarDisplayPhoto: {
     type: String,
     trim: true,
-    match: [/https:\/\/\.com\/a\//i, "Invalid image URL"], // need to validate regex here but effectively want to validate if this is a legitimate URL
+    // match: [/https:\/\/\.com\/a\//i, "Invalid image URL"], // need to validate regex here but effectively want to validate if this is a legitimate URL
   },
 });
 
