@@ -32,12 +32,13 @@ const registerUsersForDeveloper = async () => {
     await User.deleteMany({});
     const newUsers = await User.create(usersData);
     console.log(newUsers);
+    return newUsers;
   } catch (err) {
     console.log(err);
   }
 };
 
-const inputTestProducts = async () => {
+const inputTestProducts = async (users) => {
   const productData = [
     ...Array.from({ length: 20 }, () => ({
       productName: faker.commerce.product(),
@@ -51,7 +52,7 @@ const inputTestProducts = async () => {
         "Accessories",
         "Misc",
       ]),
-      productOwner: "685ccc6a6563a8614e11fec3", // adjust to make this tied to User objectID later
+      productOwner: faker.helpers.arrayElement(users)._id,
       productDisplayPhoto: faker.image.urlPicsumPhotos(),
       productDefaultDeliveryTime: 30,
     })),
@@ -78,8 +79,8 @@ const connect = async () => {
 
   // Call the runQueries function, which will eventually hold functions to work
   // with data in our db.
-  await registerUsersForDeveloper();
-  await inputTestProducts();
+  const createdUsers = await registerUsersForDeveloper();
+  await inputTestProducts(createdUsers);
   //   await createHootsForDeveloper();
 
   // Disconnect our app from MongoDB after our queries run.
