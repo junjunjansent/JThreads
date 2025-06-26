@@ -15,7 +15,7 @@ const signUp = async (req, res, next) => {
     if (usernameExisting) {
       throw new ApiError({
         status: 409,
-        source: { pointer: "publicController.js" },
+        source: { pointer: "authController.js" },
         title: "Conflict: User Exists",
         detail: "Username already taken.",
       });
@@ -25,7 +25,7 @@ const signUp = async (req, res, next) => {
     if (emailExisting) {
       throw new ApiError({
         status: 409,
-        source: { pointer: "publicController.js" },
+        source: { pointer: "authController.js" },
         title: "Conflict: User Exists",
         detail: "Email already taken.",
       });
@@ -65,7 +65,7 @@ const signIn = async (req, res, next) => {
     if (!oneUser || !isPasswordBCryptValidated(password, oneUser.password)) {
       throw new ApiError({
         status: 400,
-        source: { pointer: "publicController.js" },
+        source: { pointer: "authController.js" },
         title: "Bad Request: Wrong Login Details",
         detail: "Login Failed with wrong login details.",
       });
@@ -77,7 +77,7 @@ const signIn = async (req, res, next) => {
     if (!userToken) {
       throw new ApiError({
         status: 503,
-        source: { pointer: "publicController.js" },
+        source: { pointer: "authController.js" },
         title: "Service Unavailable: Token Generation",
         detail: "Server having issue generating token.",
       });

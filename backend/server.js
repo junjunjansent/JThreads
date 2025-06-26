@@ -9,7 +9,7 @@ dotenv.config();
 const port = process.env.BACKEND_PORT || 3000;
 
 // ----- Import routers
-const publicRouter = require("./routes/publicRoutes");
+const authRouter = require("./routes/authRoutes");
 const authenticateUser = require("./middlwares/authenticator");
 const usersRouter = require("./routes/userRoutes");
 
@@ -38,7 +38,7 @@ app.use((req, res, next) => {
 });
 
 // ----- Routes
-app.use("/api", publicRouter);
+app.use("/api", authRouter);
 app.use(authenticateUser);
 app.use("/api/users", usersRouter);
 // app.use("/api/products", productRouter);
