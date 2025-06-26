@@ -5,9 +5,29 @@ const productVariantSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Product",
     required: [true, "All product variants sold must belong to one owner."],
+const productVariantSchema = new mongoose.Schema({
+  mainProduct: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Product",
+    required: [true, "All product variants sold must belong to one owner."],
   },
   productVarDesign: {
+  productVarDesign: {
     type: String,
+    trim: true,
+    required: [true, "Product Design needs to be defined"],
+    //   unique: ** we probably will want sizes to be unique at the product name level ** // Can explore! This is actually important but not sure how to implement
+  },
+  // productcolor: {
+  //   type: String,
+  //   required: [true, "product color needs to be defined"],
+  // },
+  productVarInventoryQty: {
+    type: Number,
+    required: [true, "Inventory Qty needs to be defined"],
+    min: [0, "Inventory quantity cannot be negative quantity"],
+  },
+  productVarAvailableQty: {
     trim: true,
     required: [true, "Product Design needs to be defined"],
     //   unique: ** we probably will want sizes to be unique at the product name level ** // Can explore! This is actually important but not sure how to implement
@@ -31,13 +51,25 @@ const productVariantSchema = new mongoose.Schema({
       },
       message: "Available quantity must be <= Inventory Qty",
     },
+    required: [true, "Available Qty needs to be defined"],
+    min: [0, "Available quantity cannot be negative quantity"],
+    validate: {
+      validator: function (value) {
+        return value <= this.productVarInventoryQty;
+      },
+      message: "Available quantity must be <= Inventory Qty",
+    },
   },
+  productVarPrice: {
   productVarPrice: {
     type: Number,
     required: [true, "Price needs to be defined"],
     min: [0, "Price cannot be negative quantity"],
+    required: [true, "Price needs to be defined"],
+    min: [0, "Price cannot be negative quantity"],
     // Probably want a validator that ensures that the value has 2 decimal places ONLY
   },
+  productVarDisplayPhoto: {
   productVarDisplayPhoto: {
     type: String,
     trim: true,
@@ -52,5 +84,7 @@ const productVariantSchema = new mongoose.Schema({
 });
 
 const ProductVariant = mongoose.model("ProductVariant", productVariantSchema);
+const ProductVariant = mongoose.model("ProductVariant", productVariantSchema);
 
+module.exports = ProductVariant;
 module.exports = ProductVariant;
