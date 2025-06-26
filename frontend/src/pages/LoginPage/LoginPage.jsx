@@ -1,4 +1,6 @@
 import { useNavigate } from "react-router";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/UserContext";
 
 import styles from "./LoginPage.module.css";
 import { toast } from "react-toastify";
@@ -9,6 +11,7 @@ import { saveTokenToLocalStorage } from "../../services/publicServices";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
 
   const handleSubmit = async (event) => {
     try {
@@ -19,6 +22,7 @@ const LoginPage = () => {
       const data = Object.fromEntries(formData);
 
       const { user, token } = await signIn(data);
+      setUser(user);
       saveTokenToLocalStorage(token);
       navigate(`/${user.username}`);
       toast.success(`Welcome, ${user.username}`);

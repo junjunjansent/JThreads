@@ -1,4 +1,7 @@
 import { useNavigate } from "react-router";
+import { useContext } from "react";
+
+import { UserContext } from "../../contexts/UserContext";
 import styles from "./RegisterPage.module.css";
 import { toast } from "react-toastify";
 
@@ -10,6 +13,7 @@ import { errorUtil } from "../../utils/errorUtil";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
 
   const handleSubmit = async (event) => {
     try {
@@ -20,6 +24,7 @@ const RegisterPage = () => {
       const data = Object.fromEntries(formData);
 
       const { user, token } = await signUp(data);
+      setUser(user);
       saveTokenToLocalStorage(token);
       navigate(`/${user.username}`);
       toast.success(`Welcome, ${user.username}`);
