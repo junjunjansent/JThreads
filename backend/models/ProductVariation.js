@@ -22,6 +22,12 @@ const productVariationSchema = new mongoose.Schema({
     type: String,
     match: [/https:\/\/\.com\/a\//i, "invalid image URL"], // need to validate regex here but effectively want to validate if this is a legitimate URL
   },
+
+  // in preparation for when we do referencing
+  assignee: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Product",
+  },
 });
 
 const ProductVariation = mongoose.model(

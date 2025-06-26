@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-// const cors = require("cors");
+const cors = require("cors");
 // const logger = require("morgan");
 const { ApiError, errorHandler } = require("./utils/errorHandler");
 
@@ -23,7 +23,7 @@ mongoose.connection.on("connected", () => {
 });
 
 // ----- Middleware
-// app.use(cors());
+app.use(cors());
 app.use(express.json());
 // app.use(logger("dev"));
 
