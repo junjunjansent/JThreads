@@ -1,7 +1,7 @@
 // run this only in backend root folder
-
 const User = require("../models/User");
 const Product = require("../models/Product");
+const ProductVariant = require("../models/ProductVariation");
 const { faker } = require("@faker-js/faker");
 const { bcryptPassword } = require("../utils/bcrypt");
 
@@ -32,12 +32,13 @@ const registerUsersForDeveloper = async () => {
     await User.deleteMany({});
     const newUsers = await User.create(usersData);
     console.log(newUsers);
+    return newUsers;
   } catch (err) {
     console.log(err);
   }
 };
 
-const inputTestProducts = async () => {
+const inputTestProducts = async (users) => {
   const productData = [
     ...Array.from({ length: 20 }, () => ({
       productName: faker.commerce.product(),
@@ -51,7 +52,7 @@ const inputTestProducts = async () => {
         "Accessories",
         "Misc",
       ]),
-      productOwner: "685ccc6a6563a8614e11fec3", // adjust to make this tied to User objectID later
+      productOwner: faker.helpers.arrayElement(users)._id,
       productDisplayPhoto: faker.image.urlPicsumPhotos(),
       productDefaultDeliveryTime: 30,
     })),
@@ -60,6 +61,31 @@ const inputTestProducts = async () => {
     await Product.deleteMany({});
     const newProducts = await Product.create(productData);
     console.log(newProducts);
+    return newProducts;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const inputTestProductVariants = async (products) => {
+  const maxInventoryQty = faker.number.int({ min: 1 });
+  const productVariationData = [
+    ...Array.from({ length: 50 }, () => ({
+      mainProduct: faker.helpers.arrayElement(products)._id,
+      productVarDesign: faker.commerce.product(),
+      productVarInventoryQty: maxInventoryQty,
+      productVarAvailableQty: faker.number.int({
+        min: 0,
+        max: maxInventoryQty,
+      }),
+      productVarPrice: faker.number.float({ fractionDigits: 2, min: 0 }),
+      productVarDisplayPhoto: faker.image.urlPicsumPhotos(),
+    })),
+  ];
+  try {
+    await ProductVariant.deleteMany({});
+    await ProductVariant.create(productVariationData);
+    console.log(productVariationData);
   } catch (err) {
     console.log(err);
   }
@@ -78,8 +104,10 @@ const connect = async () => {
 
   // Call the runQueries function, which will eventually hold functions to work
   // with data in our db.
-  await registerUsersForDeveloper();
-  await inputTestProducts();
+  const createdUsers = await registerUsersForDeveloper();
+  const createdProducts = await inputTestProducts(createdUsers);
+  await inputTestProductVariants(createdProducts);
+
   //   await createHootsForDeveloper();
 
   // Disconnect our app from MongoDB after our queries run.

@@ -21,7 +21,16 @@ const PublicBuyPage = () => {
           <BuySearchBar styles={styles} />
         </div>
         <div className={styles.searcharea}>
-          <ProductCard allProducts={displayProducts} />
+          {displayProducts.map((product) => (
+            <ProductCard
+              key={product._id}
+              name={product.productName}
+              category={product.productCategory}
+              photo={product.productDisplayPhoto}
+              owner={product.productOwner}
+              isActive={product.productIsActive}
+            />
+          ))}
         </div>
       </div>
     </>

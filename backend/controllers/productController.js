@@ -4,7 +4,7 @@ const Product = require("../models/Product");
 // show all products as buyer on search page
 const index = async (req, res, next) => {
   try {
-    const allProducts = await Product.find({});
+    const allProducts = await Product.find({}).populate("productOwner");
     if (!allProducts) {
       return res.json("Msg: No products available"); // we can remove this once we handle the state change front end to display a message
     }
@@ -43,10 +43,5 @@ const indexCategory = async (req, res, next) => {
 };
 
 // details when navigating to a product's page
-const detailedProductDetails = async (req, res) => {
-  try {
-    const detailedOneProduct = await Product.findById({ _id: req.params });
-  } catch (err) {}
-};
 
 module.exports = { index, showOne, indexCategory };
