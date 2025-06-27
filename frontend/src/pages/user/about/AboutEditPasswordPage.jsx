@@ -13,7 +13,7 @@ import styles from "./AboutPage.module.css";
 import logoImg from "../../../assets/JThreads_logo.png";
 import { toast } from "react-toastify";
 
-import { List, Select, TextField, Box, MenuItem } from "@mui/material";
+import { TextField, Box } from "@mui/material";
 import { updateOwnerPassword } from "../../../services/userServices";
 
 const AboutEditPasswordPage = () => {
@@ -63,7 +63,9 @@ const AboutEditPasswordPage = () => {
       <main className={styles["page"]}>
         <section className={styles["section-info"]}>
           <div className={styles["title-bar"]}>
-            <h2 className={styles["title-text"]}>CHANGE PASSWORD</h2>
+            <h2 className={styles["title-text"]}>
+              CHANGE PASSWORD - {user.username}
+            </h2>
           </div>
           <div className={styles["descrpition-bar"]}>
             <p className={styles["description-text"]}>Please remember it...</p>
@@ -78,17 +80,23 @@ const AboutEditPasswordPage = () => {
             </div>
           </div>
           <article>
-            <Box component="form" onSubmit={handleSubmit}>
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              className={styles["form-field"]}
+            >
               <TextField
                 required
                 type="password"
                 label="Old Password"
+                autoComplete="current-password"
                 onChange={(e) => handleChange("oldPassword", e.target.value)}
               />
               <TextField
                 required
                 type="password"
                 label="New Password"
+                autoComplete="current-password"
                 onChange={(e) => handleChange("newPassword", e.target.value)}
               />
               <ValidatedTextField
@@ -100,7 +108,9 @@ const AboutEditPasswordPage = () => {
                 validator={newPasswordValidator}
               />
 
-              <button type="submit">Change It</button>
+              <button type="submit" className={styles["submit-button"]}>
+                Change It
+              </button>
             </Box>
           </article>
         </section>
