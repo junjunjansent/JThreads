@@ -21,7 +21,6 @@ const PublicBuyPage = () => {
     const filtering = allProducts.filter((product) =>
       product.productName.toLowerCase().includes(search.toLowerCase())
     );
-    console.log(search);
     setDisplayProducts(filtering);
   };
 
