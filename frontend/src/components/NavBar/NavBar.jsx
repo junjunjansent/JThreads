@@ -45,11 +45,6 @@ const NavBar = () => {
                 </li>
                 <li>
                   <NavLink to={PATHS.USER(username).SELLER.ORDER_ALL}>
-                    Seller Panel
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to={PATHS.USER(username).SELLER.ORDER_ALL}>
                     Orders (Seller)
                   </NavLink>
                 </li>
@@ -61,10 +56,14 @@ const NavBar = () => {
           <ul>
             {user ? (
               <>
-                {" "}
                 <li>
                   <NavLink to={PATHS.USER(username).ABOUT.DEFAULT}>
                     Welcome, {username}!
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to={PATHS.USER(username).BUYER.CART}>
+                    My Cart 🛒
                   </NavLink>
                 </li>
                 <li>

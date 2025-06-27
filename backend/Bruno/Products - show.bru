@@ -1,0 +1,15 @@
+meta {
+  name: Products - show
+  type: http
+  seq: 8
+}
+
+get {
+  url: http://localhost:3000/api/users/user2
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY4NWJjY2IyNmQ5MGMyY2UxMTk0YzkxOCIsInVzZXJuYW1lIjoidXNlcjEiLCJlbWFpbCI6IjEyM0A0NTYuY29tIiwiY3JlYXRlZEF0IjoiMjAyNS0wNi0yNVQxMDoxNzoyMi41MTFaIn0sImlhdCI6MTc1MDg0NzExMywiZXhwIjoxNzUxNDUxOTEzfQ.esZoYEb6t8uw2l5Szz09NiDQx0XoUkjhGPsKKyIY9w4
+}

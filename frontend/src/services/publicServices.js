@@ -1,6 +1,8 @@
 import { ApiError } from "../utils/errorUtil";
 
-const publicService_BASE_URL = import.meta.env.VITE_BACK_END_SERVER_URL;
+const publicService_BASE_URL = `${
+  import.meta.env.VITE_BACK_END_SERVER_URL
+}/public`;
 
 const publicService_HEADER = {
   "Content-Type": "application/json",
@@ -12,10 +14,18 @@ const fetchJson = async (url, methodStr = "GET", bodyData = null) => {
     headers: publicService_HEADER,
   };
 
-  if (bodyData && methodStr !== "GET") {
-    options.body = JSON.stringify(bodyData);
+  if (methodStr === "POST" || methodStr === "PUT") {
+    if (bodyData) {
+      options.body = JSON.stringify(bodyData);
+    } else {
+      throw new ApiError({
+        status: 405,
+        source: { pointer: "publicServices.js" },
+        title: "Method Not Allowed",
+        detail: "Need Body Data for this method.",
+      });
+    }
   }
-
   const res = await fetch(url, options);
   const data = await res.json();
 

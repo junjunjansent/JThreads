@@ -14,10 +14,12 @@ const App = () => {
   const { user } = useContext(UserContext);
 
   useEffect(() => {
-    if (user) {
+    const hasRefreshed = sessionStorage.getItem("hasRefreshed");
+    if (user && !hasRefreshed) {
       toast.success(`Welcome Back, ${user.username}`);
+      sessionStorage.setItem("hasRefreshed", "true");
     }
-  });
+  }, [user]);
 
   return (
     <main>

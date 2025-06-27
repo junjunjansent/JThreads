@@ -101,7 +101,19 @@ const signIn = async (req, res, next) => {
   }
 };
 
-const index = async (req, res, next) => {
+const showUser = async (req, res, next) => {
+  try {
+    const { userUsername } = req.params;
+    const userExisting = await User.findOne({ username: userUsername }).select(
+      "username createdAt"
+    );
+    res.status(200).json({ user: userExisting });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const indexProducts = async (req, res, next) => {
   try {
     const allProducts = await Product.find({});
     if (!allProducts) {
@@ -113,4 +125,4 @@ const index = async (req, res, next) => {
   }
 };
 
-module.exports = { signUp, signIn, index };
+module.exports = { signUp, signIn, showUser, indexProducts };

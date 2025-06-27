@@ -38,7 +38,7 @@ app.use((req, res, next) => {
 });
 
 // ----- Routes
-app.use("/api", publicRouter);
+app.use("/api/public", publicRouter);
 app.use(authenticateUser);
 app.use("/api/users", usersRouter);
 // app.use("/api/products", productRouter);

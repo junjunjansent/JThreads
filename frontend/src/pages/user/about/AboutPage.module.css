@@ -1,0 +1,45 @@
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.loginarea {
+  width: 30%;
+  padding: 80px 0px 0px 0px;
+}
+
+.pagetitle {
+  font-size: 25px;
+}
+
+.pagedescription {
+  font-size: 14px;
+  font-style: italic;
+}
+
+.inputfield {
+  /* width: 10%; */
+  color: black;
+  font-size: 15px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 1.5px solid grey;
+  background-color: white;
+}
+
+.submitbutton {
+  font-size: 15px;
+  width: 100%;
+  /* width: 50px; */
+  background-color: black;
+  color: white;
+}
+
+.register {
+  font-size: 12px;
+  font-style: italic;
+  display: inline-block;
+}
