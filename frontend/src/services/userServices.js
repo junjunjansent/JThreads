@@ -67,4 +67,28 @@ const showOwnerProfile = async () => {
   }
 };
 
-export { showOwnerProfile };
+const updateOwnerProfile = async (bodyData) => {
+  const url = `${publicService_BASE_URL}/owner`;
+  const token = getTokenFromLocalStorage();
+
+  try {
+    const resData = await fetchJson(url, "PUT", token, bodyData);
+    return resData;
+  } catch (err) {
+    throw new ApiError(err);
+  }
+};
+
+const updateOwnerPassword = async (bodyData) => {
+  const url = `${publicService_BASE_URL}/owner/password`;
+  const token = getTokenFromLocalStorage();
+
+  try {
+    const resData = await fetchJson(url, "PUT", token, bodyData);
+    return resData;
+  } catch (err) {
+    throw new ApiError(err);
+  }
+};
+
+export { showOwnerProfile, updateOwnerProfile, updateOwnerPassword };
