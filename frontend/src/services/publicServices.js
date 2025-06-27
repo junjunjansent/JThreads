@@ -67,7 +67,7 @@ const signIn = async (bodyData) => {
 };
 
 const getAllProducts = async () => {
-  const url = `${publicService_BASE_URL}/api/products`;
+  const url = `${publicService_BASE_URL}/products`;
   try {
     const resData = await fetchJson(url, "GET");
     return resData;

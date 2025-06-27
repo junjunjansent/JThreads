@@ -1,5 +1,3 @@
-// import debug from "debug";
-// const log = debug("JThreads:file destination");
 import NavBar from "./components/NavBar/NavBar";
 import AppRoutes from "./routes/AppRoutes";
 
