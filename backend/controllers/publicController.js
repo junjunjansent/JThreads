@@ -10,6 +10,26 @@ const { createJWT } = require("../utils/tokenHandler");
 const signUp = async (req, res, next) => {
   try {
     const { username, password, email } = req.body;
+
+    if (!/^[a-z0-9_-]+$/.test(username)) {
+      throw new ApiError({
+        status: 400,
+        source: { pointer: "publicController.js" },
+        title: "Bad Request: Username Format",
+        detail:
+          "Username can only contain lowercase letters, numbers, hyphens, and underscores.",
+      });
+    }
+
+    if (!/^[-.\w]+@[-.\w]+\.[-.\w]{2,}$/.test(email)) {
+      throw new ApiError({
+        status: 400,
+        source: { pointer: "publicController.js" },
+        title: "Bad Request: Email Format",
+        detail: "Email needs to be in correct format.",
+      });
+    }
+
     const usernameExisting = await User.findOne({ username }).select(
       "username"
     );

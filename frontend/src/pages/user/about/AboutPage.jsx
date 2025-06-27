@@ -1,24 +1,17 @@
-import { PATHS } from "../../../routes/PATHS";
-
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { PATHS } from "../../../routes/PATHS";
+import { showOwnerProfile } from "../../../services/userServices";
 
 import styles from "./AboutPage.module.css";
 import logoImg from "../../../assets/JThreads_logo.png";
-import { useEffect, useState } from "react";
+import dayjs from "dayjs";
+import { Avatar, List, ListItem, ListItemText } from "@mui/material";
+
 import { errorUtil } from "../../../utils/errorUtil";
 import Loader from "../../../components/Loader";
-import { PageStatusTypes } from "../../../utils/pageStatusUtil";
 import ErrorPage from "../../ErrorPage";
-import { showOwnerProfile } from "../../../services/userServices";
-import dayjs from "dayjs";
-import {
-  Avatar,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Typography,
-} from "@mui/material";
+import { PageStatusTypes } from "../../../utils/pageStatusUtil";
 
 const AboutPage = () => {
   const [userProfile, setUserProfile] = useState(null);
@@ -88,7 +81,9 @@ const AboutPage = () => {
         <section className={styles["section-info"]}>
           <div className={styles["title-bar"]}>
             <Avatar alt="Profile Photo" src={userProfile.profilePhoto} />
-            <h2 className={styles["title-text"]}>ABOUT YOURSELF</h2>
+            <h2 className={styles["title-text"]}>
+              ABOUT YOURSELF, {userProfile.username}
+            </h2>
           </div>
           <div className={styles["descrpition-bar"]}>
             <p className={styles["description-text"]}>
@@ -125,7 +120,6 @@ const AboutPage = () => {
                       secondary={
                         <span
                           style={{
-                            color: "rgba(255, 255, 255, 0.7)",
                             fontSize: "0.7rem",
                           }}
                         >

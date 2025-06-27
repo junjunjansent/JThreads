@@ -16,6 +16,10 @@ const userSchema = new mongoose.Schema(
       required: [true, "Username is required"],
       lowercase: true,
       trim: true,
+      match: [
+        /^[a-z0-9_-]+$/,
+        "Username can only contain lowercase letters, numbers, hyphens, and underscores",
+      ],
     },
     email: {
       type: String,
@@ -61,7 +65,7 @@ const userSchema = new mongoose.Schema(
       type: String, //cause can have leading zeros
       trim: true,
       match: [
-        /^\+?[1-9]\d{6,14}$/,
+        /^\+?[1-9](?:\s?\d){6,14}$/,
         "Expected valid international phone number",
       ],
     },
