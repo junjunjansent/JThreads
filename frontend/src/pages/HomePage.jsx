@@ -30,9 +30,9 @@ const HomePage = () => {
             alt="Logo"
             style={{
               width: "100%",
-              maxWidth: "20rem", // limit max width to 400px
-              maxHeight: "20rem", // limit max height to 300px
-              objectFit: "contain", // keep aspect ratio, no cropping
+              maxWidth: "20rem",
+              maxHeight: "20rem",
+              objectFit: "contain",
               borderRadius: "12px",
               boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
             }}

@@ -21,10 +21,12 @@ const registerUsersForDeveloper = async () => {
       username: faker.internet.username(),
       email: faker.internet.email(),
       password: bcryptPassword("12345678"),
+      firstName: faker.person.firstName(),
+      lastName: faker.person.lastName(),
       birthday: faker.date.birthdate(),
       gender: faker.helpers.arrayElement(["M", "F", "X"]),
       phoneNumber: faker.phone.number({ style: "international" }),
-      profilePhoto: faker.internet.url(),
+      profilePhoto: faker.image.avatar(),
       defaultShippingAddress: faker.location.streetAddress(),
     })),
   ];

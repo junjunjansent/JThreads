@@ -1,5 +1,7 @@
 import { PATHS } from "../../../routes/PATHS";
 
+import { useNavigate } from "react-router";
+
 import styles from "./AboutPage.module.css";
 import logoImg from "../../../assets/JThreads_logo.png";
 import { useEffect, useState } from "react";
@@ -8,6 +10,7 @@ import Loader from "../../../components/Loader";
 import { PageStatusTypes } from "../../../utils/pageStatusUtil";
 import ErrorPage from "../../ErrorPage";
 import { showOwnerProfile } from "../../../services/userServices";
+import dayjs from "dayjs";
 import {
   Avatar,
   List,
@@ -20,6 +23,7 @@ import {
 const AboutPage = () => {
   const [userProfile, setUserProfile] = useState(null);
   const [pageStatus, setPageStatus] = useState(PageStatusTypes.LOADING);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getOwnerInfo = async () => {
@@ -52,170 +56,94 @@ const AboutPage = () => {
     default:
       break;
   }
+
+  const userInfoGroups = [
+    [
+      { label: "Username", value: userProfile.username },
+      { label: "Email", value: userProfile.email },
+    ],
+    [
+      { label: "First Name", value: userProfile.firstName ?? "-" },
+      { label: "Last Name", value: userProfile.lastName ?? "-" },
+      { label: "Gender", value: userProfile.gender ?? "-" },
+    ],
+    [
+      { label: "Phone Number", value: userProfile.phoneNumber ?? "-" },
+      {
+        label: "Birthday",
+        value: dayjs(userProfile.birthday).format("D MMM YYYY") ?? "-",
+      },
+    ],
+    [
+      {
+        label: "Default Shipping Address",
+        value: userProfile.defaultShippingAddress ?? "-",
+      },
+    ],
+  ];
+
   return (
     <>
-      <div className={styles.page}>
-        <div className={styles.loginarea}>
-          <h2 className={styles.pagetitle}>ABOUT YOURSELF</h2>
-          <p className={styles.pagedescription}>
-            Joined us on {userProfile.createdAt}
-          </p>
+      <main className={styles["page"]}>
+        <section className={styles["section-info"]}>
+          <div className={styles["title-bar"]}>
+            <Avatar alt="Profile Photo" src={userProfile.profilePhoto} />
+            <h2 className={styles["title-text"]}>ABOUT YOURSELF</h2>
+          </div>
+          <div className={styles["descrpition-bar"]}>
+            <p className={styles["description-text"]}>
+              Joined us on {dayjs(userProfile.createdAt).format("D MMM YYYY")}
+            </p>
+            <div className={styles["descrpition-btns"]}>
+              <button
+                onClick={() =>
+                  navigate(
+                    PATHS.USER(userProfile.username).ABOUT.EDIT_PROFILE,
+                    { state: { userProfile } }
+                  )
+                }
+              >
+                Edit Profile
+              </button>
+              <button
+                onClick={() =>
+                  navigate(PATHS.USER(userProfile.username).ABOUT.EDIT_PASSWORD)
+                }
+              >
+                Change Password
+              </button>
+            </div>
+          </div>
 
           <article>
-            <div className={styles.divText}></div>
-            <List
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <ListItem alignItems="flex-start">
-                <ListItemAvatar>
-                  <Avatar alt="Profile Photo" src={userProfile.profilePhoto} />
-                </ListItemAvatar>
-                <ListItemText
-                  primary={userProfile.username}
-                  secondary={
-                    <span style={{ color: "rgba(255, 255, 255, 0.7)" }}>
-                      Username
-                    </span>
-                  }
-                />
-              </ListItem>
-              <ListItem alignItems="flex-start">
-                <ListItemText
-                  primary={userProfile.email}
-                  secondary={
-                    <span style={{ color: "rgba(255, 255, 255, 0.7)" }}>
-                      Email
-                    </span>
-                  }
-                />
-              </ListItem>
-            </List>
-            <List
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <ListItem alignItems="flex-start">
-                <ListItemText
-                  primary={userProfile.firstName ?? "-"}
-                  secondary={
-                    <span style={{ color: "rgba(255, 255, 255, 0.7)" }}>
-                      First Name
-                    </span>
-                  }
-                />
-              </ListItem>
-              <ListItem alignItems="flex-start">
-                <ListItemText
-                  primary={userProfile.lastName ?? "-"}
-                  secondary={
-                    <span style={{ color: "rgba(255, 255, 255, 0.7)" }}>
-                      Last Name
-                    </span>
-                  }
-                />
-              </ListItem>
-              <ListItem alignItems="flex-start">
-                <ListItemText
-                  primary={userProfile.gender ?? "-"}
-                  secondary={
-                    <span style={{ color: "rgba(255, 255, 255, 0.7)" }}>
-                      Gender
-                    </span>
-                  }
-                />
-              </ListItem>
-            </List>
-            <List
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <ListItem alignItems="flex-start">
-                <ListItemText
-                  primary={userProfile.phoneNumber ?? "-"}
-                  secondary={
-                    <span style={{ color: "rgba(255, 255, 255, 0.7)" }}>
-                      Phone Number
-                    </span>
-                  }
-                />
-              </ListItem>
-              <ListItem alignItems="flex-start">
-                <ListItemText
-                  primary={userProfile.birthday ?? "-"}
-                  secondary={
-                    <span style={{ color: "rgba(255, 255, 255, 0.7)" }}>
-                      Birthday
-                    </span>
-                  }
-                />
-              </ListItem>
-            </List>
-            <List>
-              <ListItem alignItems="flex-start">
-                <ListItemText
-                  primary={userProfile.defaultShippingAddress ?? "-"}
-                  secondary={
-                    <span style={{ color: "rgba(255, 255, 255, 0.7)" }}>
-                      Default Shipping Address
-                    </span>
-                  }
-                />
-              </ListItem>
-            </List>
+            {userInfoGroups.map((group, index) => (
+              <List key={index} className={styles["list-row-style"]}>
+                {group.map(({ label, value }, i) => (
+                  <ListItem key={i} alignItems="flex-start">
+                    <ListItemText
+                      primary={value}
+                      secondary={
+                        <span
+                          style={{
+                            color: "rgba(255, 255, 255, 0.7)",
+                            fontSize: "0.7rem",
+                          }}
+                        >
+                          {label}
+                        </span>
+                      }
+                    />
+                  </ListItem>
+                ))}
+              </List>
+            ))}
           </article>
-
-          {/* <form onSubmit={handleSubmit}>
-            <input
-              className={styles.inputfield}
-              type="text"
-              name="username"
-              placeholder="USERNAME"
-            ></input>
-            <input
-              className={styles.inputfield}
-              type="text"
-              name="email"
-              placeholder"EMAIL"
-            ></input>
-            <input
-              className={styles.inputfield}
-              type="password"
-              autoComplete="off"
-              name="password"
-              placeholder="PASSWORD"
-            ></input>
-            <button className={styles.submitbutton}>SIGN UP</button>
-            <Link className={styles.register} to={PATHS.PUBLIC.SIGN_IN}>
-              Already have an account, log in now!
-            </Link>
-          </form> */}
-        </div>
-        <div>
-          <img
-            src={logoImg}
-            alt="Logo"
-            style={{
-              width: "100%",
-              maxWidth: "20rem", // limit max width to 400px
-              maxHeight: "20rem", // limit max height to 300px
-              objectFit: "contain", // keep aspect ratio, no cropping
-              borderRadius: "12px",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-            }}
-          />
-        </div>
-      </div>
-      <pre>{JSON.stringify(userProfile, null, 2)}</pre>
+        </section>
+        <aside className={styles["aside-img"]}>
+          <img src={logoImg} alt="Logo" />
+        </aside>
+      </main>
+      {/* <pre>{JSON.stringify(userProfile, null, 2)}</pre> */}
     </>
   );
 };

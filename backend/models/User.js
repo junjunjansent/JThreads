@@ -67,8 +67,7 @@ const userSchema = new mongoose.Schema(
     },
     profilePhoto: {
       type: String,
-      default:
-        "https://pixabay.com/vectors/blank-profile-picture-mystery-man-973460/",
+      default: "https://www.gravatar.com/avatar/?d=mp",
     },
     defaultShippingAddress: { type: String, trim: true },
   },

@@ -1,23 +1,49 @@
 .page {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
   gap: 1rem;
+  width: 100%;
+  padding: 1rem;
+}
+
+.section-info {
   width: 100%;
 }
 
-.loginarea {
-  width: 60%;
-  padding: 80px 0px 0px 0px;
+.title-bar {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
 }
 
-.pagetitle {
-  font-size: 25px;
+.title-text {
+  font-size: 1.5rem;
 }
 
-.pagedescription {
-  font-size: 14px;
+.descrpition-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0 1rem 0;
+}
+
+.description-text {
+  font-size: 0.875rem;
   font-style: italic;
+}
+
+.descrpition-btns {
+  display: flex;
+  gap: 1rem;
+}
+
+.aside-img {
+  display: none;
+}
+
+.list-row-style {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .inputfield {
@@ -40,7 +66,24 @@
   color: white;
 }
 
-.divText {
-  display: flex;
-  justify-content: space-between;
+/* Larger Screen with ratio of 6:4 */
+@media screen and (min-width: 1024px) {
+  .page {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .section-info {
+    width: 60%;
+  }
+
+  .aside-img {
+    display: block;
+    width: 40%;
+    max-width: 20rem;
+    max-height: 20rem;
+    object-fit: contain;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
 }
