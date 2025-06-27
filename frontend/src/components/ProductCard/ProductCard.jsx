@@ -1,8 +1,9 @@
 import styles from "./ProductCard.module.css";
 
-const ProductCard = ({ key, name, category, photo, owner, isActive }) => {
+const ProductCard = ({ productid, name, category, photo, owner }) => {
+  // TODO: isActive is passed here for use later to decid
   return (
-    <div className={styles.productCard}>
+    <div className={styles.productCard} key={productid}>
       <img className={styles.productImage} src={photo} />
       <div className={styles.productName}>{name}</div>
       <div className={styles.productSubContainer}>

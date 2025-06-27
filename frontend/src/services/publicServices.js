@@ -55,6 +55,17 @@ const signIn = async (bodyData) => {
   }
 };
 
+const getAllProducts = async () => {
+  const url = `${publicService_BASE_URL}/api/products`;
+  try {
+    const resData = await fetchJson(url, "GET");
+    return resData;
+  } catch (err) {
+    throw new ApiError(err);
+  }
+};
+export { getAllProducts };
+
 // ----------- token Services
 
 const saveTokenToLocalStorage = (token) => {
