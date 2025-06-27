@@ -32,14 +32,16 @@ const BuyAllPage = () => {
         </div>
         <div className={styles.searcharea}>
           {displayProducts.map((product) => (
-            <ProductCard
-              productid={product._id}
-              name={product.productName}
-              category={product.productCategory}
-              photo={product.productDisplayPhoto}
-              owner={product.productOwner}
-              isActive={product.productIsActive} // TODO: isActive is passed here but not used yet. We probably need to put this into the JS portion as a filter to not render !isActive products
-            />
+            <a href={`/${product.productId}`} className={styles.productlink}>
+              <ProductCard
+                productid={product._id}
+                name={product.productName}
+                category={product.productCategory}
+                photo={product.productDisplayPhoto}
+                owner={product.productOwner}
+                isActive={product.productIsActive} // TODO: isActive is passed here but not used yet. We probably need to put this into the JS portion as a filter to not render !isActive products
+              />
+            </a>
           ))}
         </div>
       </div>
