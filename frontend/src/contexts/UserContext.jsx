@@ -1,6 +1,6 @@
 // ContextProvider encapsulated
 
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import {
   getInfoFromToken,
   getTokenFromLocalStorage,
@@ -9,10 +9,28 @@ import {
 const UserContext = createContext();
 
 function UserProvider({ children }) {
-  const [user, setUser] = useState(
-    getInfoFromToken(getTokenFromLocalStorage()).user
-  );
+  const [user, setUser] = useState(null);
   const value = { user, setUser };
+
+  useEffect(() => {
+    const loadUser = async () => {
+      try {
+        const token = getTokenFromLocalStorage();
+        if (token) {
+          const userInfo = getInfoFromToken(token);
+          if (userInfo && userInfo.user) {
+            setUser(userInfo.user);
+          }
+        } else {
+          setUser(null);
+        }
+      } catch (err) {
+        console.error("Error loading user from token:", err);
+        setUser(null);
+      }
+    };
+    loadUser();
+  }, []);
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }
