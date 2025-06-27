@@ -41,14 +41,6 @@ const userSchema = new mongoose.Schema(
       trim: true,
       minLength: [2, "Expecting min. 2 characters"],
     },
-    birthday: {
-      type: Date,
-      min: [
-        new Date(Date.now() - 100 * 365 * 24 * 60 * 60 * 1000),
-        "Birthday is unexpectedly too old",
-      ], // but this is talking about 100 years before when schema is defined
-      max: [Date.now, "Birthday can't be in the future"],
-    },
     gender: {
       type: String,
       trim: true,
@@ -56,6 +48,14 @@ const userSchema = new mongoose.Schema(
         values: ["M", "F", "X"],
         message: 'Gender must be either "M" or "F" or "X"',
       },
+    },
+    birthday: {
+      type: Date,
+      min: [
+        new Date(Date.now() - 100 * 365 * 24 * 60 * 60 * 1000),
+        "Birthday is unexpectedly too old",
+      ], // but this is talking about 100 years before when schema is defined
+      max: [Date.now, "Birthday can't be in the future"],
     },
     phoneNumber: {
       type: String, //cause can have leading zeros

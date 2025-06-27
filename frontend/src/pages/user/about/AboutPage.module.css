@@ -3,9 +3,11 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  width: 100%;
 }
+
 .loginarea {
-  width: 30%;
+  width: 60%;
   padding: 80px 0px 0px 0px;
 }
 
@@ -38,8 +40,7 @@
   color: white;
 }
 
-.register {
-  font-size: 12px;
-  font-style: italic;
-  display: inline-block;
+.divText {
+  display: flex;
+  justify-content: space-between;
 }

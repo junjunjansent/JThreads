@@ -54,9 +54,7 @@ const fetchJson = async (
 
 // ----------- actual Services
 
-const showUser = async () => {};
-
-const showOwner = async () => {
+const showOwnerProfile = async () => {
   // private Router should have protected any unauthorised getting in
   const url = `${publicService_BASE_URL}/owner`;
   const token = getTokenFromLocalStorage();
@@ -69,4 +67,4 @@ const showOwner = async () => {
   }
 };
 
-export { showUser, showOwner };
+export { showOwnerProfile };

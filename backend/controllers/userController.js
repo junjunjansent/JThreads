@@ -22,7 +22,7 @@ const showOwner = async (req, res, next) => {
   try {
     const user = getUserFromRequest(req);
     const userFull = await User.findById(user._id);
-    res.status(200).json({ userFull });
+    res.status(200).json({ user: userFull });
   } catch (err) {
     next(err);
   }
@@ -117,7 +117,7 @@ const updateOwnerPassword = async (req, res, next) => {
       { new: true }
     );
 
-    res.status(201).json({ updatedUser });
+    res.status(201).json({ user: updatedUser });
   } catch (err) {
     next(err);
   }

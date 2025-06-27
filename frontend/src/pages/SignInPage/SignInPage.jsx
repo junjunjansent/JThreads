@@ -55,10 +55,10 @@ const SignInPage = () => {
             placeholder="PASSWORD"
           ></input>
           <button className={styles.submitbutton}>LOG IN</button>
-          <Link className={styles.register} to={PATHS.PUBLIC.SIGN_UP}>
-            Create an account lah bodoh...
-          </Link>
         </form>
+        <Link className={styles.register} to={PATHS.PUBLIC.SIGN_UP}>
+          Create an account lah bodoh...
+        </Link>
       </div>
 
       <div>
