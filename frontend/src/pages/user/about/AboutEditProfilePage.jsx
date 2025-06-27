@@ -1,4 +1,7 @@
-import { useState } from "react";
+// import debug from "debug";
+// const log = debug("JThreads:AboutEditProfilePage");
+
+import { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { PATHS } from "../../../routes/PATHS";
 
@@ -7,17 +10,23 @@ import {
   usernameValidator,
   emailValidator,
 } from "../../../utils/inputValidator";
+import { errorUtil } from "../../../utils/errorUtil";
+import { UserContext } from "../../../contexts/UserContext";
+import { saveTokenToLocalStorage } from "../../../services/publicServices";
 
 import styles from "./AboutPage.module.css";
 import logoImg from "../../../assets/JThreads_logo.png";
 import dayjs from "dayjs";
+import { toast } from "react-toastify";
 
 import { List, Select, TextField, Box, MenuItem } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers";
+import { updateOwnerProfile } from "../../../services/userServices";
 
 const AboutEditProfilePage = () => {
+  const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
   const location = useLocation();
   const user = location.state?.userProfile ?? null;
@@ -33,64 +42,24 @@ const AboutEditProfilePage = () => {
     });
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    (userProfile.birthday = userProfile.birthday
-      ? userProfile.birthday.toDate()
-      : null),
-      console.log("Submitted:", userProfile);
-  };
+  const handleSubmit = async (event) => {
+    // need to prevent submission if any error TextFields
+    try {
+      event.preventDefault();
+      (userProfile.birthday = userProfile.birthday
+        ? userProfile.birthday.toDate()
+        : null),
+        toast.info("Updating for you...");
 
-  const userInfoGroups = [
-    [
-      { label: "Username", formLabel: "username", value: userProfile.username },
-      { label: "Email", formLabel: "email", value: userProfile.email },
-    ],
-    [
-      {
-        label: "First Name",
-        formLabel: "firstName",
-        value: userProfile.firstName ?? "-",
-      },
-      {
-        label: "Last Name",
-        formLabel: "lastName",
-        value: userProfile.lastName ?? "-",
-      },
-      {
-        label: "Gender",
-        formLabel: "gender",
-        date: "select",
-        value: userProfile.gender ?? "-",
-      },
-    ],
-    [
-      {
-        label: "Phone Number",
-        formLabel: "phoneNumber",
-        date: "number",
-        value: userProfile.phoneNumber ?? "-",
-      },
-      {
-        label: "Birthday",
-        formLabel: "birthday",
-        type: "date",
-        value: userProfile.birthday ?? null,
-      },
-    ],
-    [
-      {
-        label: "Default Shipping Address",
-        formLabel: "defaultShippingAddress",
-        value: userProfile.defaultShippingAddress ?? "-",
-      },
-      {
-        label: "Profile Photo",
-        formLabel: "profilePhoto",
-        value: userProfile.profilePhoto ?? "-",
-      },
-    ],
-  ];
+      const { user, token } = await updateOwnerProfile(userProfile);
+      setUser(user);
+      saveTokenToLocalStorage(token);
+      navigate(PATHS.USER(user.username).ABOUT.DEFAULT);
+      toast.success(`Edits Saved :)`);
+    } catch (err) {
+      errorUtil(err);
+    }
+  };
 
   return (
     <>
@@ -122,9 +91,8 @@ const AboutEditProfilePage = () => {
                     required
                     label="Username"
                     value={userProfile.username}
-                    onChange={(e) =>
-                      handleChange("username", e.target.value.trim())
-                    }
+                    formLabel="username"
+                    onChange={handleChange}
                     validator={usernameValidator}
                   />
                   <ValidatedTextField
@@ -132,9 +100,8 @@ const AboutEditProfilePage = () => {
                     label="Email"
                     value={userProfile.email}
                     validator={emailValidator}
-                    onChange={(e) =>
-                      handleChange("email", e.target.value.trim())
-                    }
+                    formLabel="email"
+                    onChange={handleChange}
                   />
                 </List>
                 <List className={styles["list-row-style"]}>
@@ -196,56 +163,6 @@ const AboutEditProfilePage = () => {
                   />
                 </List>
 
-                {userInfoGroups.map((group, index) => (
-                  <List key={index} className={styles["list-row-style"]}>
-                    {group.map(({ label, formLabel, value, type }) => {
-                      if (type === "date") {
-                        return (
-                          <DesktopDatePicker
-                            key={formLabel}
-                            label={label}
-                            value={value}
-                            onChange={(newValue) =>
-                              handleChange(formLabel, newValue)
-                            }
-                            slotProps={{
-                              textField: {
-                                fullWidth: true,
-                              },
-                            }}
-                          />
-                        );
-                      } else if (formLabel === "gender") {
-                        return (
-                          <Select
-                            key={formLabel}
-                            label={label}
-                            value={value}
-                            onChange={(e) =>
-                              handleChange(formLabel, e.target.value)
-                            }
-                          >
-                            <MenuItem value="">None</MenuItem>
-                            <MenuItem value="M">M</MenuItem>
-                            <MenuItem value="F">F</MenuItem>
-                            <MenuItem value="X">X</MenuItem>
-                          </Select>
-                        );
-                      } else {
-                        return (
-                          <TextField
-                            key={formLabel}
-                            label={label}
-                            value={value}
-                            onChange={(e) =>
-                              handleChange(formLabel, e.target.value)
-                            }
-                          />
-                        );
-                      }
-                    })}
-                  </List>
-                ))}
                 <button type="submit">Change It</button>
               </LocalizationProvider>
             </Box>
