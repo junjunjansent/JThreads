@@ -5,21 +5,24 @@ import { ProductCard } from "../../components/ProductCard/ProductCard";
 import { getAllProducts } from "../../services/publicServices";
 
 const PublicBuyPage = () => {
+  const [allProducts, setAllProducts] = useState([]);
   const [displayProducts, setDisplayProducts] = useState([]);
-  const [searchentry, setSearchEntry] = useState();
   useEffect(() => {
     const fetchAllProducts = async () => {
-      const allProducts = await getAllProducts();
-      setDisplayProducts(allProducts);
-      console.log(allProducts);
+      const fetchedProducts = await getAllProducts();
+      setAllProducts(fetchedProducts);
+      setDisplayProducts(fetchedProducts);
     };
     fetchAllProducts();
   }, []);
 
   const handleSearch = async (event) => {
     let search = event.target.value;
-    setSearchEntry(search);
-    console.log(searchentry);
+    const filtering = allProducts.filter((product) =>
+      product.productName.toLowerCase().includes(search.toLowerCase())
+    );
+    console.log(search);
+    setDisplayProducts(filtering);
   };
 
   return (

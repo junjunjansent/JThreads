@@ -64,7 +64,6 @@ const getAllProducts = async () => {
     throw new ApiError(err);
   }
 };
-export { getAllProducts };
 
 // ----------- token Services
 
@@ -118,4 +117,5 @@ export {
   saveTokenToLocalStorage,
   getTokenFromLocalStorage,
   getInfoFromToken,
+  getAllProducts,
 };
