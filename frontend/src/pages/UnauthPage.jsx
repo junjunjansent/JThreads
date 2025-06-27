@@ -2,18 +2,15 @@ import { useNavigate } from "react-router";
 import logoImg from "../assets/JThreads_logo.png";
 import { PATHS } from "../routes/PATHS";
 
-const HomePage = () => {
+const UnauthPage = () => {
   const navigate = useNavigate();
 
   return (
     <>
       <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
         <div>
-          <h1>Welcome to JThreads</h1>
-          <p>
-            Discover a calm, modern platform built with care. Whether you're
-            here to learn, create, or just breathe — you're in the right place.
-          </p>
+          <h1>About This Page You're Looking For..</h1>
+          <p>Why don't you login and use our website babes</p>
           <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
             <button onClick={() => navigate(PATHS.PUBLIC.SIGN_UP)}>
               Don't have an Account? what an L...
@@ -43,4 +40,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default UnauthPage;

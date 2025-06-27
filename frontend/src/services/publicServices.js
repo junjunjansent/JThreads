@@ -86,19 +86,14 @@ const getTokenFromLocalStorage = () => {
   if (token) {
     return token;
   } else {
-    throw new ApiError({
-      status: 403,
-      source: { pointer: "Token" },
-      title: "Not Found (Token)",
-      detail: "Unable to get user token",
-    });
+    return null;
   }
 };
 
 const getInfoFromToken = (token) => {
   if (token) {
     try {
-      return JSON.parse(atob(token.split(".")[1])).payload;
+      return JSON.parse(atob(token.split(".")[1]));
     } catch (err) {
       throw new ApiError({
         status: 403,
