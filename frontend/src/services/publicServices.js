@@ -21,6 +21,7 @@ const fetchJson = async (url, methodStr = "GET", bodyData = null) => {
 
   if (!res.ok) {
     //   if (!res.ok && data.errors) {
+
     throw ApiError.fromFetchResponses(data);
     // const { status, title, detail } = data.errors[0];
     // throw new Error(`Error code ${status}: ${title} - ${detail}`);
