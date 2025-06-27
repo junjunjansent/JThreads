@@ -13,13 +13,13 @@ const NavBar = () => {
             <NavLink to={PATHS.PUBLIC.HOME}>Home Page</NavLink>
           </li>
           <li>
-            <NavLink to={PATHS.PUBLIC.REGISTER}>Register</NavLink>
+            <NavLink to={PATHS.PUBLIC.SIGN_UP}>Sign Up</NavLink>
           </li>
           <li>
-            <NavLink to={PATHS.PUBLIC.LOGIN}>Login</NavLink>
+            <NavLink to={PATHS.PUBLIC.SIGN_IN}>Sign In</NavLink>
           </li>
           <li>
-            <NavLink to={PATHS.PUBLIC.BUY_ALL}>Shop</NavLink>
+            <NavLink to={PATHS.PUBLIC.BUY.ALL}>Shop</NavLink>
           </li>
           <li>
             <NavLink to={PATHS.USER(1).ABOUT}>About</NavLink>
