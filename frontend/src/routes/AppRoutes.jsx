@@ -2,8 +2,8 @@ import { Outlet, Routes, Route } from "react-router";
 import { PATHS } from "./PATHS";
 
 import HomePage from "../pages/HomePage";
-import RegisterPage from "../pages/RegisterPage/RegisterPage";
-import LoginPage from "../pages/LoginPage/LoginPage";
+import SignUpPage from "../pages/SignUpPage/SignUpPage";
+import SignInPage from "../pages/SignInPage/SignInPage";
 import PublicBuyPage from "../pages/PublicBuyPage/PublicBuyPage";
 import AboutPage from "../pages/user/AboutPage";
 import BuyAllPage from "../pages/user/buyer/BuyAllPage";
@@ -16,9 +16,9 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path={PATHS.PUBLIC.HOME} element={<HomePage />} />
-      <Route path={PATHS.PUBLIC.REGISTER} element={<RegisterPage />} />
-      <Route path={PATHS.PUBLIC.LOGIN} element={<LoginPage />} />
-      <Route path={PATHS.PUBLIC.BUY_ALL} element={<PublicBuyPage />} />
+      <Route path={PATHS.PUBLIC.SIGN_UP} element={<SignUpPage />} />
+      <Route path={PATHS.PUBLIC.SIGN_IN} element={<SignInPage />} />
+      <Route path={PATHS.PUBLIC.BUY.ALL} element={<PublicBuyPage />} />
 
       <Route path="/:userId" element={<Outlet />}>
         <Route path="about" element={<AboutPage />} />

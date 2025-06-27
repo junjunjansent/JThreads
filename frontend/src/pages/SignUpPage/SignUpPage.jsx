@@ -2,7 +2,7 @@ import { useNavigate } from "react-router";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 
-import styles from "./RegisterPage.module.css";
+import styles from "./SignUpPage.module.css";
 import { toast } from "react-toastify";
 import logoImg from "../../assets/JThreads_logo.png";
 
@@ -12,7 +12,7 @@ import logoImg from "../../assets/JThreads_logo.png";
 import { signUp, saveTokenToLocalStorage } from "../../services/publicServices";
 import { errorUtil } from "../../utils/errorUtil";
 
-const RegisterPage = () => {
+const SignUpPage = () => {
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
 
@@ -84,4 +84,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default SignUpPage;

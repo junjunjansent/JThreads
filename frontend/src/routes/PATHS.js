@@ -1,23 +1,28 @@
+// this page doesnt talk about authorisation
+
 export const PATHS = {
   PUBLIC: {
     HOME: "/",
-    BUY_ALL: "/buy",
-    REGISTER: "/register",
-    LOGIN: "/login",
+    SIGN_UP: "/sign-up",
+    SIGN_IN: "/sign-in",
+    BUY: { ALL: "/buy", PRODUCT_ONE: (productId) => `/buy/${productId}` },
+    USER_SHOP: (userId) => `/${userId}`, // list of items user is selling
   },
   USER: (userId) => ({
-    ABOUT: `/${userId}/about`,
+    SHOP: `/${userId}`, // list of items user is selling
+    ABOUT: {
+      DEFAULT: `/${userId}/about`, // profile full details
+      EDIT_PROFILE: `/${userId}/about/edit-profile`,
+      EDIT_PASSWORD: `/${userId}/about/edit-password`,
+    },
     BUYER: {
-      BUY_ALL: `/${userId}/buy`,
-      BUY_ONE: (productId) => `/${userId}/buy/${productId}`,
-      CART: `not yet defined`,
-      ORDER_ALL: `/${userId}/buy/orders`,
-      ORDER_ONE: (orderId) => `/${userId}/buy/${orderId}`,
+      CART: `/${userId}/cart`,
+      ORDER_ALL: `/${userId}/orders`,
+      ORDER_ONE: (orderId) => `/${userId}/${orderId}`,
     },
     SELLER: {
-      SELL_ALL: `/${userId}/sell`,
-      SELL_ONE: (productId) => `/${userId}/sell/${productId}`,
-      CART: `not yet defined`,
+      LIST: `/${userId}/sell`, // editable list of items user is selling
+      PRODUCT_ONE: (productId) => `/${userId}/sell/${productId}`,
       ORDER_ALL: `/${userId}/sell/orders`,
       ORDER_ONE: (orderId) => `/${userId}/sell/${orderId}`,
     },
