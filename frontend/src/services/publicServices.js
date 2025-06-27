@@ -21,6 +21,7 @@ const fetchJson = async (url, methodStr = "GET", bodyData = null) => {
 
   if (!res.ok) {
     //   if (!res.ok && data.errors) {
+
     throw ApiError.fromFetchResponses(data);
     // const { status, title, detail } = data.errors[0];
     // throw new Error(`Error code ${status}: ${title} - ${detail}`);
@@ -71,12 +72,7 @@ const saveTokenToLocalStorage = (token) => {
   if (token) {
     localStorage.setItem("token", token);
   } else {
-    throw new ApiError({
-      status: 403,
-      source: { pointer: "Token" },
-      title: "Not Found (Token)",
-      detail: "Unable to save user token to Local Storage",
-    });
+    localStorage.removeItem("token");
   }
 };
 

@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 
@@ -11,6 +11,7 @@ import logoImg from "../../assets/JThreads_logo.png";
 
 import { signUp, saveTokenToLocalStorage } from "../../services/publicServices";
 import { errorUtil } from "../../utils/errorUtil";
+import { PATHS } from "../../routes/PATHS";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -57,13 +58,14 @@ const SignUpPage = () => {
           <input
             className={styles.inputfield}
             type="password"
+            autoComplete="off"
             name="password"
             placeholder="PASSWORD"
           ></input>
           <button className={styles.submitbutton}>SIGN UP</button>
-          <a href="/login" className={styles.register}>
-            <p>Already have an account, log in now!</p>
-          </a>
+          <Link className={styles.register} to={PATHS.PUBLIC.SIGN_IN}>
+            Already have an account, log in now!
+          </Link>
         </form>
       </div>
       <div>

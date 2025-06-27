@@ -13,23 +13,32 @@ function UserProvider({ children }) {
   const value = { user, setUser };
 
   useEffect(() => {
-    const loadUser = async () => {
-      try {
-        const token = getTokenFromLocalStorage();
-        if (token) {
-          const userInfo = getInfoFromToken(token);
-          if (userInfo && userInfo.user) {
-            setUser(userInfo.user);
-          }
-        } else {
-          setUser(null);
-        }
-      } catch (err) {
-        console.error("Error loading user from token:", err);
-        setUser(null);
-      }
-    };
-    loadUser();
+    const token = getTokenFromLocalStorage();
+    if (token) {
+      const { user } = getInfoFromToken(token);
+      setUser(user);
+    } else {
+      setUser(null);
+    }
+
+    // const loadUser = async () => {
+    //   try {
+    //     const token = getTokenFromLocalStorage();
+    //     if (token) {
+    //       const userInfo = getInfoFromToken(token);
+    //       if (userInfo && userInfo.user) {
+    //         setUser(userInfo.user);
+    //       }
+    //     } else {
+    //       setUser(null);
+    //     }
+    //   } catch (err) {
+    //     console.error("Error loading user from token:", err);
+    //     setUser(null);
+    //   }
+    // };
+
+    // loadUser();
   }, []);
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
