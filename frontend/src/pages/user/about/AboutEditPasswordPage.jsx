@@ -14,10 +14,7 @@ import logoImg from "../../../assets/JThreads_logo.png";
 import { toast } from "react-toastify";
 
 import { List, Select, TextField, Box, MenuItem } from "@mui/material";
-import {
-  checkOwnerPassword,
-  updateOwnerPassword,
-} from "../../../services/userServices";
+import { updateOwnerPassword } from "../../../services/userServices";
 
 const AboutEditPasswordPage = () => {
   const navigate = useNavigate();
@@ -29,6 +26,7 @@ const AboutEditPasswordPage = () => {
   });
 
   const newPasswordValidator = () => {
+    // TODO: this validator has an input lag
     if (
       passwordProfile.newPassword &&
       passwordProfile.confirmNewPassword !== passwordProfile.newPassword
@@ -47,6 +45,7 @@ const AboutEditPasswordPage = () => {
   };
 
   const handleSubmit = async (event) => {
+    // need to prevent submission if any error TextFields
     try {
       event.preventDefault();
       toast.info("Changing Password for you... so mafan...");
