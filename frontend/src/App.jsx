@@ -1,3 +1,5 @@
+// import debug from "debug";
+// const log = debug("JThreads:file destination");
 import NavBar from "./components/NavBar/NavBar";
 import AppRoutes from "./routes/AppRoutes";
 
@@ -15,7 +17,8 @@ const App = () => {
     if (user) {
       toast.success(`Welcome Back, ${user.username}`);
     }
-  }, [user]);
+  });
+
   return (
     <main>
       <section className="navbar">

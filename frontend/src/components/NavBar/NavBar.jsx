@@ -34,12 +34,17 @@ const NavBar = () => {
             {user && (
               <>
                 <li>
-                  <NavLink to={PATHS.USER(username).BUYER.ORDER_ALL}>
-                    Orders (Buyer)
+                  <NavLink to={PATHS.PUBLIC.USER_SHOP(username)}>
+                    My Page
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to={PATHS.USER(username).SELLER.SELL_ALL}>
+                  <NavLink to={PATHS.USER(username).BUYER.ORDER_ALL}>
+                    My Purchases
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to={PATHS.USER(username).SELLER.ORDER_ALL}>
                     Seller Panel
                   </NavLink>
                 </li>
@@ -58,10 +63,12 @@ const NavBar = () => {
               <>
                 {" "}
                 <li>
-                  <NavLink to={PATHS.USER(username).ABOUT}>About</NavLink>
+                  <NavLink to={PATHS.USER(username).ABOUT.DEFAULT}>
+                    Welcome, {username}!
+                  </NavLink>
                 </li>
                 <li>
-                  <button onClick={handleSignOut}>Sign Out</button>
+                  <a onClick={handleSignOut}>Sign Out</a>
                 </li>
               </>
             ) : (

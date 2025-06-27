@@ -15,8 +15,8 @@ function UserProvider({ children }) {
   useEffect(() => {
     const token = getTokenFromLocalStorage();
     if (token) {
-      const userInfo = getInfoFromToken(token);
-      setUser(userInfo);
+      const { user } = getInfoFromToken(token);
+      setUser(user);
     } else {
       setUser(null);
     }
