@@ -6,12 +6,12 @@ import { PATHS, relativeUserPaths } from "./PATHS";
 import HomePage from "../pages/HomePage";
 import SignUpPage from "../pages/SignUpPage/SignUpPage";
 import SignInPage from "../pages/SignInPage/SignInPage";
-import PublicBuyPage from "../pages/PublicBuyPage/PublicBuyPage";
-import BuyOnePage from "../pages/PublicBuyPage/BuyOnePage";
+import BuyAllPage from "../pages/products/BuyAllPage";
+import BuyOnePage from "../pages/products/BuyOnePage";
+import BuyUserPage from "../pages/products/BuyUserPage";
 import AboutPage from "../pages/user/AboutPage";
 import AboutEditProfilePage from "../pages/user/AboutEditProfilePage";
 import AboutEditPasswordPage from "../pages/user/AboutEditPasswordPage";
-import BuyAllPage from "../pages/PublicBuyPage/BuyAllPage";
 import BuyerOrdersAll from "../pages/user/buyer/BuyerOrdersAll";
 import BuyerCartPage from "../pages/user/buyer/BuyerCartPage";
 import SellAllPage from "../pages/user/seller/SellAllPage";
@@ -37,9 +37,9 @@ const AppRoutes = () => {
       <Route path={PATHS.PUBLIC.HOME} element={<HomePage />} />
       <Route path={PATHS.PUBLIC.SIGN_UP} element={<SignUpPage />} />
       <Route path={PATHS.PUBLIC.SIGN_IN} element={<SignInPage />} />
-      <Route path={PATHS.PUBLIC.BUY.ALL} element={<PublicBuyPage />} />
+      <Route path={PATHS.PUBLIC.BUY.ALL} element={<BuyAllPage />} />
       <Route path={PATHS.PUBLIC.BUY.PRODUCT_ONE()} element={<BuyOnePage />} />
-      <Route path={PATHS.PUBLIC.USER_SHOP()} element={<PublicBuyPage />} />
+      <Route path={PATHS.PUBLIC.USER_SHOP()} element={<BuyUserPage />} />
 
       <Route path={`/:userUsername`} element={<PrivateRoute />}>
         <Route path={PATHS.USER().ABOUT.DEFAULT} element={<AboutPage />} />

@@ -1,10 +1,10 @@
-import styles from "./PublicBuyPage.module.css";
+import styles from "./BuyAllPage.module.css";
 import { useEffect, useState } from "react";
 import { BuySearchBar } from "../../components/BuySearchBar";
 import { ProductCard } from "../../components/ProductCard/ProductCard";
 import { getAllProducts } from "../../services/publicServices";
 
-const PublicBuyPage = () => {
+const BuyAllPage = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [displayProducts, setDisplayProducts] = useState([]);
   useEffect(() => {
@@ -48,4 +48,4 @@ const PublicBuyPage = () => {
   );
 };
 
-export default PublicBuyPage;
+export default BuyAllPage;

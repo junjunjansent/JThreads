@@ -71,12 +71,7 @@ const saveTokenToLocalStorage = (token) => {
   if (token) {
     localStorage.setItem("token", token);
   } else {
-    throw new ApiError({
-      status: 403,
-      source: { pointer: "Token" },
-      title: "Not Found (Token)",
-      detail: "Unable to save user token to Local Storage",
-    });
+    localStorage.removeItem("token");
   }
 };
 
