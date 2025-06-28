@@ -40,14 +40,15 @@ const BuyAllPage = () => {
   };
 
   const productsToDisplay = useMemo(() => {
-    const lowerCaseSearchQuery = searchQuery.toLowerCase();
+    const SearchQuery = searchParams.get("search");
+    const lowerCaseSearchQuery = SearchQuery;
     return allProducts.filter(
       (product) =>
         product.productIsActive &&
         (product.productName.toLowerCase().includes(lowerCaseSearchQuery) ||
           product.productCategory.toLowerCase().includes(lowerCaseSearchQuery))
     );
-  }, [allProducts, searchQuery]);
+  }, [allProducts, searchParams]);
 
   return (
     <>

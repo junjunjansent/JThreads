@@ -70,7 +70,7 @@ const inputTestProducts = async (users) => {
 };
 
 const inputTestProductVariants = async (products) => {
-  const maxInventoryQty = faker.number.int({ min: 1 });
+  const maxInventoryQty = faker.number.int({ min: 1, max: 100 });
   const productVariationData = [
     ...Array.from({ length: 50 }, () => ({
       mainProduct: faker.helpers.arrayElement(products)._id,

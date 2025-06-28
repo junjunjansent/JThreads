@@ -4,10 +4,11 @@ import { useParams } from "react-router";
 import { getOneIndex, getVariantIndex } from "../../services/publicServices";
 
 const BuyOnePage = () => {
-  const [oneProductIndex, setOneProductIndex] = useState();
-  const [variantIndex, setVariantIndex] = useState([]);
+  const [oneProductIndex, setOneProductIndex] = useState(); // This state stores base product information that will not change (seller name, product name)
+  const [displayProduct, setDisplayProduct] = useState(); // This state is for rendering product variation information
+  const [variantIndex, setVariantIndex] = useState([]); // This state stores all variant information
   const { productId } = useParams();
-  // need 2 API calls here, one for main product details and one for all variants
+
   useEffect(() => {
     const fetchOneIndex = async () => {
       const fetchedOne = await getOneIndex(productId);
@@ -17,14 +18,26 @@ const BuyOnePage = () => {
     const fetchVariantIndex = async () => {
       const fetchedVariants = await getVariantIndex(productId);
       console.log(fetchedVariants);
-      setVariantIndex(fetchedVariants); // if we want to set the variants here}
+      setVariantIndex(fetchedVariants);
+      setDisplayProduct(fetchedVariants[0]); // Set the first variant as the default selected variant information to render
     };
     fetchOneIndex();
     fetchVariantIndex();
   }, [productId]);
 
+  const handleSelectVariant = (event) => {
+    const selectedVariantId = event.target.id;
+    const index = variantIndex.findIndex(
+      (variant) => variant._id === selectedVariantId
+    );
+    setDisplayProduct(variantIndex[index]);
+    console.log(displayProduct);
+  };
+
   const { _id, productDisplayPhoto, productName } = oneProductIndex || {};
   const { username } = oneProductIndex?.productOwner || {};
+  const { productVarAvailableQty, productVarPrice } = displayProduct || {};
+
   return (
     <>
       <div className={styles.buyOneArea}>
@@ -42,14 +55,19 @@ const BuyOnePage = () => {
           <div>
             <div className={styles.designButtons}>
               {variantIndex.map((variant) => (
-                <a href={`/buy/${_id}/${variant._id}`} key={variant._id}>
-                  <button>{variant.productVarDesign}</button>
-                </a>
+                <button id={variant._id} onClick={handleSelectVariant}>
+                  {variant.productVarDesign}
+                </button>
               ))}
             </div>
           </div>
 
-          <div>Qty / Avail / Price Section</div>
+          <div className={styles.priceQuantity}>
+            <div className={styles.productPrice}>Price: {productVarPrice}</div>
+            <div className={styles.productQuantity}>
+              Qty: {productVarAvailableQty}
+            </div>
+          </div>
           <div className={styles.buttonsArea}>
             <button>Quantity</button>
             <button>Add to Cart</button>
