@@ -12,7 +12,7 @@ import Loader from "../../components/Loader";
 import ErrorPage from "../ErrorPage";
 
 import {
-  getUserProducts,
+  getProducts,
   showUserBasicProfile,
 } from "../../services/publicServices";
 
@@ -51,8 +51,8 @@ const BuyUserPage = () => {
           const fetchedUser = await showUserBasicProfile(userUsername);
           setUserBasicProfile(fetchedUser.user);
         }
-        const fetchedProducts = await getUserProducts(userUsername);
-        setAllProducts(fetchedProducts);
+        const { product } = await getProducts(userUsername, null);
+        setAllProducts(product);
         setPageStatus(PageStatusTypes.OK);
       } catch (err) {
         setPageStatus(PageStatusTypes.ERROR);
@@ -72,11 +72,8 @@ const BuyUserPage = () => {
     setSearchQuery(newSearchQuery);
     setSearchParams(`search=${newSearchQuery}`);
     const fetchAllProducts = async () => {
-      const fetchedProducts = await getUserProducts(
-        userUsername,
-        newSearchQuery
-      );
-      setAllProducts(fetchedProducts);
+      const { product } = await getProducts(userUsername, newSearchQuery);
+      setAllProducts(product);
     };
     fetchAllProducts();
   };

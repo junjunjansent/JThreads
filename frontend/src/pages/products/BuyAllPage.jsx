@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 import { BuySearchBar } from "../../components/BuySearchBar";
 import { ProductCard } from "../../components/ProductCard/ProductCard";
-import { getAllProducts } from "../../services/publicServices";
+import { getProducts } from "../../services/publicServices";
 
 const BuyAllPage = () => {
   const [allProducts, setAllProducts] = useState([]);
@@ -12,8 +12,8 @@ const BuyAllPage = () => {
 
   useEffect(() => {
     const fetchAllProducts = async () => {
-      const fetchedProducts = await getAllProducts();
-      setAllProducts(fetchedProducts);
+      const { product } = await getProducts();
+      setAllProducts(product);
     };
     fetchAllProducts();
   }, []);
@@ -23,8 +23,8 @@ const BuyAllPage = () => {
     setSearchQuery(newSearchQuery);
     setSearchParams(`search=${newSearchQuery}`);
     const fetchAllProducts = async () => {
-      const fetchedProducts = await getAllProducts(newSearchQuery);
-      setAllProducts(fetchedProducts);
+      const { product } = await getProducts(null, newSearchQuery);
+      setAllProducts(product);
     };
     fetchAllProducts();
   };

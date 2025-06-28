@@ -150,7 +150,7 @@ const indexProducts = async (req, res, next) => {
       const allProducts = await Product.find(findQuery).populate(
         "productOwner"
       );
-      res.json(allProducts);
+      res.json({ product: allProducts });
     }
     const { userUsername } = req.params;
     const { search } = req.query;
@@ -167,7 +167,7 @@ const indexProducts = async (req, res, next) => {
       ];
     }
     const allProducts = await Product.find(findQuery).populate("productOwner");
-    res.json(allProducts);
+    res.json({ product: allProducts });
   } catch (err) {
     console.error("Error in indexSearchProducts:", err);
     next(err);

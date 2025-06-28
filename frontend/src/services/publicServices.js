@@ -77,11 +77,17 @@ const showUserBasicProfile = async (userUsername) => {
   }
 };
 
-const getAllProducts = async (searchParams) => {
-  // tenerary operator to check if queryString is empty and pass the correct URL with and without query parameters
-  const url = searchParams
-    ? `${publicService_BASE_URL}/products?search=${searchParams}`
-    : `${publicService_BASE_URL}/products`;
+const getProducts = async (userUsername = null, searchParams = "") => {
+  let url;
+  if (!userUsername) {
+    url = searchParams
+      ? `${publicService_BASE_URL}/products?search=${searchParams}`
+      : `${publicService_BASE_URL}/products`;
+  } else {
+    url = searchParams
+      ? `${publicService_BASE_URL}/${userUsername}?search=${searchParams}`
+      : `${publicService_BASE_URL}/${userUsername}`;
+  }
   try {
     const resData = await fetchJson(url, "GET");
     return resData;
@@ -90,17 +96,17 @@ const getAllProducts = async (searchParams) => {
   }
 };
 
-const getUserProducts = async (userUsername, searchParams) => {
-  const url = searchParams
-    ? `${publicService_BASE_URL}/${userUsername}?search=${searchParams}`
-    : `${publicService_BASE_URL}/${userUsername}`;
-  try {
-    const resData = await fetchJson(url, "GET");
-    return resData;
-  } catch (err) {
-    throw new ApiError(err);
-  }
-};
+// const getUserProducts = async (userUsername, searchParams) => {
+//   const url = searchParams
+//     ? `${publicService_BASE_URL}/${userUsername}?search=${searchParams}`
+//     : `${publicService_BASE_URL}/${userUsername}`;
+//   try {
+//     const resData = await fetchJson(url, "GET");
+//     return resData;
+//   } catch (err) {
+//     throw new ApiError(err);
+//   }
+// };
 
 const getOneIndex = async (productid) => {
   const url = `${publicService_BASE_URL}/products/${productid}`;
@@ -126,8 +132,7 @@ export {
   signUp,
   signIn,
   showUserBasicProfile,
-  getAllProducts,
-  getUserProducts,
+  getProducts,
   getOneIndex,
   getVariantIndex,
 };
