@@ -3,7 +3,7 @@ import { UserContext } from "../contexts/UserContext";
 import { Outlet, Routes, Route, useParams } from "react-router";
 import { PATHS, relativeUserPaths } from "./PATHS";
 
-import HomePage from "../pages/HomePage";
+import HomePage from "../pages/SigningPages/HomePage";
 import SignUpPage from "../pages/SigningPages/SignUpPage";
 import SignInPage from "../pages/SigningPages/SignInPage";
 import BuyAllPage from "../pages/products/BuyAllPage";
