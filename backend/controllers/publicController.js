@@ -135,9 +135,31 @@ const showUser = async (req, res, next) => {
 };
 
 const indexProducts = async (req, res, next) => {
-  const { search } = req.query;
+  // checking what type of req is being sent
   try {
-    let findQuery = {};
+    // if the request URL includes "products" API fetch is for all products
+    if (req.url.includes("products")) {
+      const { search } = req.query;
+      let findQuery = {};
+      if (search) {
+        findQuery.$or = [
+          { productName: { $regex: search, $options: "i" } },
+          { productCategory: { $regex: search, $options: "i" } },
+        ];
+      }
+      const allProducts = await Product.find(findQuery).populate(
+        "productOwner"
+      );
+      res.json(allProducts);
+    }
+    const { userUsername } = req.params;
+    const { search } = req.query;
+    const user = await User.findOne({ username: userUsername });
+    let findQuery = {
+      productOwner: user._id,
+    };
+
+    // else, we assume that the request is for a specific user's products
     if (search) {
       findQuery.$or = [
         { productName: { $regex: search, $options: "i" } },
@@ -152,41 +174,45 @@ const indexProducts = async (req, res, next) => {
   }
 };
 
-// Function for getting all products by a specific seller
+// const indexProducts = async (req, res, next) => {
+//   const { search } = req.query;
+//   try {
+//     let findQuery = {};
+//     if (search) {
+//       findQuery.$or = [
+//         { productName: { $regex: search, $options: "i" } },
+//         { productCategory: { $regex: search, $options: "i" } },
+//       ];
+//     }
+//     const allProducts = await Product.find(findQuery).populate("productOwner");
+//     res.json(allProducts);
+//   } catch (err) {
+//     console.error("Error in indexSearchProducts:", err);
+//     next(err);
+//   }
+// };
+
 // const indexUserProducts = async (req, res, next) => {
 //   try {
 //     const { userUsername } = req.params;
+//     const { search } = req.query;
 //     const user = await User.findOne({ username: userUsername });
-//     const userProducts = await Product.find({
+//     let findQuery = {
 //       productOwner: user._id,
-//     }).populate("productOwner");
+//     };
+//     if (search) {
+//       findQuery.$or = [
+//         { productName: { $regex: search, $options: "i" } },
+//         { productCategory: { $regex: search, $options: "i" } },
+//       ];
+//     }
+//     const userProducts = await Product.find(findQuery).populate("productOwner");
+
 //     res.json(userProducts);
 //   } catch (err) {
 //     next(err);
 //   }
 // };
-
-const indexUserProducts = async (req, res, next) => {
-  try {
-    const { userUsername } = req.params;
-    const { search } = req.query;
-    const user = await User.findOne({ username: userUsername });
-    let findQuery = {
-      productOwner: user._id,
-    };
-    if (search) {
-      findQuery.$or = [
-        { productName: { $regex: search, $options: "i" } },
-        { productCategory: { $regex: search, $options: "i" } },
-      ];
-    }
-    const userProducts = await Product.find(findQuery).populate("productOwner");
-
-    res.json(userProducts);
-  } catch (err) {
-    next(err);
-  }
-};
 
 const showOneIndex = async (req, res, next) => {
   try {
@@ -217,7 +243,7 @@ module.exports = {
   signIn,
   showUser,
   indexProducts,
-  indexUserProducts,
+  // indexUserProducts,
   showOneIndex,
   showVariantIndex,
 };
