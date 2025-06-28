@@ -134,24 +134,15 @@ const showUser = async (req, res, next) => {
   }
 };
 
-// const indexProducts = async (req, res, next) => {
-//   try {
-//     const allProducts = await Product.find({}).populate("productOwner");
-//     if (!allProducts) {
-//       return res.json("Msg: No products available"); // we can remove this once we handle the state change front end to display a message
-//     }
-//     res.json(allProducts);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
-
 const indexProducts = async (req, res, next) => {
   const { search } = req.query;
   try {
     let findQuery = {};
     if (search) {
-      findQuery.productName = { $regex: search, $options: "i" };
+      findQuery.$or = [
+        { productName: { $regex: search, $options: "i" } },
+        { productCategory: { $regex: search, $options: "i" } },
+      ];
     }
     const allProducts = await Product.find(findQuery).populate("productOwner");
     if (allProducts.length === 0) {
@@ -195,7 +186,6 @@ module.exports = {
   signIn,
   showUser,
   indexProducts,
-  // indexSearchProducts,
   showOneIndex,
   showVariantIndex,
 };
