@@ -38,6 +38,10 @@ const BuyOnePage = () => {
   const { username } = oneProductIndex?.productOwner || {};
   const { productVarAvailableQty, productVarPrice, productVarDisplayPhoto } =
     displayProduct || {};
+  const renderQuantityOptions = [];
+  for (let i = 1; i <= productVarAvailableQty; i++) {
+    renderQuantityOptions.push(i);
+  }
 
   return (
     <>
@@ -74,7 +78,17 @@ const BuyOnePage = () => {
             </div>
           </div>
           <div className={styles.buttonsArea}>
-            <button>Quantity</button>
+            {/* <button>Quantity</button> */}
+            <form>
+              <label>Quantity</label>
+              <select>
+                <optgroup>
+                  {renderQuantityOptions.map((quantity) => (
+                    <option>{quantity}</option>
+                  ))}
+                </optgroup>
+              </select>
+            </form>
             <button>Add to Cart</button>
           </div>
         </section>
