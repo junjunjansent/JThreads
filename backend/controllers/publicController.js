@@ -93,7 +93,7 @@ const signIn = async (req, res, next) => {
     const { usernameOrEmail, password } = req.body;
     const oneUser = await User.findOne({
       $or: [{ username: usernameOrEmail }, { email: usernameOrEmail }],
-    }).select("username email password createdAt");
+    }).select("username password createdAt profilePhoto");
 
     if (!oneUser || !isPasswordBCryptValidated(password, oneUser.password)) {
       throw new ApiError({
@@ -126,7 +126,7 @@ const showUser = async (req, res, next) => {
   try {
     const { userUsername } = req.params;
     const userExisting = await User.findOne({ username: userUsername }).select(
-      "username createdAt"
+      "username createdAt profilePhoto"
     );
     res.status(200).json({ user: userExisting });
   } catch (err) {

@@ -66,7 +66,16 @@ const signIn = async (bodyData) => {
   }
 };
 
-const showUser = async () => {};
+const showUserBasicProfile = async (userUsername) => {
+  const url = `${publicService_BASE_URL}/users/${userUsername}`;
+
+  try {
+    const resData = await fetchJson(url, "GET");
+    return resData;
+  } catch (err) {
+    throw new ApiError(err);
+  }
+};
 
 const getAllProducts = async (searchParams) => {
   // tenerary operator to check if queryString is empty and pass the correct URL with and without query parameters
@@ -116,7 +125,7 @@ const getVariantIndex = async (productid) => {
 export {
   signUp,
   signIn,
-  showUser,
+  showUserBasicProfile,
   getAllProducts,
   getUserProducts,
   getOneIndex,

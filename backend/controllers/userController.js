@@ -6,17 +6,18 @@ const {
   isPasswordBCryptValidated,
 } = require("../utils/bcrypt");
 
-const show = async (req, res, next) => {
-  try {
-    const { userUsername } = req.params;
-    const userExisting = await User.findOne({ username: userUsername }).select(
-      "username createdAt"
-    );
-    res.status(200).json({ user: userExisting });
-  } catch (err) {
-    next(err);
-  }
-};
+// REMOVED due users shouldnt be able to get other Users' details
+// const show = async (req, res, next) => {
+//   try {
+//     const { userUsername } = req.params;
+//     const userExisting = await User.findOne({ username: userUsername }).select(
+//       "username profilePhoto createdAt"
+//     );
+//     res.status(200).json({ user: userExisting });
+//   } catch (err) {
+//     next(err);
+//   }
+// };
 
 const showOwner = async (req, res, next) => {
   try {
@@ -79,7 +80,7 @@ const updateOwner = async (req, res, next) => {
         defaultShippingAddress,
       },
       { new: true }
-    );
+    ).select("username profilePhoto createdAt");
 
     // Ensures user details are saved in frontend - with id, username, and email, createdAt
     const userToken = await createJWT({ user: updatedUser });
@@ -139,7 +140,6 @@ const updateOwnerPassword = async (req, res, next) => {
 };
 
 module.exports = {
-  show,
   showOwner,
   updateOwner,
   updateOwnerPassword,

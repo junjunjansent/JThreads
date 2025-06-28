@@ -25,11 +25,10 @@ const AboutPage = () => {
         setPageStatus(PageStatusTypes.LOADING);
         const { user } = await showOwnerProfile();
         setUserProfile(user);
+        setPageStatus(PageStatusTypes.OK);
       } catch (err) {
         setPageStatus(PageStatusTypes.ERROR);
         errorUtil(err);
-      } finally {
-        setPageStatus(PageStatusTypes.OK);
       }
 
       return () => {

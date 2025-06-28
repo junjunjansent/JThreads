@@ -1,4 +1,4 @@
-import styles from "./BuyAllPage.module.css";
+import styles from "./BuyMultiPage.module.css";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 import { BuySearchBar } from "../../components/BuySearchBar";
@@ -31,7 +31,14 @@ const BuyAllPage = () => {
 
   return (
     <>
-      <div className={styles.page}>
+      <main className={styles.page}>
+        <div className={styles["title-bar"]}>
+          <h2 className={styles["title-text"]}>All Products</h2>
+        </div>
+        <p className={styles["description-text"]}>
+          Shop to Your Heart's Content
+        </p>
+
         <div className={styles.searchbar}>
           <BuySearchBar
             styles={styles}
@@ -60,7 +67,7 @@ const BuyAllPage = () => {
             <p>No products found!</p>
           )}
         </div>
-      </div>
+      </main>
     </>
   );
 };
