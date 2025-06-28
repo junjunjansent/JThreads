@@ -43,5 +43,4 @@ const indexCategory = async (req, res, next) => {
 };
 
 // details when navigating to a product's page
-
-module.exports = { index, showOne, indexCategory };
+// First function is for calling the product's details, second function is for calling the product's variants

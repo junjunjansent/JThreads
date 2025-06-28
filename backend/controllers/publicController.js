@@ -145,4 +145,14 @@ const indexProducts = async (req, res, next) => {
   }
 };
 
-module.exports = { signUp, signIn, showUser, indexProducts };
+const showOneIndex = async (req, res, next) => {
+  try {
+    const { productId } = req.params;
+    const oneProductIndex = await Product.findById({ _id: productId });
+    res.json(oneProductIndex);
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { signUp, signIn, showUser, indexProducts, showOneIndex };

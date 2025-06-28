@@ -1,0 +1,14 @@
+.buyOneArea {
+  display: flex;
+  flex-direction: row;
+}
+
+.productDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttonsArea {
+  display: flex;
+  flex-direction: row;
+}
