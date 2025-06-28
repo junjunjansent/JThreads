@@ -19,8 +19,9 @@ const BuyAllPage = () => {
   }, []);
 
   const handleInputChange = (event) => {
-    setSearchQuery(event.target.value);
-    setSearchParams(`search=${searchQuery}`);
+    const newSearchQuery = event.target.value;
+    setSearchQuery(newSearchQuery);
+    setSearchParams(`search=${newSearchQuery}`);
   };
 
   return (

@@ -7,6 +7,7 @@ const {
   indexProducts,
   showOneIndex,
   showVariantIndex,
+  indexSearchProducts,
 } = require("../controllers/publicController");
 
 //user routes
@@ -15,6 +16,7 @@ router.post("/sign-in", signIn);
 router.post("/users/:userUsername", showUser);
 
 // buyer routes
+// router.get("/products", indexSearchProducts);
 router.get("/products", indexProducts);
 router.get("/products/:productId", showOneIndex);
 router.get("/products/:productId/variants", showVariantIndex);
