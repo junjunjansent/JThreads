@@ -82,8 +82,8 @@ const getAllProducts = async (searchParams) => {
   }
 };
 
-const getUserProducts = async (userid) => {
-  const url = `${publicService_BASE_URL}/${userid}`; // TODO: check what the pathing is like for when a user is logged in, might be able to use a tenerary operator here to reuse the function
+const getUserProducts = async (userUsername) => {
+  const url = `${publicService_BASE_URL}/${userUsername}`;
   try {
     const resData = await fetchJson(url, "GET");
     return resData;

@@ -42,6 +42,22 @@ const registerUsersForDeveloper = async () => {
 
 const inputTestProducts = async (users) => {
   const productData = [
+    ...Array.from({ length: 10 }, () => ({
+      productName: faker.commerce.product(),
+      productIsActive: true,
+      productDescription: faker.commerce.productDescription(),
+      productCategory: faker.helpers.arrayElement([
+        "Tops",
+        "Bottoms",
+        "Headwear",
+        "Bags",
+        "Accessories",
+        "Misc",
+      ]),
+      productOwner: users[0]._id,
+      productDisplayPhoto: faker.image.urlPicsumPhotos(),
+      productDefaultDeliveryTime: 30,
+    })),
     ...Array.from({ length: 20 }, () => ({
       productName: faker.commerce.product(),
       productIsActive: true,
