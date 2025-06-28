@@ -12,13 +12,15 @@ Slay
 
 ## Planning
 
-### Routes
+### FrontEnd Routes
+
+![Frontend Routes](./photosREADME/FE_AllRoutes.png)
+
+### Backend Routes
 
 #### Routes for User Data
 
-/public/register
-/public/login
-/:userId/about --> view & edit user details
+![User Routes](./photosREADME/BE_REST_UserRoutes.png)
 
 ##### Routes for Product Data
 
@@ -39,9 +41,12 @@ Slay
 
 ## Credits
 
-Features from:
+Backend Techniques from:
 
 - [eCommerce Model Definitions](https://dev.to/ezzdinatef/ecommerce-database-design-1ggc)
+
+Frontend Techniques from:
+
 - [Private Route](https://medium.com/@bhairabpatra.iitd/private-routes-in-react-559a7d8d161f)
 - [MUI Controlled Form](https://dev.to/melissajlw/how-to-create-a-controlled-form-in-mui-material-ui-4gm9)
 - [Validation in Forms](https://muhimasri.com/blogs/mui-validation/)
