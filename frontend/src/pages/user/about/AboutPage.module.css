@@ -62,12 +62,16 @@
   gap: 1rem;
 }
 
-.input-fields .MuiInputBase-input {
-  color: white;
+.date-picker-reset {
+  white-space: nowrap;
 }
 
-.inputfield {
-  /* width: 10%; */
+/* hide the aria-hidden input */
+.date-picker-reset input[aria-hidden="true"] {
+  display: none;
+}
+
+/* .inputfield {
   color: black;
   font-size: 15px;
   padding: 12px 20px;
@@ -81,10 +85,9 @@
 .submitbutton {
   font-size: 15px;
   width: 100%;
-  /* width: 50px; */
   background-color: black;
   color: white;
-}
+} */
 
 /* Larger Screen with ratio of 6:4 */
 @media screen and (min-width: 1024px) {

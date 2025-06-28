@@ -25,11 +25,11 @@ const AboutEditPasswordPage = () => {
     confirmNewPassword: "",
   });
 
-  const newPasswordValidator = () => {
+  const newPasswordValidator = (newValue) => {
     // TODO: this validator has an input lag
     if (
       passwordProfile.newPassword &&
-      passwordProfile.confirmNewPassword !== passwordProfile.newPassword
+      newValue !== passwordProfile.newPassword
     ) {
       return "Passwords do not match >:(";
     }

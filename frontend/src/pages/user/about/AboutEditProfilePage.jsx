@@ -9,6 +9,7 @@ import ValidatedTextField from "../../../utils/ValidatedTextField";
 import {
   usernameValidator,
   emailValidator,
+  nameValidator,
 } from "../../../utils/inputValidator";
 import { errorUtil } from "../../../utils/errorUtil";
 import { UserContext } from "../../../contexts/UserContext";
@@ -19,7 +20,17 @@ import logoImg from "../../../assets/JThreads_logo.png";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
 
-import { List, Select, TextField, Box, MenuItem } from "@mui/material";
+import {
+  List,
+  Select,
+  TextField,
+  Box,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Button,
+  Grid,
+} from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers";
@@ -86,84 +97,113 @@ const AboutEditProfilePage = () => {
           <article>
             <Box component="form" onSubmit={handleSubmit}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <List className={styles["list-row-style"]}>
-                  <ValidatedTextField
-                    required
-                    label="Username"
-                    value={userProfile.username}
-                    formLabel="username"
-                    onChange={handleChange}
-                    validator={usernameValidator}
-                  />
-                  <ValidatedTextField
-                    required
-                    label="Email"
-                    value={userProfile.email}
-                    validator={emailValidator}
-                    formLabel="email"
-                    onChange={handleChange}
-                  />
-                </List>
-                <List className={styles["list-row-style"]}>
-                  <TextField
-                    label="First Name"
-                    value={userProfile.firstName}
-                    onChange={(e) => handleChange("firstName", e.target.value)}
-                  />
-                  <TextField
-                    label="Last Name"
-                    value={userProfile.lastName}
-                    onChange={(e) => handleChange("lastName", e.target.value)}
-                  />
-                  <Select
-                    label="Gender"
-                    value={userProfile.gender}
-                    onChange={(e) => handleChange("gender", e.target.value)}
-                  >
-                    <MenuItem value="">None</MenuItem>
-                    <MenuItem value="M">M</MenuItem>
-                    <MenuItem value="F">F</MenuItem>
-                    <MenuItem value="X">X</MenuItem>
-                  </Select>
-                </List>
-                <List className={styles["list-row-style"]}>
-                  <TextField
-                    label="Phone Number"
-                    value={userProfile.phoneNumber}
-                    onChange={(e) =>
-                      handleChange("phoneNumber", e.target.value)
-                    }
-                  />
-                  <DesktopDatePicker
-                    label="Birthday"
-                    value={userProfile.birthday}
-                    onChange={(newDate) => handleChange("birthday", newDate)}
-                    slotProps={{
-                      textField: {
-                        fullWidth: true,
-                      },
-                    }}
-                  />
-                </List>
+                <Grid container spacing={2}>
+                  <Grid size={6}>
+                    <ValidatedTextField
+                      required
+                      label="Username"
+                      value={userProfile.username}
+                      formLabel="username"
+                      onChange={handleChange}
+                      validator={usernameValidator}
+                    />
+                  </Grid>
+                  <Grid size={6}>
+                    <ValidatedTextField
+                      required
+                      label="Email"
+                      value={userProfile.email}
+                      validator={emailValidator}
+                      formLabel="email"
+                      onChange={handleChange}
+                    />
+                  </Grid>
 
-                <List className={styles["list-row-style"]}>
-                  <TextField
-                    label="Default Shipping Address"
-                    value={userProfile.defaultShippingAddress}
-                    onChange={(e) =>
-                      handleChange("defaultShippingAddress", e.target.value)
-                    }
-                  />
-                  <TextField
-                    label="Profile Photo"
-                    value={userProfile.profilePhoto}
-                    onChange={(e) =>
-                      handleChange("profilePhoto", e.target.value)
-                    }
-                  />
-                </List>
+                  <Grid size={4}>
+                    <ValidatedTextField
+                      label="First Name"
+                      value={userProfile.firstName}
+                      validator={nameValidator}
+                      formLabel="firstName"
+                      onChange={handleChange}
+                    />
+                  </Grid>
+                  <Grid size={4}>
+                    <ValidatedTextField
+                      label="Last Name"
+                      value={userProfile.lastName}
+                      validator={nameValidator}
+                      formLabel="lastName"
+                      onChange={handleChange}
+                    />
+                  </Grid>
+                  <Grid size={4}>
+                    <FormControl fullWidth>
+                      <InputLabel>Gender</InputLabel>
+                      <Select
+                        label="Gender"
+                        value={userProfile.gender}
+                        onChange={(e) => handleChange("gender", e.target.value)}
+                      >
+                        <MenuItem value="">None</MenuItem>
+                        <MenuItem value="M">M</MenuItem>
+                        <MenuItem value="F">F</MenuItem>
+                        <MenuItem value="X">X</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
 
-                <button type="submit">Change It</button>
+                  <Grid size={6}>
+                    <ValidatedTextField
+                      label="Phone Number"
+                      value={userProfile.phoneNumber}
+                      validator={nameValidator}
+                      formLabel="phoneNumber"
+                      onChange={handleChange}
+                    />
+                  </Grid>
+                  <Grid size={6}>
+                    <div className={styles["date-picker-reset"]}>
+                      <DesktopDatePicker
+                        disableFuture
+                        minDate={dayjs().subtract(100, "year")}
+                        label="Birthday"
+                        value={userProfile.birthday}
+                        onChange={(newDate) =>
+                          handleChange("birthday", newDate)
+                        }
+                        slotProps={{
+                          textField: {
+                            fullWidth: true,
+                          },
+                        }}
+                      />
+                    </div>
+                  </Grid>
+                  <Grid size={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        label="Default Shipping Address"
+                        value={userProfile.defaultShippingAddress}
+                        onChange={(e) =>
+                          handleChange("defaultShippingAddress", e.target.value)
+                        }
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid size={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        label="Profile Photo"
+                        value={userProfile.profilePhoto}
+                        onChange={(e) =>
+                          handleChange("profilePhoto", e.target.value)
+                        }
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Button type="submit">Change It</Button>
+                </Grid>
               </LocalizationProvider>
             </Box>
           </article>

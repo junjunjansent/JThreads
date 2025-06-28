@@ -11,3 +11,15 @@ export const emailValidator = (email) => {
     return "Email needs to be in correct format";
   return false;
 };
+
+export const nameValidator = (name) => {
+  if (!/^[a-zA-Z\s]{2,}$/.test(name))
+    return "Name is expected to be longer than 2 characters";
+  return false;
+};
+
+export const phoneNumberValidator = (phoneNumber) => {
+  if (!/^\+?[1-9](?:\s?\d){6,14}$/.test(phoneNumber))
+    return "Expected valid international phone number";
+  return false;
+};
