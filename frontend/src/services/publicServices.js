@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { ApiError } from "../utils/errorUtil";
 
 const publicService_BASE_URL = `${
@@ -133,6 +134,8 @@ const getInfoFromToken = (token) => {
     try {
       return JSON.parse(atob(token.split(".")[1]));
     } catch (err) {
+      localStorage.removeItem("token");
+      toast.error("Logeed Out. Could not find User");
       throw new ApiError({
         status: 403,
         source: { pointer: "Token" },

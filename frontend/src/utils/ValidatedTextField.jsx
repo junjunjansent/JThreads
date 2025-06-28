@@ -1,9 +1,10 @@
-import { useState } from "react";
-import { TextField } from "@mui/material";
+import { useEffect, useState } from "react";
+import { FormControl, TextField } from "@mui/material";
 
 const ValidatedTextField = ({
-  label,
+  required = false,
   type = "text",
+  label,
   value = "",
   formLabel,
   validator,
@@ -25,15 +26,22 @@ const ValidatedTextField = ({
     onChange(formLabel, newValue);
   };
 
+  useEffect(() => {
+    setValue(value);
+  }, [value]);
+
   return (
-    <TextField
-      type={type}
-      label={label}
-      value={inputValue}
-      onChange={handleChange}
-      error={error}
-      helperText={errorMessage}
-    />
+    <FormControl fullWidth>
+      <TextField
+        required={required}
+        type={type}
+        label={label}
+        value={inputValue}
+        onChange={handleChange}
+        error={error}
+        helperText={errorMessage}
+      />
+    </FormControl>
   );
 };
 
