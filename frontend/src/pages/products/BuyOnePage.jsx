@@ -34,15 +34,16 @@ const BuyOnePage = () => {
     console.log(displayProduct);
   };
 
-  const { _id, productDisplayPhoto, productName } = oneProductIndex || {};
+  const { _id, productName } = oneProductIndex || {};
   const { username } = oneProductIndex?.productOwner || {};
-  const { productVarAvailableQty, productVarPrice } = displayProduct || {};
+  const { productVarAvailableQty, productVarPrice, productVarDisplayPhoto } =
+    displayProduct || {};
 
   return (
     <>
       <div className={styles.buyOneArea}>
         <section className={styles.productImg}>
-          <img src={productDisplayPhoto} alt={productName} />
+          <img src={productVarDisplayPhoto} alt={productName} />
         </section>
         <section className={styles.productDetails}>
           {/* Container for Product Name and Seller */}
