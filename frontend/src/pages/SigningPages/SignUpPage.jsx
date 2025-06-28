@@ -1,31 +1,49 @@
+import debug from "debug";
+const log = debug("JThreads: SignUpPage");
+
 import { useNavigate, Link } from "react-router";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../../contexts/UserContext";
+import { PATHS } from "../../routes/PATHS";
 
 import styles from "./SigningPage.module.css";
 import { toast } from "react-toastify";
 import logoImg from "../../assets/JThreads_logo.png";
-
-// import debug from "debug";
-// const log = debug("JThreads:file destination");
+import { Box, Button, TextField } from "@mui/material";
+import ValidatedTextField from "../../utils/ValidatedTextField";
 
 import { signUp, saveTokenToLocalStorage } from "../../services/publicServices";
+import { emailValidator, usernameValidator } from "../../utils/inputValidator";
 import { errorUtil } from "../../utils/errorUtil";
-import { PATHS } from "../../routes/PATHS";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
+  const [signUpProfile, setSignUpProfile] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const confirmPasswordValidator = (newValue) => {
+    if (signUpProfile.password && newValue !== signUpProfile.password) {
+      return "Passwords do not match >:(";
+    }
+    return false;
+  };
+
+  const handleChange = (formLabel, value) => {
+    setSignUpProfile({ ...signUpProfile, [formLabel]: value });
+    log(signUpProfile);
+  };
 
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
       toast.info("Signing Up for you...");
 
-      const formData = new FormData(event.target);
-      const data = Object.fromEntries(formData);
-
-      const { user, token } = await signUp(data);
+      const { user, token } = await signUp(signUpProfile);
       setUser(user);
       saveTokenToLocalStorage(token);
       navigate(PATHS.PUBLIC.USER_SHOP(user.username));
@@ -46,28 +64,44 @@ const SignUpPage = () => {
             services.
           </p>
         </div>
-        <form className={styles["form-field"]} onSubmit={handleSubmit}>
-          <input
-            className={styles["input-field"]}
-            type="text"
-            name="username"
-            placeholder="USERNAME"
-          ></input>
-          <input
-            className={styles["input-field"]}
-            type="text"
-            name="email"
-            placeholder="EMAIL"
-          ></input>
-          <input
-            className={styles["input-field"]}
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          className={styles["form-field"]}
+        >
+          <ValidatedTextField
+            required
+            label="Username"
+            value={signUpProfile.username}
+            formLabel="username"
+            onChange={handleChange}
+            validator={usernameValidator}
+          />
+          <ValidatedTextField
+            required
+            label="Email"
+            value={signUpProfile.email}
+            validator={emailValidator}
+            formLabel="email"
+            onChange={handleChange}
+          />
+          <TextField
+            required
             type="password"
-            autoComplete="off"
-            name="password"
-            placeholder="PASSWORD"
-          ></input>
-          <button className={styles["submit-button"]}>SIGN UP</button>
-        </form>
+            label="Password"
+            autoComplete="current-password"
+            onChange={(e) => handleChange("password", e.target.value)}
+          />
+          <ValidatedTextField
+            required
+            type="password"
+            label="Confirm Password"
+            formLabel="confirmPassword"
+            onChange={handleChange}
+            validator={confirmPasswordValidator}
+          />
+          <Button type="submit">CREATE AN ACCOUNT</Button>
+        </Box>
         <Link className={styles["link-signing-page"]} to={PATHS.PUBLIC.SIGN_IN}>
           Already have an account, log in now!
         </Link>

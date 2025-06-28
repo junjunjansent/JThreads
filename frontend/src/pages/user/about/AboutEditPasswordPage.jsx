@@ -13,7 +13,7 @@ import styles from "./AboutPage.module.css";
 import logoImg from "../../../assets/JThreads_logo.png";
 import { toast } from "react-toastify";
 
-import { TextField, Box } from "@mui/material";
+import { TextField, Box, Button } from "@mui/material";
 import { updateOwnerPassword } from "../../../services/userServices";
 
 const AboutEditPasswordPage = () => {
@@ -26,7 +26,6 @@ const AboutEditPasswordPage = () => {
   });
 
   const newPasswordValidator = (newValue) => {
-    // TODO: this validator has an input lag
     if (
       passwordProfile.newPassword &&
       newValue !== passwordProfile.newPassword
@@ -45,7 +44,7 @@ const AboutEditPasswordPage = () => {
   };
 
   const handleSubmit = async (event) => {
-    // need to prevent submission if any error TextFields
+    // TODO: need to prevent submission if any error TextFields
     try {
       event.preventDefault();
       toast.info("Changing Password for you... so mafan...");
@@ -108,9 +107,7 @@ const AboutEditPasswordPage = () => {
                 validator={newPasswordValidator}
               />
 
-              <button type="submit" className={styles["submit-button"]}>
-                Change It
-              </button>
+              <Button type="submit">Change It</Button>
             </Box>
           </article>
         </section>
