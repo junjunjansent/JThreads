@@ -145,11 +145,11 @@ const indexProducts = async (req, res, next) => {
       ];
     }
     const allProducts = await Product.find(findQuery).populate("productOwner");
-    if (allProducts.length === 0) {
-      return res
-        .status(200)
-        .json({ message: "No products available matching your criteria." });
-    }
+    // if (allProducts.length === 0) {
+    //   return res
+    //     .status(200)
+    //     .json({ message: "No products available matching your criteria." });
+    // }
     res.json(allProducts);
   } catch (err) {
     console.error("Error in indexSearchProducts:", err);

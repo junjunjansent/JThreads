@@ -40,22 +40,25 @@ const BuyAllPage = () => {
           />
         </div>
         <div className={styles.searcharea}>
-          {allProducts.map((product) => (
-            <a
-              href={`/buy/${product._id}`}
-              className={styles.productlink}
-              key={product._id}
-            >
-              <ProductCard
-                productid={product._id}
-                name={product.productName}
-                category={product.productCategory}
-                photo={product.productDisplayPhoto}
-                owner={product.productOwner}
-                isActive={product.productIsActive} // TODO: isActive is passed here but not used yet. We probably need to put this into the JS portion as a filter to not render !isActive products
-              />
-            </a>
-          ))}
+          {allProducts.length > 0 ? (
+            allProducts.map((product) => (
+              <a
+                href={`/buy/${product._id}`}
+                className={styles.productlink}
+                key={product._id}
+              >
+                <ProductCard
+                  productid={product._id}
+                  name={product.productName}
+                  category={product.productCategory}
+                  photo={product.productDisplayPhoto}
+                  owner={product.productOwner}
+                />
+              </a>
+            ))
+          ) : (
+            <p>No products found!</p>
+          )}
         </div>
       </div>
     </>

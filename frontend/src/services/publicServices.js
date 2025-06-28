@@ -69,25 +69,12 @@ const signIn = async (bodyData) => {
 
 const showUser = async () => {};
 
-// const getAllProducts = async () => {
-//   const url = `${publicService_BASE_URL}/products`;
-//   try {
-//     const resData = await fetchJson(url, "GET");
-//     return resData;
-//   } catch (err) {
-//     throw new ApiError(err);
-//   }
-// };
-
 // TODO: API call for search not implemented yet on BuyAllPage
 const getAllProducts = async (searchParams) => {
-  // const queryString = new URLSearchParams(searchParams).toString();
-
   // tenerary operator to check if queryString is empty and pass the correct URL with and without query parameters
   const url = searchParams
     ? `${publicService_BASE_URL}/products?search=${searchParams}`
     : `${publicService_BASE_URL}/products`;
-
   try {
     const resData = await fetchJson(url, "GET");
     return resData;
