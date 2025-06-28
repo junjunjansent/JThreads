@@ -1,3 +1,5 @@
+import styles from "./BuyOnePage.module.css";
+
 const BuyOnePage = () => {
   return (
     <>

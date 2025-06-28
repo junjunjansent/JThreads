@@ -60,9 +60,9 @@ const BuyAllPage = () => {
           />
         </div>
         <div className={styles.searcharea}>
-          {productsToDisplay.map((product) => (
+          {allProducts.map((product) => (
             <a
-              href={`/${product.productId}`}
+              href={`/buy/${product._id}`}
               className={styles.productlink}
               key={product._id}
             >
