@@ -22,6 +22,11 @@ const BuyAllPage = () => {
     const newSearchQuery = event.target.value;
     setSearchQuery(newSearchQuery);
     setSearchParams(`search=${newSearchQuery}`);
+    const fetchAllProducts = async () => {
+      const fetchedProducts = await getAllProducts(newSearchQuery);
+      setAllProducts(fetchedProducts);
+    };
+    fetchAllProducts();
   };
 
   return (

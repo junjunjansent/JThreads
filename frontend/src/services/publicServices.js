@@ -81,11 +81,11 @@ const showUser = async () => {};
 
 // TODO: API call for search not implemented yet on BuyAllPage
 const getAllProducts = async (searchParams) => {
-  const queryString = new URLSearchParams(searchParams).toString();
+  // const queryString = new URLSearchParams(searchParams).toString();
 
   // tenerary operator to check if queryString is empty and pass the correct URL with and without query parameters
-  const url = queryString
-    ? `${publicService_BASE_URL}/products${queryString}`
+  const url = searchParams
+    ? `${publicService_BASE_URL}/products?search=${searchParams}`
     : `${publicService_BASE_URL}/products`;
 
   try {
