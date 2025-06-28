@@ -8,7 +8,7 @@ import { getAllProducts } from "../../services/publicServices";
 const BuyAllPage = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchParams, setSearchParams] = useSearchParams("");
+  const [, setSearchParams] = useSearchParams(""); // removed 'searchParams' state as we don't need to store search params in state
 
   useEffect(() => {
     const fetchAllProducts = async () => {

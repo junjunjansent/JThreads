@@ -157,6 +157,20 @@ const indexProducts = async (req, res, next) => {
   }
 };
 
+// Function for getting all products by a specific seller
+const indexUserProducts = async (req, res, next) => {
+  try {
+    const { userUsername } = req.params;
+    const user = await User.findOne({ username: userUsername });
+    const userProducts = await Product.find({
+      productOwner: user._id,
+    }).populate("productOwner");
+    res.json(userProducts);
+  } catch (err) {
+    next(err);
+  }
+};
+
 const showOneIndex = async (req, res, next) => {
   try {
     const { productId } = req.params;
@@ -186,6 +200,7 @@ module.exports = {
   signIn,
   showUser,
   indexProducts,
+  indexUserProducts,
   showOneIndex,
   showVariantIndex,
 };

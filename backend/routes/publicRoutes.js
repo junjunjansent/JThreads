@@ -5,9 +5,9 @@ const {
   signIn,
   showUser,
   indexProducts,
+  indexUserProducts,
   showOneIndex,
   showVariantIndex,
-  indexSearchProducts,
 } = require("../controllers/publicController");
 
 //user routes
@@ -19,5 +19,6 @@ router.post("/users/:userUsername", showUser);
 router.get("/products", indexProducts);
 router.get("/products/:productId", showOneIndex);
 router.get("/products/:productId/variants", showVariantIndex);
+router.get("/:userUsername", indexUserProducts); // TODO: are we putting this in user or buyer route?
 
 module.exports = router;
