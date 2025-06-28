@@ -1,15 +1,15 @@
 import styles from "./BuyUserPage.module.css";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useParams, useSearchParams } from "react-router";
 import { BuySearchBar } from "../../components/BuySearchBar";
 import { ProductCard } from "../../components/ProductCard/ProductCard";
 import { getUserProducts } from "../../services/publicServices";
 
 const BuyUserPage = () => {
   const [allProducts, setAllProducts] = useState([]);
-  // const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   // removed 'searchParams' state as we don't need to store search params in state
-  // const [, setSearchParams] = useSearchParams("");
+  const [, setSearchParams] = useSearchParams("");
   const { userUsername } = useParams();
 
   useEffect(() => {
@@ -20,16 +20,19 @@ const BuyUserPage = () => {
     fetchAllProducts();
   }, [userUsername]);
 
-  // const handleInputChange = (event) => {
-  //   const newSearchQuery = event.target.value;
-  //   setSearchQuery(newSearchQuery);
-  //   setSearchParams(`search=${newSearchQuery}`);
-  //   const fetchAllProducts = async () => {
-  //     const fetchedProducts = await getUserProducts(newSearchQuery);
-  //     setAllProducts(fetchedProducts);
-  //   };
-  //   fetchAllProducts();
-  // };
+  const handleInputChange = (event) => {
+    const newSearchQuery = event.target.value;
+    setSearchQuery(newSearchQuery);
+    setSearchParams(`search=${newSearchQuery}`);
+    const fetchAllProducts = async () => {
+      const fetchedProducts = await getUserProducts(
+        userUsername,
+        newSearchQuery
+      );
+      setAllProducts(fetchedProducts);
+    };
+    fetchAllProducts();
+  };
 
   return (
     <>
@@ -37,8 +40,8 @@ const BuyUserPage = () => {
         <div className={styles.searchbar}>
           <BuySearchBar
             styles={styles}
-            // handleInputChange={handleInputChange}
-            // searchvalue={searchQuery}
+            handleInputChange={handleInputChange}
+            searchvalue={searchQuery}
           />
         </div>
         <div className={styles.searcharea}>

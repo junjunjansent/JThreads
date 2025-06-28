@@ -82,8 +82,10 @@ const getAllProducts = async (searchParams) => {
   }
 };
 
-const getUserProducts = async (userUsername) => {
-  const url = `${publicService_BASE_URL}/${userUsername}`;
+const getUserProducts = async (userUsername, searchParams) => {
+  const url = searchParams
+    ? `${publicService_BASE_URL}/${userUsername}?search=${searchParams}`
+    : `${publicService_BASE_URL}/${userUsername}`;
   try {
     const resData = await fetchJson(url, "GET");
     return resData;
