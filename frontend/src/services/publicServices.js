@@ -80,15 +80,15 @@ const getAllProducts = async () => {
 };
 
 // TODO: API call for search not implemented yet on BuyAllPage
-// const getSearchProducts = async () => {
-//   const url = `${publicService_BASE_URL}/products`;
-//   try {
-//     const resData = await fetchJson(url, "GET");
-//     return resData;
-//   } catch (err) {
-//     throw new ApiError(err);
-//   }
-// };
+const getSearchProducts = async () => {
+  const url = `${publicService_BASE_URL}/products`;
+  try {
+    const resData = await fetchJson(url, "GET");
+    return resData;
+  } catch (err) {
+    throw new ApiError(err);
+  }
+};
 
 const getOneIndex = async (productid) => {
   const url = `${publicService_BASE_URL}/products/${productid}`;
