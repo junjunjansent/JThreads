@@ -161,7 +161,7 @@ const showOneIndex = async (req, res, next) => {
 const showVariantIndex = async (req, res, next) => {
   try {
     const { productId } = req.params;
-    const variantIndex = await ProductVariant.findById({
+    const variantIndex = await ProductVariant.find({
       mainProduct: productId,
     });
     res.json(variantIndex);

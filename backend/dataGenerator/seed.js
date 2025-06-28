@@ -73,7 +73,8 @@ const inputTestProductVariants = async (products) => {
   const maxInventoryQty = faker.number.int({ min: 1 });
   const productVariationData = [
     ...Array.from({ length: 50 }, () => ({
-      mainProduct: products[0].id,
+      mainProduct: faker.helpers.arrayElement(products)._id,
+
       productVarDesign: faker.commerce.product(),
       productVarInventoryQty: maxInventoryQty,
       productVarAvailableQty: faker.number.int({
@@ -84,7 +85,7 @@ const inputTestProductVariants = async (products) => {
       productVarDisplayPhoto: faker.image.urlPicsumPhotos(),
     })),
     ...Array.from({ length: 10 }, () => ({
-      mainProduct: faker.helpers.arrayElement(products)._id,
+      mainProduct: products[0].id,
       productVarDesign: faker.commerce.product(),
       productVarInventoryQty: maxInventoryQty,
       productVarAvailableQty: faker.number.int({

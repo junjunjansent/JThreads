@@ -1,0 +1,16 @@
+meta {
+  name: Product - Index Variant
+  type: http
+  seq: 10
+}
+
+get {
+  url: http://localhost:3000/api/public/products/:productId/:variantId
+  body: none
+  auth: inherit
+}
+
+params:path {
+  variantId: 685f61b2de37c4c8b2afc6c4
+  productId: 685f61b2de37c4c8b2afc69b
+}

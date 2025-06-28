@@ -5,7 +5,7 @@ import { getOneIndex, getVariantIndex } from "../../services/publicServices";
 
 const BuyOnePage = () => {
   const [oneProductIndex, setOneProductIndex] = useState();
-  const [variantIndex, setVariantIndex] = useState();
+  const [variantIndex, setVariantIndex] = useState([]);
   const { productId } = useParams();
   // need 2 API calls here, one for main product details and one for all variants
   useEffect(() => {
@@ -17,15 +17,14 @@ const BuyOnePage = () => {
     const fetchVariantIndex = async () => {
       const fetchedVariants = await getVariantIndex(productId);
       console.log(fetchedVariants);
-      setOneProductIndex(fetchedVariants); // if we want to set the variants here}
+      setVariantIndex(fetchedVariants); // if we want to set the variants here}
     };
     fetchOneIndex();
     fetchVariantIndex();
   }, [productId]);
 
-  const { productDisplayPhoto, productName } = oneProductIndex || {};
+  const { _id, productDisplayPhoto, productName } = oneProductIndex || {};
   const { username } = oneProductIndex?.productOwner || {};
-
   return (
     <>
       <div className={styles.buyOneArea}>
@@ -41,8 +40,13 @@ const BuyOnePage = () => {
 
           {/* Container for Product Designs*/}
           <div>
-            Design Area
-            <div>Design Boxes</div>
+            <div className={styles.designButtons}>
+              {variantIndex.map((variant) => (
+                <a href={`/buy/${_id}/${variant._id}`} key={variant._id}>
+                  <button>{variant.productVarDesign}</button>
+                </a>
+              ))}
+            </div>
           </div>
 
           <div>Qty / Avail / Price Section</div>
