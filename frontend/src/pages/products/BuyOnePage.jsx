@@ -16,8 +16,8 @@ const BuyOnePage = () => {
     fetchOneIndex();
   }, [productId]);
 
-  const { productDisplayPhoto, productName } = oneProductIndex;
-  const { username } = oneProductIndex.productOwner;
+  const { productDisplayPhoto, productName } = oneProductIndex || {};
+  const { username } = oneProductIndex?.productOwner || {};
 
   return (
     <>
