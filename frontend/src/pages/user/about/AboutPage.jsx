@@ -6,7 +6,8 @@ import { showOwnerProfile } from "../../../services/userServices";
 import styles from "./AboutPage.module.css";
 import logoImg from "../../../assets/JThreads_logo.png";
 import dayjs from "dayjs";
-import { Avatar, List, ListItem, ListItemText } from "@mui/material";
+import { Avatar, List } from "@mui/material";
+import InfoTextCard from "../../../components/InfoTextCard";
 
 import { errorUtil } from "../../../utils/errorUtil";
 import Loader from "../../../components/Loader";
@@ -113,20 +114,7 @@ const AboutPage = () => {
             {userInfoGroups.map((group, index) => (
               <List key={index} className={styles["list-row-style"]}>
                 {group.map(({ label, value }, i) => (
-                  <ListItem key={i} alignItems="flex-start">
-                    <ListItemText
-                      primary={value}
-                      secondary={
-                        <span
-                          style={{
-                            fontSize: "0.7rem",
-                          }}
-                        >
-                          {label}
-                        </span>
-                      }
-                    />
-                  </ListItem>
+                  <InfoTextCard key={i} label={label} value={value} />
                 ))}
               </List>
             ))}

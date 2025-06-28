@@ -1,35 +1,44 @@
 .buyOneArea {
   display: flex;
   flex-direction: row;
-  gap: 100px;
+  justify-content: space-between;
+  /* gap: 100px; */
+}
+
+.aside-img {
+  width: 40%;
+  max-width: 20rem;
+  max-height: 20rem;
+}
+
+.productImg {
+  width: 400px;
+  height: 400px;
 }
 
 .productDetails {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1rem;
+  width: 60%;
 }
 
 .productHeader,
 .priceQuantity {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-}
-
-.productImg {
-  width: 400px;
-  height: 500px;
-}
-
-.buttonsArea {
-  display: flex;
-  flex-direction: row;
+  gap: 2rem;
 }
 
 .designButtons {
   display: flex;
   flex-direction: row;
   font-size: 10px;
-  gap: 5px;
+  gap: 1rem;
+}
+
+.buttonsArea {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
 }

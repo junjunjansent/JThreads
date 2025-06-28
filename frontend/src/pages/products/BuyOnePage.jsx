@@ -1,7 +1,9 @@
 import styles from "./BuyOnePage.module.css";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import { getOneIndex, getVariantIndex } from "../../services/publicServices";
+import { PATHS } from "../../routes/PATHS";
+import InfoTextCard from "../../components/InfoTextCard";
 
 const BuyOnePage = () => {
   const [oneProductIndex, setOneProductIndex] = useState(); // This state stores base product information that will not change (seller name, product name)
@@ -45,54 +47,72 @@ const BuyOnePage = () => {
 
   return (
     <>
-      <div className={styles.buyOneArea}>
-        <section>
+      <main className={styles.buyOneArea}>
+        <aside className={styles["aside-img"]}>
           <img
             className={styles.productImg}
             src={productVarDisplayPhoto}
             alt={productName}
           />
-        </section>
+        </aside>
+
         <section className={styles.productDetails}>
           {/* Container for Product Name and Seller */}
           <div className={styles.productHeader}>
-            <div>{productName}</div>
-            <div>{username}</div>
+            <InfoTextCard label="Product Name" value={productName} />
+            <InfoTextCard label="Category" value="Do you want this?" />
+            <InfoTextCard
+              label="Username"
+              value={
+                <Link to={PATHS.PUBLIC.USER_SHOP(username)}>{username}</Link>
+              }
+            />
           </div>
 
           {/* Container for Product Designs*/}
-          <div>
+          <article>
+            <h6>Designs: </h6>
             <div className={styles.designButtons}>
               {variantIndex.map((variant) => (
-                <button id={variant._id} onClick={handleSelectVariant}>
+                <button
+                  key={variant._id}
+                  id={variant._id}
+                  onClick={handleSelectVariant}
+                >
                   {variant.productVarDesign}
                 </button>
               ))}
             </div>
-          </div>
 
-          <div className={styles.priceQuantity}>
-            <div className={styles.productPrice}>Price: ${productVarPrice}</div>
-            <div className={styles.productQuantity}>
-              Qty: {productVarAvailableQty}
+            <div className={styles.priceQuantity}>
+              <div className={styles.productPrice}>
+                Price: ${productVarPrice}
+              </div>
+              <div className={styles.productQuantity}>
+                Qty: {productVarAvailableQty}
+              </div>
             </div>
-          </div>
-          <div className={styles.buttonsArea}>
-            {/* <button>Quantity</button> */}
-            <form>
-              <label>Quantity</label>
-              <select>
-                <optgroup>
-                  {renderQuantityOptions.map((quantity) => (
-                    <option>{quantity}</option>
-                  ))}
-                </optgroup>
-              </select>
-            </form>
-            <button>Add to Cart</button>
-          </div>
+          </article>
+
+          <article>
+            <h6>You know you want to buy it: </h6>
+            <div className={styles.buttonsArea}>
+              {/* <button>Quantity</button> */}
+              <form>
+                <label>Quantity</label>
+                <select>
+                  <optgroup>
+                    {renderQuantityOptions.map((quantity) => (
+                      <option key={quantity}>{quantity}</option>
+                    ))}
+                  </optgroup>
+                </select>
+              </form>
+              <button>Add to Cart</button>
+            </div>
+          </article>
         </section>
-      </div>
+      </main>
     </>
   );
 };
