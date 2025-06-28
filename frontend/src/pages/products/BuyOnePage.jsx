@@ -42,8 +42,12 @@ const BuyOnePage = () => {
   return (
     <>
       <div className={styles.buyOneArea}>
-        <section className={styles.productImg}>
-          <img src={productVarDisplayPhoto} alt={productName} />
+        <section>
+          <img
+            className={styles.productImg}
+            src={productVarDisplayPhoto}
+            alt={productName}
+          />
         </section>
         <section className={styles.productDetails}>
           {/* Container for Product Name and Seller */}
@@ -64,7 +68,7 @@ const BuyOnePage = () => {
           </div>
 
           <div className={styles.priceQuantity}>
-            <div className={styles.productPrice}>Price: {productVarPrice}</div>
+            <div className={styles.productPrice}>Price: ${productVarPrice}</div>
             <div className={styles.productQuantity}>
               Qty: {productVarAvailableQty}
             </div>

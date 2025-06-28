@@ -1,11 +1,25 @@
 .buyOneArea {
   display: flex;
   flex-direction: row;
+  gap: 100px;
 }
 
 .productDetails {
   display: flex;
   flex-direction: column;
+  gap: 20px;
+}
+
+.productHeader,
+.priceQuantity {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.productImg {
+  width: 400px;
+  height: 500px;
 }
 
 .buttonsArea {
