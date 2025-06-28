@@ -3,9 +3,12 @@ import { PATHS } from "../../routes/PATHS";
 
 import styles from "./SigningPage.module.css";
 import logoImg from "../../assets/JThreads_logo.png";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/UserContext";
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
 
   return (
     <>
@@ -28,12 +31,26 @@ const HomePage = () => {
             </p>
             <p>- Skibidi you on the server.</p>
             <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
-              <button onClick={() => navigate(PATHS.PUBLIC.SIGN_UP)}>
-                Don't have an Account? what an L...
-              </button>
-              <button onClick={() => navigate(PATHS.PUBLIC.SIGN_IN)}>
-                Login like a W
-              </button>
+              {user ? (
+                <>
+                  <button
+                    onClick={() =>
+                      navigate(PATHS.USER(user.username).ABOUT.DEFAULT)
+                    }
+                  >
+                    Already Logged In, slay mama
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button onClick={() => navigate(PATHS.PUBLIC.SIGN_UP)}>
+                    Don't have an Account? what an L...
+                  </button>
+                  <button onClick={() => navigate(PATHS.PUBLIC.SIGN_IN)}>
+                    Login like a W
+                  </button>{" "}
+                </>
+              )}
             </div>
           </div>
         </section>

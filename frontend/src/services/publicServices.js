@@ -1,4 +1,3 @@
-import { toast } from "react-toastify";
 import { ApiError } from "../utils/errorUtil";
 
 const publicService_BASE_URL = `${
@@ -114,56 +113,10 @@ const getVariantIndex = async (productid) => {
   }
 };
 
-// ----------- token Services
-
-const saveTokenToLocalStorage = (token) => {
-  if (token) {
-    localStorage.setItem("token", token);
-  } else {
-    localStorage.removeItem("token");
-  }
-};
-
-const getTokenFromLocalStorage = () => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    return token;
-  } else {
-    return null;
-  }
-};
-
-const getInfoFromToken = (token) => {
-  if (token) {
-    try {
-      return JSON.parse(atob(token.split(".")[1]));
-    } catch (err) {
-      localStorage.removeItem("token");
-      toast.error("Logeed Out. Could not find User");
-      throw new ApiError({
-        status: 403,
-        source: { pointer: "Token" },
-        title: err.name,
-        detail: "Unable to get user token",
-      });
-    }
-  } else {
-    throw new ApiError({
-      status: 404,
-      source: { pointer: "Token" },
-      title: "Unauthorized",
-      detail: "No user details obtained",
-    });
-  }
-};
-
 export {
   signUp,
   signIn,
   showUser,
-  saveTokenToLocalStorage,
-  getTokenFromLocalStorage,
-  getInfoFromToken,
   getAllProducts,
   getUserProducts,
   getOneIndex,

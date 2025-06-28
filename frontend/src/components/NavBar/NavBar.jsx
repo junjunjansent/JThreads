@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from "react-router";
 import { PATHS } from "../../routes/PATHS";
 import { NavCategory } from "./NavCategory";
 import { UserContext } from "../../contexts/UserContext";
-import { saveTokenToLocalStorage } from "../../services/publicServices";
+import { saveTokenToLocalStorage } from "../../utils/tokenUtil";
 
 import styles from "./NavBar.module.css";
 import logoImg from "../../assets/JThreads_logo.png";

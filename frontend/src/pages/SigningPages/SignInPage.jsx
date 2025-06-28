@@ -1,6 +1,7 @@
 import { useNavigate, Link } from "react-router";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
+import { PATHS } from "../../routes/PATHS";
 
 import styles from "./SigningPage.module.css";
 import { toast } from "react-toastify";
@@ -8,8 +9,7 @@ import logoImg from "../../assets/JThreads_logo.png";
 
 import { signIn } from "../../services/publicServices";
 import { errorUtil } from "../../utils/errorUtil";
-import { saveTokenToLocalStorage } from "../../services/publicServices";
-import { PATHS } from "../../routes/PATHS";
+import { saveTokenToLocalStorage } from "../../utils/tokenUtil";
 
 const SignInPage = () => {
   const navigate = useNavigate();

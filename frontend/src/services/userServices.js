@@ -1,5 +1,5 @@
 import { ApiError } from "../utils/errorUtil";
-import { getTokenFromLocalStorage } from "./publicServices";
+import { getTokenFromLocalStorage } from "../utils/tokenUtil";
 
 const publicService_BASE_URL = `${
   import.meta.env.VITE_BACK_END_SERVER_URL

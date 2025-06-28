@@ -19,16 +19,12 @@ import SellOnePage from "../pages/user/seller/SellOnePage";
 import SellerOrdersAll from "../pages/user/seller/SellerOrdersAll";
 import ErrorPage from "../pages/ErrorPage";
 import UnauthPage from "../pages/UnauthPage";
+import { isDomainForOwner } from "../utils/ownerValidator";
 
 const PrivateRoute = () => {
   const { user } = useContext(UserContext);
   const { userUsername } = useParams();
-  if (user) {
-    const { username } = user;
-    return username === userUsername ? <Outlet /> : <UnauthPage />;
-  } else {
-    return <UnauthPage />;
-  }
+  return isDomainForOwner(user, userUsername) ? <Outlet /> : <UnauthPage />;
 };
 
 const AppRoutes = () => {

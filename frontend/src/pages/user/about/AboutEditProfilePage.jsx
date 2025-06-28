@@ -11,9 +11,9 @@ import {
   emailValidator,
   nameValidator,
 } from "../../../utils/inputValidator";
-import { errorUtil } from "../../../utils/errorUtil";
 import { UserContext } from "../../../contexts/UserContext";
-import { saveTokenToLocalStorage } from "../../../services/publicServices";
+import { errorUtil } from "../../../utils/errorUtil";
+import { saveTokenToLocalStorage } from "../../../utils/tokenUtil";
 
 import styles from "./AboutPage.module.css";
 import logoImg from "../../../assets/JThreads_logo.png";

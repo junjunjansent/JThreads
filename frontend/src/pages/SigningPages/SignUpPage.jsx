@@ -12,7 +12,8 @@ import logoImg from "../../assets/JThreads_logo.png";
 import { Box, Button, TextField } from "@mui/material";
 import ValidatedTextField from "../../utils/ValidatedTextField";
 
-import { signUp, saveTokenToLocalStorage } from "../../services/publicServices";
+import { saveTokenToLocalStorage } from "../../utils/tokenUtil";
+import { signUp } from "../../services/publicServices";
 import { emailValidator, usernameValidator } from "../../utils/inputValidator";
 import { errorUtil } from "../../utils/errorUtil";
 

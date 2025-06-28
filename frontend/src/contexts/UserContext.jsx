@@ -1,10 +1,7 @@
 // ContextProvider encapsulated
 
 import { createContext, useState, useEffect } from "react";
-import {
-  getInfoFromToken,
-  getTokenFromLocalStorage,
-} from "../services/publicServices";
+import { getInfoFromToken, getTokenFromLocalStorage } from "../utils/tokenUtil";
 
 const UserContext = createContext();
 
