@@ -90,7 +90,7 @@ const getSearchProducts = async () => {
 };
 
 const getOneIndex = async (productid) => {
-  const url = `${publicService_BASE_URL}/products/:${productid}`;
+  const url = `${publicService_BASE_URL}/products/${productid}`;
   try {
     const resData = await fetchJson(url, "GET");
     return resData;

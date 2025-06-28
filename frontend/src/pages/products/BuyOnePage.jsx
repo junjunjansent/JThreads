@@ -5,15 +5,12 @@ import { getOneIndex } from "../../services/publicServices";
 
 const BuyOnePage = () => {
   const [oneProductIndex, setOneProductIndex] = useState();
-  const productId = useParams();
-  // console.log(productId);
+  const { productId } = useParams();
   // need 2 API calls here, one for main product details and one for all variants
   useEffect(() => {
-    const fetchOneIndex = async (productId) => {
-      console.log(productId);
-
+    const fetchOneIndex = async () => {
       const fetchedOne = await getOneIndex(productId);
-      // console.log(fetchedOne);
+      console.log(fetchedOne);
 
       setOneProductIndex(fetchedOne);
     };
