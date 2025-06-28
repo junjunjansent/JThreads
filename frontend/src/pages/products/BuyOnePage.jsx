@@ -11,24 +11,33 @@ const BuyOnePage = () => {
     const fetchOneIndex = async () => {
       const fetchedOne = await getOneIndex(productId);
       console.log(fetchedOne);
-
       setOneProductIndex(fetchedOne);
     };
     fetchOneIndex();
   }, [productId]);
 
+  const { productDisplayPhoto, productName } = oneProductIndex;
+  const { username } = oneProductIndex.productOwner;
+
   return (
     <>
       <div className={styles.buyOneArea}>
         <section className={styles.productImg}>
-          <p>Product Image</p>
+          <img src={productDisplayPhoto} alt={productName} />
         </section>
         <section className={styles.productDetails}>
-          <div>Product Name + Product Seller</div>
+          {/* Container for Product Name and Seller */}
+          <div className={styles.productHeader}>
+            <div>{productName}</div>
+            <div>{username}</div>
+          </div>
+
+          {/* Container for Product Designs*/}
           <div>
             Design Area
             <div>Design Boxes</div>
           </div>
+
           <div>Qty / Avail / Price Section</div>
           <div className={styles.buttonsArea}>
             <button>Quantity</button>

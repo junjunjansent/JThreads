@@ -135,7 +135,7 @@ const showUser = async (req, res, next) => {
 
 const indexProducts = async (req, res, next) => {
   try {
-    const allProducts = await Product.find({});
+    const allProducts = await Product.find({}).populate("productOwner");
     if (!allProducts) {
       return res.json("Msg: No products available"); // we can remove this once we handle the state change front end to display a message
     }
@@ -148,7 +148,9 @@ const indexProducts = async (req, res, next) => {
 const showOneIndex = async (req, res, next) => {
   try {
     const { productId } = req.params;
-    const oneProductIndex = await Product.findById({ _id: productId });
+    const oneProductIndex = await Product.findById({ _id: productId }).populate(
+      "productOwner"
+    );
     res.json(oneProductIndex);
   } catch (err) {
     next(err);
