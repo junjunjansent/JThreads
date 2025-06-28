@@ -13,12 +13,12 @@ const registerUsersForDeveloper = async () => {
       password: bcryptPassword("12345678"),
     },
     ...Array.from({ length: 4 }, () => ({
-      username: faker.internet.username(),
+      username: faker.internet.username().toLowerCase().replaceAll(".", ""),
       email: faker.internet.email(),
       password: bcryptPassword("12345678"),
     })),
     ...Array.from({ length: 5 }, () => ({
-      username: faker.internet.username(),
+      username: faker.internet.username().toLowerCase().replaceAll(".", ""),
       email: faker.internet.email(),
       password: bcryptPassword("12345678"),
       firstName: faker.person.firstName(),
@@ -73,6 +73,17 @@ const inputTestProductVariants = async (products) => {
   const maxInventoryQty = faker.number.int({ min: 1 });
   const productVariationData = [
     ...Array.from({ length: 50 }, () => ({
+      mainProduct: products[0].id,
+      productVarDesign: faker.commerce.product(),
+      productVarInventoryQty: maxInventoryQty,
+      productVarAvailableQty: faker.number.int({
+        min: 0,
+        max: maxInventoryQty,
+      }),
+      productVarPrice: faker.number.float({ fractionDigits: 2, min: 0 }),
+      productVarDisplayPhoto: faker.image.urlPicsumPhotos(),
+    })),
+    ...Array.from({ length: 10 }, () => ({
       mainProduct: faker.helpers.arrayElement(products)._id,
       productVarDesign: faker.commerce.product(),
       productVarInventoryQty: maxInventoryQty,

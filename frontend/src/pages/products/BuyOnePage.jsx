@@ -1,19 +1,26 @@
 import styles from "./BuyOnePage.module.css";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { getOneIndex } from "../../services/publicServices";
+import { getOneIndex, getVariantIndex } from "../../services/publicServices";
 
 const BuyOnePage = () => {
   const [oneProductIndex, setOneProductIndex] = useState();
+  const [variantIndex, setVariantIndex] = useState();
   const { productId } = useParams();
   // need 2 API calls here, one for main product details and one for all variants
   useEffect(() => {
     const fetchOneIndex = async () => {
       const fetchedOne = await getOneIndex(productId);
-      console.log(fetchedOne);
+      // console.log(fetchedOne);
       setOneProductIndex(fetchedOne);
     };
+    const fetchVariantIndex = async () => {
+      const fetchedVariants = await getVariantIndex(productId);
+      console.log(fetchedVariants);
+      setOneProductIndex(fetchedVariants); // if we want to set the variants here}
+    };
     fetchOneIndex();
+    fetchVariantIndex();
   }, [productId]);
 
   const { productDisplayPhoto, productName } = oneProductIndex || {};

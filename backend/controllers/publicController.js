@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const Product = require("../models/Product");
+const ProductVariant = require("../models/ProductVariation");
 const { ApiError } = require("../utils/errorHandler");
 const {
   bcryptPassword,
@@ -160,6 +161,20 @@ const showOneIndex = async (req, res, next) => {
 const showVariantIndex = async (req, res, next) => {
   try {
     const { productId } = req.params;
-    const variantIndex = await ProductVariant.findById({})
+    const variantIndex = await ProductVariant.findById({
+      mainProduct: productId,
+    });
+    res.json(variantIndex);
+  } catch (err) {
+    next(err);
+  }
+};
 
-module.exports = { signUp, signIn, showUser, indexProducts, showOneIndex };
+module.exports = {
+  signUp,
+  signIn,
+  showUser,
+  indexProducts,
+  showOneIndex,
+  showVariantIndex,
+};
