@@ -88,8 +88,8 @@ const inputTestProducts = async (users) => {
 const inputTestProductVariants = async (products) => {
   const maxInventoryQty = faker.number.int({ min: 1, max: 100 });
   const productVariationData = [
-    ...Array.from({ length: 50 }, () => ({
-      mainProduct: faker.helpers.arrayElement(products)._id,
+    ...Array.from({ length: 5 }, () => ({
+      mainProduct: products[0]._id,
 
       productVarDesign: faker.commerce.product(),
       productVarInventoryQty: maxInventoryQty,
@@ -100,8 +100,9 @@ const inputTestProductVariants = async (products) => {
       productVarPrice: faker.number.float({ fractionDigits: 2, min: 0 }),
       productVarDisplayPhoto: faker.image.urlPicsumPhotos(),
     })),
-    ...Array.from({ length: 10 }, () => ({
-      mainProduct: products[0].id,
+    ...Array.from({ length: 50 }, () => ({
+      mainProduct: faker.helpers.arrayElement(products)._id,
+
       productVarDesign: faker.commerce.product(),
       productVarInventoryQty: maxInventoryQty,
       productVarAvailableQty: faker.number.int({
