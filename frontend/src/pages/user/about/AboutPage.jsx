@@ -1,59 +1,143 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import { PATHS } from "../../../routes/PATHS";
+import { showOwnerProfile } from "../../../services/userServices";
 
 import styles from "./AboutPage.module.css";
 import logoImg from "../../../assets/JThreads_logo.png";
+import dayjs from "dayjs";
+import { Avatar, List, ListItem, ListItemText } from "@mui/material";
+
+import { errorUtil } from "../../../utils/errorUtil";
+import Loader from "../../../components/Loader";
+import ErrorPage from "../../ErrorPage";
+import { PageStatusTypes } from "../../../utils/pageStatusUtil";
 
 const AboutPage = () => {
+  const [userProfile, setUserProfile] = useState(null);
+  const [pageStatus, setPageStatus] = useState(PageStatusTypes.LOADING);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const getOwnerInfo = async () => {
+      const controller = new AbortController();
+      try {
+        setPageStatus(PageStatusTypes.LOADING);
+        const { user } = await showOwnerProfile();
+        setUserProfile(user);
+      } catch (err) {
+        setPageStatus(PageStatusTypes.ERROR);
+        errorUtil(err);
+      } finally {
+        setPageStatus(PageStatusTypes.OK);
+      }
+
+      return () => {
+        // Cleanup on unmount
+        controller.abort();
+      };
+    };
+
+    getOwnerInfo();
+  }, []);
+
+  switch (pageStatus) {
+    case PageStatusTypes.LOADING:
+      return <Loader />;
+    case PageStatusTypes.ERROR:
+      return <ErrorPage />;
+    default:
+      break;
+  }
+
+  const userInfoGroups = [
+    [
+      { label: "Username", value: userProfile.username },
+      { label: "Email", value: userProfile.email },
+    ],
+    [
+      { label: "First Name", value: userProfile.firstName ?? "-" },
+      { label: "Last Name", value: userProfile.lastName ?? "-" },
+      { label: "Gender", value: userProfile.gender ?? "-" },
+    ],
+    [
+      { label: "Phone Number", value: userProfile.phoneNumber ?? "-" },
+      {
+        label: "Birthday",
+        value: dayjs(userProfile.birthday).format("D MMM YYYY") ?? "-",
+      },
+    ],
+    [
+      {
+        label: "Default Shipping Address",
+        value: userProfile.defaultShippingAddress ?? "-",
+      },
+    ],
+  ];
+
   return (
     <>
-      <div className={styles.page}>
-        <div className={styles.loginarea}>
-          <h2 className={styles.pagetitle}>JOIN US TODAY</h2>
-          <p className={styles.pagedescription}>
-            Log in to enjoy a personalized experience and to access all our
-            services.
-          </p>
-          {/* <form onSubmit={handleSubmit}>
-            <input
-              className={styles.inputfield}
-              type="text"
-              name="username"
-              placeholder="USERNAME"
-            ></input>
-            <input
-              className={styles.inputfield}
-              type="text"
-              name="email"
-              placeholder="EMAIL"
-            ></input>
-            <input
-              className={styles.inputfield}
-              type="password"
-              autoComplete="off"
-              name="password"
-              placeholder="PASSWORD"
-            ></input>
-            <button className={styles.submitbutton}>SIGN UP</button>
-            <Link className={styles.register} to={PATHS.PUBLIC.SIGN_IN}>
-              Already have an account, log in now!
-            </Link>
-          </form> */}
-        </div>
-        <div>
-          <img
-            src={logoImg}
-            alt="Logo"
-            style={{
-              width: "100%",
-              maxWidth: "20rem", // limit max width to 400px
-              maxHeight: "20rem", // limit max height to 300px
-              objectFit: "contain", // keep aspect ratio, no cropping
-              borderRadius: "12px",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-            }}
-          />
-        </div>
-      </div>
+      <main className={styles["page"]}>
+        <section className={styles["section-info"]}>
+          <div className={styles["title-bar"]}>
+            <Avatar alt="Profile Photo" src={userProfile.profilePhoto} />
+            <h2 className={styles["title-text"]}>
+              ABOUT YOURSELF, {userProfile.username}
+            </h2>
+          </div>
+          <div className={styles["descrpition-bar"]}>
+            <p className={styles["description-text"]}>
+              Joined us on {dayjs(userProfile.createdAt).format("D MMM YYYY")}
+            </p>
+            <div className={styles["descrpition-btns"]}>
+              <button
+                onClick={() =>
+                  navigate(
+                    PATHS.USER(userProfile.username).ABOUT.EDIT_PROFILE,
+                    { state: { userProfile } }
+                  )
+                }
+              >
+                Edit Profile
+              </button>
+              <button
+                onClick={() =>
+                  navigate(PATHS.USER(userProfile.username).ABOUT.EDIT_PASSWORD)
+                }
+              >
+                Change Password
+              </button>
+            </div>
+          </div>
+
+          <article>
+            {userInfoGroups.map((group, index) => (
+              <List key={index} className={styles["list-row-style"]}>
+                {group.map(({ label, value }, i) => (
+                  <ListItem key={i} alignItems="flex-start">
+                    <ListItemText
+                      primary={value}
+                      secondary={
+                        <span
+                          style={{
+                            fontSize: "0.7rem",
+                          }}
+                        >
+                          {label}
+                        </span>
+                      }
+                    />
+                  </ListItem>
+                ))}
+              </List>
+            ))}
+          </article>
+        </section>
+        <aside className={styles["aside-img"]}>
+          <img src={logoImg} alt="Logo" />
+        </aside>
+      </main>
+      {/* <pre>{JSON.stringify(userProfile, null, 2)}</pre> */}
     </>
   );
 };

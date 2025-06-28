@@ -36,3 +36,11 @@ Slay
 /:userId/sell/:orderId --> see view of one transaction
 
 ### Features & Splitting of Work
+
+## Credits
+
+Features from:
+
+- [Private Route](https://medium.com/@bhairabpatra.iitd/private-routes-in-react-559a7d8d161f)
+- [MUI Controlled Form](https://dev.to/melissajlw/how-to-create-a-controlled-form-in-mui-material-ui-4gm9)
+- [Validation in Forms](https://muhimasri.com/blogs/mui-validation/)

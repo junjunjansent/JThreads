@@ -66,6 +66,8 @@ const signIn = async (bodyData) => {
   }
 };
 
+const showUser = async () => {};
+
 const getAllProducts = async () => {
   const url = `${publicService_BASE_URL}/products`;
   try {
@@ -129,6 +131,7 @@ const getInfoFromToken = (token) => {
 export {
   signUp,
   signIn,
+  showUser,
   saveTokenToLocalStorage,
   getTokenFromLocalStorage,
   getInfoFromToken,

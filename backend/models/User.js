@@ -16,6 +16,10 @@ const userSchema = new mongoose.Schema(
       required: [true, "Username is required"],
       lowercase: true,
       trim: true,
+      match: [
+        /^[a-z0-9_-]+$/,
+        "Username can only contain lowercase letters, numbers, hyphens, and underscores",
+      ],
     },
     email: {
       type: String,
@@ -41,14 +45,6 @@ const userSchema = new mongoose.Schema(
       trim: true,
       minLength: [2, "Expecting min. 2 characters"],
     },
-    birthday: {
-      type: Date,
-      min: [
-        new Date(Date.now() - 100 * 365 * 24 * 60 * 60 * 1000),
-        "Birthday is unexpectedly too old",
-      ], // but this is talking about 100 years before when schema is defined
-      max: [Date.now, "Birthday can't be in the future"],
-    },
     gender: {
       type: String,
       trim: true,
@@ -57,18 +53,25 @@ const userSchema = new mongoose.Schema(
         message: 'Gender must be either "M" or "F" or "X"',
       },
     },
+    birthday: {
+      type: Date,
+      min: [
+        new Date(Date.now() - 100 * 365 * 24 * 60 * 60 * 1000),
+        "Birthday is unexpectedly too old",
+      ], // but this is talking about 100 years before when schema is defined
+      max: [Date.now, "Birthday can't be in the future"],
+    },
     phoneNumber: {
       type: String, //cause can have leading zeros
       trim: true,
       match: [
-        /^\+?[1-9]\d{6,14}$/,
+        /^\+?[1-9](?:\s?\d){6,14}$/,
         "Expected valid international phone number",
       ],
     },
     profilePhoto: {
       type: String,
-      default:
-        "https://pixabay.com/vectors/blank-profile-picture-mystery-man-973460/",
+      default: "https://www.gravatar.com/avatar/?d=mp",
     },
     defaultShippingAddress: { type: String, trim: true },
   },

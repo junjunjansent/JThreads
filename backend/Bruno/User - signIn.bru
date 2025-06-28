@@ -5,14 +5,14 @@ meta {
 }
 
 post {
-  url: http://localhost:3000/api/sign-in
+  url: http://localhost:3000/api/public/sign-in
   body: json
   auth: inherit
 }
 
 body:json {
   {
-    "usernameOrEmail":"user1",
+    "usernameOrEmail":"user2",
     "password":"12345678"
   }
 }

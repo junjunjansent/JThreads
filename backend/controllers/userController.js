@@ -1,6 +1,6 @@
 const User = require("../models/User");
 const { ApiError } = require("../utils/errorHandler");
-const { getUserFromRequest } = require("../utils/tokenHandler");
+const { getUserFromRequest, createJWT } = require("../utils/tokenHandler");
 const {
   bcryptPassword,
   isPasswordBCryptValidated,
@@ -22,13 +22,14 @@ const showOwner = async (req, res, next) => {
   try {
     const user = getUserFromRequest(req);
     const userFull = await User.findById(user._id);
-    res.status(200).json({ userFull });
+    res.status(200).json({ user: userFull });
   } catch (err) {
     next(err);
   }
 };
 
 const updateOwner = async (req, res, next) => {
+  // note need to create token so that user can stay logged in
   try {
     const {
       username,
@@ -80,7 +81,21 @@ const updateOwner = async (req, res, next) => {
       { new: true }
     );
 
-    res.status(201).json({ user: updatedUser });
+    // Ensures user details are saved in frontend - with id, username, and email, createdAt
+    const userToken = await createJWT({ user: updatedUser });
+    if (!userToken) {
+      throw new ApiError({
+        status: 503,
+        source: { pointer: "publicController.js" },
+        title: "Service Unavailable: Token Generation",
+        detail: "Server having issue generating token.",
+      });
+    }
+
+    console.log(userToken);
+    console.log("i am here");
+
+    res.status(201).json({ user: updatedUser, token: userToken });
   } catch (err) {
     next(err);
   }
@@ -117,10 +132,15 @@ const updateOwnerPassword = async (req, res, next) => {
       { new: true }
     );
 
-    res.status(201).json({ updatedUser });
+    res.status(201).json({ user: updatedUser });
   } catch (err) {
     next(err);
   }
 };
 
-module.exports = { show, showOwner, updateOwner, updateOwnerPassword };
+module.exports = {
+  show,
+  showOwner,
+  updateOwner,
+  updateOwnerPassword,
+};

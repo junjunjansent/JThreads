@@ -4,8 +4,8 @@ import { Outlet, Routes, Route, useParams } from "react-router";
 import { PATHS, relativeUserPaths } from "./PATHS";
 
 import HomePage from "../pages/HomePage";
-import SignUpPage from "../pages/SignUpPage/SignUpPage";
-import SignInPage from "../pages/SignInPage/SignInPage";
+import SignUpPage from "../pages/SigningPages/SignUpPage";
+import SignInPage from "../pages/SigningPages/SignInPage";
 import BuyAllPage from "../pages/products/BuyAllPage";
 import BuyOnePage from "../pages/products/BuyOnePage";
 import BuyUserPage from "../pages/products/BuyUserPage";

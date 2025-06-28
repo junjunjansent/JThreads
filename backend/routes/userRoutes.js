@@ -4,6 +4,7 @@ const {
   show,
   showOwner,
   updateOwner,
+
   updateOwnerPassword,
 } = require("../controllers/userController");
 
