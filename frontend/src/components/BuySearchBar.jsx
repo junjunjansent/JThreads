@@ -1,7 +1,7 @@
-const BuySearchBar = ({ styles, handleSearch }) => {
+const BuySearchBar = ({ styles, handleInputChange }) => {
   return (
     <>
-      <form onChange={handleSearch}>
+      <form onChange={handleInputChange}>
         <input
           className={styles.inputfield}
           type="search"

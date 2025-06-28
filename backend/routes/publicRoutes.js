@@ -5,13 +5,16 @@ const {
   signIn,
   showUser,
   indexProducts,
+  showOneIndex,
 } = require("../controllers/publicController");
-const { index } = require("../controllers/productController"); //this should be commented out
 
+//user routes
 router.post("/sign-up", signUp);
 router.post("/sign-in", signIn);
-router.get("/products", index); // this should be commented out
-router.get("/products", indexProducts);
 router.post("/users/:userUsername", showUser);
+
+// buyer routes
+router.get("/products", indexProducts);
+router.get("/products/:productId", showOneIndex);
 
 module.exports = router;

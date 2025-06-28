@@ -1,38 +1,71 @@
 import styles from "./BuyAllPage.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import { useSearchParams } from "react-router";
 import { BuySearchBar } from "../../components/BuySearchBar";
 import { ProductCard } from "../../components/ProductCard/ProductCard";
 import { getAllProducts } from "../../services/publicServices";
 
 const BuyAllPage = () => {
   const [allProducts, setAllProducts] = useState([]);
-  const [displayProducts, setDisplayProducts] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+
   useEffect(() => {
     const fetchAllProducts = async () => {
       const fetchedProducts = await getAllProducts();
       setAllProducts(fetchedProducts);
-      setDisplayProducts(fetchedProducts);
+      const urlSearchParam = searchParams.get("search");
+      if (urlSearchParam) {
+        setSearchQuery(urlSearchParam);
+      }
     };
     fetchAllProducts();
-  }, []);
+  }, [searchParams]);
 
-  const handleSearch = async (event) => {
-    let search = event.target.value;
-    const filtering = allProducts.filter((product) =>
-      product.productName.toLowerCase().includes(search.toLowerCase())
-    );
-    setDisplayProducts(filtering);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const currentParams = new URLSearchParams(searchParams);
+      if (searchQuery) {
+        currentParams.set("search", searchQuery);
+      } else {
+        currentParams.delete("search");
+      }
+      setSearchParams(currentParams);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [searchQuery, setSearchParams, searchParams]);
+
+  const handleInputChange = (event) => {
+    setSearchQuery(event.target.value);
   };
+
+  const productsToDisplay = useMemo(() => {
+    const lowerCaseSearchQuery = searchQuery.toLowerCase();
+    return allProducts.filter(
+      (product) =>
+        product.productIsActive &&
+        (product.productName.toLowerCase().includes(lowerCaseSearchQuery) ||
+          product.productCategory.toLowerCase().includes(lowerCaseSearchQuery))
+    );
+  }, [allProducts, searchQuery]);
 
   return (
     <>
       <div className={styles.page}>
         <div className={styles.searchbar}>
-          <BuySearchBar styles={styles} handleSearch={handleSearch} />
+          <BuySearchBar
+            styles={styles}
+            handleInputChange={handleInputChange}
+            searchvalue={searchQuery}
+          />
         </div>
         <div className={styles.searcharea}>
-          {displayProducts.map((product) => (
-            <a href={`/${product.productId}`} className={styles.productlink}>
+          {allProducts.map((product) => (
+            <a
+              href={`/buy/${product._id}`}
+              className={styles.productlink}
+              key={product._id}
+            >
               <ProductCard
                 productid={product._id}
                 name={product.productName}
