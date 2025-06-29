@@ -48,14 +48,15 @@ const BuyOnePage = () => {
     productDescription,
     productCategory,
     productDefaultDeliveryTime,
+    productOwner,
   } = oneProductIndex || {};
-  const { username } = oneProductIndex?.productOwner || {};
   const { productVarAvailableQty, productVarPrice, productVarDisplayPhoto } =
     displayProduct || {};
-  const renderQuantityOptions = [];
-  for (let i = 1; i <= productVarAvailableQty; i++) {
-    renderQuantityOptions.push(i);
-  }
+
+  const renderQuantityOptions = Array.from(
+    { length: productVarAvailableQty },
+    (_, i) => i + 1
+  );
 
   return (
     <>
@@ -82,7 +83,9 @@ const BuyOnePage = () => {
             <InfoTextCard
               label="Sold by"
               value={
-                <Link to={PATHS.PUBLIC.USER_SHOP(username)}>{username}</Link>
+                <Link to={PATHS.PUBLIC.USER_SHOP(productOwner.username)}>
+                  {productOwner.username}
+                </Link>
               }
             />
           </div>
