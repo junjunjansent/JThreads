@@ -33,7 +33,7 @@ const AppRoutes = () => {
       <Route path={PATHS.PUBLIC.HOME} element={<HomePage />} />
       <Route path={PATHS.PUBLIC.SIGN_UP} element={<SignUpPage />} />
       <Route path={PATHS.PUBLIC.SIGN_IN} element={<SignInPage />} />
-      <Route path={PATHS.PUBLIC.BUY.ALL} element={<BuyAllPage />} />
+      <Route path={PATHS.PUBLIC.BUY.PRODUCT_ALL} element={<BuyAllPage />} />
       <Route path={PATHS.PUBLIC.BUY.PRODUCT_ONE()} element={<BuyOnePage />} />
       <Route path={PATHS.PUBLIC.USER_SHOP()} element={<BuyUserPage />} />
 

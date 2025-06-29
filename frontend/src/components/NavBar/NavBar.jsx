@@ -43,7 +43,7 @@ const NavBar = () => {
             <NavCategory styles={styles} />
             {/* Is it possible to make NavCategory a drop down from "Shop" instead */}
             <li>
-              <NavLink to={PATHS.PUBLIC.BUY.ALL}>Shop</NavLink>
+              <NavLink to={PATHS.PUBLIC.BUY.PRODUCT_ALL}>Shop</NavLink>
               <FontAwesomeIcon icon={faStore} />
             </li>
 

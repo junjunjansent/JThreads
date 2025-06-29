@@ -6,7 +6,7 @@ const PATHS = {
     SIGN_UP: "/sign-up",
     SIGN_IN: "/sign-in",
     BUY: {
-      ALL: "/buy",
+      PRODUCT_ALL: "/buy",
       PRODUCT_ONE: (productId = `:productId`) => `/buy/${productId}`,
     },
     USER_SHOP: (userUsername = `:userUsername`) => `/${userUsername}`, // list of items user is selling
