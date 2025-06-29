@@ -3,7 +3,6 @@ const router = express.Router();
 const {
   showOwner,
   updateOwner,
-
   updateOwnerPassword,
 } = require("../controllers/userController");
 

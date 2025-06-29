@@ -20,6 +20,7 @@ const PATHS = {
     },
     BUYER: {
       CART: `/${userUsername}/${relativeUserPaths.BUYER.CART}`,
+      CHECKOUT: `/${userUsername}/${relativeUserPaths.BUYER.CHECKOUT}`,
       ORDER_ALL: `/${userUsername}/${relativeUserPaths.BUYER.ORDER_ALL}`,
       ORDER_ONE: (orderId = `:orderId`) =>
         `/${userUsername}/${relativeUserPaths.BUYER.ORDER_ONE(orderId)}`,
@@ -44,6 +45,7 @@ const relativeUserPaths = {
   },
   BUYER: {
     CART: `cart`,
+    CHECKOUT: `checkout`,
     ORDER_ALL: `orders`,
     ORDER_ONE: (orderId = `:orderId`) => `orders/${orderId}`,
   },

@@ -4,9 +4,9 @@ const {
   DELIVERY_TIMELINE,
 } = require("../../sharedConstants/delivery");
 
-const orderSchema = new mongoose.Schema(
+const orderItemSchema = new mongoose.Schema(
   {
-    order: {
+    mainOrder: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: [true, "Missing Order for Ordered ProductVar"],
@@ -21,33 +21,31 @@ const orderSchema = new mongoose.Schema(
       ref: "User",
       required: [true, "Missing Seller for Ordered ProductVar"],
     },
-    orderedQty: {
+    orderItemQty: {
       type: Number,
       required: [true, "Missing Ordered Qty for Ordered Product Var"],
-      min: [0, "Ordered Qty cannot be negative quantity"],
+      min: [1, "Ordered Qty cannot be negative quantity"],
     },
     productVarId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "ProductVariant",
       required: [true, "Missing Product Variant reference"],
     },
-    orderedVarPrice: {
+    orderItemPrice: {
       // take from ProductVar schema
       type: Number,
       required: [true, "Missing Price for Ordered Product Var"],
       min: [0, "Price cannot be negative quantity"],
       // Probably want a validator that ensures that the value has 2 decimal places ONLY
     },
-    orderedProductDefaultDeliveryTime: {
+    orderItemDefaultDeliveryTime: {
       // take from Product schema
       // in days
       type: Number,
       default: 30,
       min: [1, "Delivery Time should not be less than a day."],
     },
-    orderedVarDeliveryStatus: {
-      // take from Product schema
-      // in days
+    orderItemDeliveryStatus: {
       type: String,
       default: "Pending Seller Confirmation",
       enum: {
@@ -55,9 +53,7 @@ const orderSchema = new mongoose.Schema(
         message: "Delivery Status should be one of the defined types",
       },
     },
-    orderedVarDeliveryTimeline: {
-      // take from Product schema
-      // in days
+    orderedItemDeliveryTimeline: {
       type: String,
       default: "Pending",
       enum: {
@@ -66,9 +62,9 @@ const orderSchema = new mongoose.Schema(
       },
     },
   },
-  { timestamps: true }
+  { timestamps: true } // to track when ordered Status changes
 );
 
-const Order = mongoose.model("Order", orderSchema);
+const OrdeItem = mongoose.model("OrderItem", orderItemSchema);
 
-module.exports = Order;
+module.exports = OrdeItem;

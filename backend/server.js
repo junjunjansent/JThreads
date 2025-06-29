@@ -13,6 +13,7 @@ const publicRouter = require("./routes/publicRoutes");
 const authenticateUser = require("./middlewares/authenticator");
 const usersRouter = require("./routes/userRoutes");
 const productRouter = require("./routes/productRoutes");
+const cartRouter = require("./routes/cartRoutes");
 
 // ----- Connect to MongoDB
 const mongoose = require("mongoose");
@@ -43,6 +44,7 @@ app.use("/api/public", publicRouter);
 app.use(authenticateUser);
 app.use("/api/users", usersRouter);
 app.use("/api/products", productRouter);
+app.use("/api/cart", cartRouter);
 app.use((req, res, next) => {
   next(
     new ApiError({

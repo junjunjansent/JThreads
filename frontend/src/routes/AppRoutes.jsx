@@ -14,6 +14,7 @@ import AboutEditProfilePage from "../pages/user/about/AboutEditProfilePage";
 import AboutEditPasswordPage from "../pages/user/about/AboutEditPasswordPage";
 import BuyerOrdersAll from "../pages/user/buyer/BuyerOrdersAll";
 import BuyerCartPage from "../pages/user/buyer/BuyerCartPage";
+import BuyerCheckoutPage from "../pages/user/buyer/BuyerCheckoutPage";
 import SellAllPage from "../pages/user/seller/SellAllPage";
 import SellOnePage from "../pages/user/seller/SellOnePage";
 import SellerOrdersAll from "../pages/user/seller/SellerOrdersAll";
@@ -50,6 +51,10 @@ const AppRoutes = () => {
         <Route
           path={relativeUserPaths.BUYER.CART}
           element={<BuyerCartPage />}
+        />
+        <Route
+          path={relativeUserPaths.BUYER.CHECKOUT}
+          element={<BuyerCheckoutPage />}
         />
         <Route
           path={relativeUserPaths.BUYER.ORDER_ALL}
