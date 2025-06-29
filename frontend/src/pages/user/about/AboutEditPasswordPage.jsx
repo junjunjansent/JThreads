@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 import { PATHS } from "../../../routes/PATHS";
 
 import { UserContext } from "../../../contexts/UserContext";
-import ValidatedTextField from "../../../utils/ValidatedTextField";
+import ValidatedTextField from "../../../components/ValidatedTextField";
 import { errorUtil } from "../../../utils/errorUtil";
 
 import styles from "./AboutPage.module.css";

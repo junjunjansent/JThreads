@@ -5,7 +5,7 @@ import { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { PATHS } from "../../../routes/PATHS";
 
-import ValidatedTextField from "../../../utils/ValidatedTextField";
+import ValidatedTextField from "../../../components/ValidatedTextField";
 import {
   usernameValidator,
   emailValidator,
@@ -39,11 +39,17 @@ import { updateOwnerProfile } from "../../../services/userServices";
 const AboutEditProfilePage = () => {
   const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
+  // state passed from About Page
   const location = useLocation();
   const user = location.state?.userProfile ?? null;
+
   const [userProfile, setUserProfile] = useState({
     ...user,
     birthday: user?.birthday ? dayjs(user.birthday) : null,
+  });
+  const [formValidity, setFormValidity] = useState({
+    username: true,
+    email: true,
   });
 
   const handleChange = (formLabel, value) => {
@@ -55,6 +61,8 @@ const AboutEditProfilePage = () => {
 
   const handleSubmit = async (event) => {
     // need to prevent submission if any error TextFields
+    // Object.entries;
+
     try {
       event.preventDefault();
       (userProfile.birthday = userProfile.birthday
@@ -106,6 +114,8 @@ const AboutEditProfilePage = () => {
                       formLabel="username"
                       onChange={handleChange}
                       validator={usernameValidator}
+                      formValidityState={formValidity}
+                      formValidityStateSetter={setFormValidity}
                     />
                   </Grid>
                   <Grid size={6}>
