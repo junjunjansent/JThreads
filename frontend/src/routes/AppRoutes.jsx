@@ -3,9 +3,9 @@ import { UserContext } from "../contexts/UserContext";
 import { Outlet, Routes, Route, useParams } from "react-router";
 import { PATHS, relativeUserPaths } from "./PATHS";
 
-import HomePage from "../pages/SigningPages/HomePage";
-import SignUpPage from "../pages/SigningPages/SignUpPage";
-import SignInPage from "../pages/SigningPages/SignInPage";
+import HomePage from "../pages/general/HomePage";
+import SignUpPage from "../pages/general/SignUpPage";
+import SignInPage from "../pages/general/SignInPage";
 import BuyAllPage from "../pages/products/BuyAllPage";
 import BuyOnePage from "../pages/products/BuyOnePage";
 import BuyUserPage from "../pages/products/BuyUserPage";
@@ -18,7 +18,7 @@ import SellAllPage from "../pages/user/seller/SellAllPage";
 import SellOnePage from "../pages/user/seller/SellOnePage";
 import SellerOrdersAll from "../pages/user/seller/SellerOrdersAll";
 import ErrorPage from "../pages/ErrorPage";
-import UnauthPage from "../pages/UnauthPage";
+import UnauthPage from "../pages/general/UnauthPage";
 import { isDomainForOwner } from "../utils/ownerValidator";
 
 const PrivateRoute = () => {

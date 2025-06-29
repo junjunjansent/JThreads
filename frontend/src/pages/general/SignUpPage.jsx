@@ -6,7 +6,7 @@ import { useContext, useState } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { PATHS } from "../../routes/PATHS";
 
-import styles from "./SigningPage.module.css";
+import styles from "./general.module.css";
 import { toast } from "react-toastify";
 import logoImg from "../../assets/JThreads_logo.png";
 import { Box, Button, TextField } from "@mui/material";

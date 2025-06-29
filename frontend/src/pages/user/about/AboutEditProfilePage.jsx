@@ -226,7 +226,7 @@ const AboutEditProfilePage = () => {
                   <Grid size={6}>
                     <FormControl fullWidth>
                       <TextField
-                        label="Profile Photo"
+                        label="Profile Photo (as a link)"
                         value={userProfile.profilePhoto ?? ""}
                         onChange={(e) =>
                           handleChange(

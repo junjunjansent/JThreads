@@ -32,6 +32,11 @@
   text-align: justify;
 }
 
+.descrpition-btns {
+  display: flex;
+  gap: 1rem;
+}
+
 .link-signing-page {
   font-size: 12px;
   font-style: italic;
