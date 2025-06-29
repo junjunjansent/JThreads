@@ -1,5 +1,7 @@
 import styles from "./ProductCard.module.css";
 
+//TODO: need to add navigate functions to the EDIT/DELETE buttons
+
 const ProductCard = ({
   productid,
   name,

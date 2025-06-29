@@ -104,22 +104,22 @@ const SellAllPage = () => {
           <p className={styles["description-text"]}>
             Joined on {dayjs(userBasicProfile.createdAt).format("D MMM YYYY")}
           </p>
-          {/* {isOwner && (
+          {isOwner && (
             <div className={styles["descrpition-btns"]}>
               <button
                 onClick={() =>
-                  navigate(PATHS.USER(userUsername).SELLER.PRODUCT_ALL)
+                  navigate(PATHS.USER(userUsername).SELLER.PRODUCT_ONE)
                 }
               >
-                Edit Listing
+                Create New Listing
               </button>
-              <button
+              {/* <button
                 onClick={() => navigate(PATHS.USER(userUsername).ABOUT.DEFAULT)}
               >
                 My Profile Details
-              </button>
+              </button> */}
             </div>
-          )} */}
+          )}
         </div>
 
         <div className={styles.searchbar}>
