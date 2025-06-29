@@ -25,7 +25,7 @@ const UnauthPage = () => {
               <>
                 <button
                   onClick={() =>
-                    navigate(PATHS.USER(user.username).ABOUT.DEFAULT)
+                    navigate(PATHS.PUBLIC.USER_SHOP(user.username))
                   }
                 >
                   Don't be nosy ah
