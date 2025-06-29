@@ -15,6 +15,7 @@ import {
 import { UserContext } from "../../../contexts/UserContext";
 import { errorUtil } from "../../../utils/errorUtil";
 import { saveTokenToLocalStorage } from "../../../utils/tokenUtil";
+import { GENDER_TYPES } from "../../../../../sharedConstants/gender";
 
 import styles from "./AboutPage.module.css";
 import logoImg from "../../../assets/JThreads_logo.png";
@@ -173,9 +174,9 @@ const AboutEditProfilePage = () => {
                         }
                       >
                         <MenuItem value="">None</MenuItem>
-                        <MenuItem value="M">M</MenuItem>
-                        <MenuItem value="F">F</MenuItem>
-                        <MenuItem value="X">X</MenuItem>
+                        {GENDER_TYPES.map((value) => (
+                          <MenuItem value={value}>{value}</MenuItem>
+                        ))}
                       </Select>
                     </FormControl>
                   </Grid>

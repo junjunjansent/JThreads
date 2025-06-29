@@ -1,7 +1,7 @@
 // run this only in backend root folder
 const User = require("../models/User");
 const Product = require("../models/Product");
-const ProductVariant = require("../models/ProductVariation");
+const ProductVariant = require("../models/ProductVariant");
 const { faker } = require("@faker-js/faker");
 const { bcryptPassword } = require("../utils/bcrypt");
 

@@ -1,6 +1,6 @@
 const User = require("../models/User");
 const Product = require("../models/Product");
-const ProductVariant = require("../models/ProductVariation");
+const ProductVariant = require("../models/ProductVariant");
 const { ApiError } = require("../utils/errorHandler");
 const {
   bcryptPassword,

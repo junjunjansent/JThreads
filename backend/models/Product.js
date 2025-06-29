@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-// const ProductVariation = require("./ProductVariation");
+// const ProductVariant = require("./ProductVariant");
 
 const productSchema = new mongoose.Schema(
   {
