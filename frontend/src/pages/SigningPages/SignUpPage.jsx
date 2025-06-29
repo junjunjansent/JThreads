@@ -10,7 +10,7 @@ import styles from "./SigningPage.module.css";
 import { toast } from "react-toastify";
 import logoImg from "../../assets/JThreads_logo.png";
 import { Box, Button, TextField } from "@mui/material";
-import ValidatedTextField from "../../utils/ValidatedTextField";
+import ValidatedTextField from "../../components/ValidatedTextField";
 
 import { saveTokenToLocalStorage } from "../../utils/tokenUtil";
 import { signUp } from "../../services/publicServices";

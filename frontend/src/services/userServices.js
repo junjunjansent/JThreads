@@ -1,11 +1,12 @@
 import { ApiError } from "../utils/errorUtil";
 import { getTokenFromLocalStorage } from "../utils/tokenUtil";
 
-const publicService_BASE_URL = `${
+const userService_BASE_URL = `${
   import.meta.env.VITE_BACK_END_SERVER_URL
 }/users`;
 
-const publicService_HEADER = (token = null) => {
+const userService_HEADER = () => {
+  const token = getTokenFromLocalStorage();
   if (token) {
     return {
       Authorization: `Bearer ${token}`,
@@ -18,15 +19,10 @@ const publicService_HEADER = (token = null) => {
   }
 };
 
-const fetchJson = async (
-  url,
-  methodStr = "GET",
-  token = null,
-  bodyData = null
-) => {
+const fetchJson = async (url, methodStr = "GET", bodyData = null) => {
   const options = {
     method: methodStr,
-    headers: publicService_HEADER(token),
+    headers: userService_HEADER(),
   };
 
   if (methodStr === "POST" || methodStr === "PUT") {
@@ -56,11 +52,10 @@ const fetchJson = async (
 
 const showOwnerProfile = async () => {
   // private Router should have protected any unauthorised getting in
-  const url = `${publicService_BASE_URL}/owner`;
-  const token = getTokenFromLocalStorage();
+  const url = `${userService_BASE_URL}/owner`;
 
   try {
-    const resData = await fetchJson(url, "GET", token);
+    const resData = await fetchJson(url, "GET");
     return resData;
   } catch (err) {
     throw new ApiError(err);
@@ -68,11 +63,10 @@ const showOwnerProfile = async () => {
 };
 
 const updateOwnerProfile = async (bodyData) => {
-  const url = `${publicService_BASE_URL}/owner`;
-  const token = getTokenFromLocalStorage();
+  const url = `${userService_BASE_URL}/owner`;
 
   try {
-    const resData = await fetchJson(url, "PUT", token, bodyData);
+    const resData = await fetchJson(url, "PUT", bodyData);
     return resData;
   } catch (err) {
     throw new ApiError(err);
@@ -80,11 +74,10 @@ const updateOwnerProfile = async (bodyData) => {
 };
 
 const updateOwnerPassword = async (bodyData) => {
-  const url = `${publicService_BASE_URL}/owner/password`;
-  const token = getTokenFromLocalStorage();
+  const url = `${userService_BASE_URL}/owner/password`;
 
   try {
-    const resData = await fetchJson(url, "PUT", token, bodyData);
+    const resData = await fetchJson(url, "PUT", bodyData);
     return resData;
   } catch (err) {
     throw new ApiError(err);
