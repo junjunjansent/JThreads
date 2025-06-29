@@ -36,7 +36,14 @@ const BuyOnePage = () => {
     console.log(displayProduct);
   };
 
-  const { _id, productName } = oneProductIndex || {};
+  const {
+    _id,
+    productName,
+    productIsActive,
+    productDescription,
+    productCategory,
+    productDefaultDeliveryTime,
+  } = oneProductIndex || {};
   const { username } = oneProductIndex?.productOwner || {};
   const { productVarAvailableQty, productVarPrice, productVarDisplayPhoto } =
     displayProduct || {};
@@ -58,14 +65,20 @@ const BuyOnePage = () => {
 
         <section className={styles.productDetails}>
           {/* Container for Product Name and Seller */}
+          <h2>{productName}</h2>
+          <p>{productDescription}</p>
           <div className={styles.productHeader}>
-            <InfoTextCard label="Product Name" value={productName} />
-            <InfoTextCard label="Category" value="Do you want this?" />
+            {/* <InfoTextCard label="Product Name" value={productName} /> */}
+            <InfoTextCard label="Category" value={productCategory} />
             <InfoTextCard
-              label="Username"
+              label="Sold by"
               value={
                 <Link to={PATHS.PUBLIC.USER_SHOP(username)}>{username}</Link>
               }
+            />
+            <InfoTextCard
+              label="Ave. Delivery Time (Days)"
+              value={productDefaultDeliveryTime}
             />
           </div>
 
@@ -108,7 +121,7 @@ const BuyOnePage = () => {
                   </optgroup>
                 </select>
               </form>
-              <button>Add to Cart</button>
+              <button disabled={!productIsActive}>Add to Cart</button>
             </div>
           </article>
         </section>
