@@ -104,7 +104,7 @@ const SellAllPage = () => {
           <p className={styles["description-text"]}>
             Joined on {dayjs(userBasicProfile.createdAt).format("D MMM YYYY")}
           </p>
-          {isOwner && (
+          {/* {isOwner && (
             <div className={styles["descrpition-btns"]}>
               <button
                 onClick={() =>
@@ -119,7 +119,7 @@ const SellAllPage = () => {
                 My Profile Details
               </button>
             </div>
-          )}
+          )} */}
         </div>
 
         <div className={styles.searchbar}>
