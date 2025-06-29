@@ -1,5 +1,5 @@
-import debug from "debug";
-const log = debug("JThreads:AboutEditPasswordPage");
+// import debug from "debug";
+// const log = debug("JThreads:AboutEditPasswordPage");
 
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 
 import { TextField, Box, Button } from "@mui/material";
 import { updateOwnerPassword } from "../../../services/userServices";
+import { passwordValidator } from "../../../utils/inputValidator";
 
 const AboutEditPasswordPage = () => {
   const navigate = useNavigate();
@@ -23,6 +24,10 @@ const AboutEditPasswordPage = () => {
     oldPassword: "",
     newPassword: "",
     confirmNewPassword: "",
+  });
+  const [formValidity, setFormValidity] = useState({
+    newPassword: false,
+    confirmNewPassword: false,
   });
 
   const newPasswordValidator = (newValue) => {
@@ -40,15 +45,23 @@ const AboutEditPasswordPage = () => {
       ...passwordProfile,
       [formLabel]: value,
     });
-    log(passwordProfile);
+    // log(passwordProfile);
   };
 
   const handleSubmit = async (event) => {
-    // TODO: need to prevent submission if any error TextFields
+    event.preventDefault();
+
+    // need to prevent submission if any error TextFields
+    const isFormValid = Object.values(formValidity).every(
+      (isInputValid) => isInputValid
+    );
+    if (!isFormValid) {
+      toast.error("Cannot Submit Form. Check your inputs!");
+      return;
+    }
+
     try {
-      event.preventDefault();
       toast.info("Changing Password for you... so mafan...");
-      log(passwordProfile);
       const { user } = await updateOwnerPassword(passwordProfile);
       navigate(PATHS.USER(user.username).ABOUT.DEFAULT);
       toast.success(`Edits Saved :)`);
@@ -79,6 +92,10 @@ const AboutEditPasswordPage = () => {
             </div>
           </div>
           <article>
+            <p className={styles["description-text"]}>
+              Password should be min 8 characters long, no spaces, and contain
+              at least a alphanumeric character
+            </p>
             <Box
               component="form"
               onSubmit={handleSubmit}
@@ -91,12 +108,15 @@ const AboutEditPasswordPage = () => {
                 autoComplete="current-password"
                 onChange={(e) => handleChange("oldPassword", e.target.value)}
               />
-              <TextField
+              <ValidatedTextField
                 required
                 type="password"
                 label="New Password"
-                autoComplete="current-password"
-                onChange={(e) => handleChange("newPassword", e.target.value)}
+                formLabel="newPassword"
+                onChange={handleChange}
+                validator={passwordValidator}
+                formValidityState={formValidity}
+                formValidityStateSetter={setFormValidity}
               />
               <ValidatedTextField
                 required
@@ -105,6 +125,8 @@ const AboutEditPasswordPage = () => {
                 formLabel="confirmNewPassword"
                 onChange={handleChange}
                 validator={newPasswordValidator}
+                formValidityState={formValidity}
+                formValidityStateSetter={setFormValidity}
               />
 
               <Button type="submit">Change It</Button>

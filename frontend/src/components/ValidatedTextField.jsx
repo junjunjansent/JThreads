@@ -19,24 +19,37 @@ const ValidatedTextField = ({
   const handleChange = (e) => {
     // usual based on onChange - the attribute of TextField
     const newValue = e.target.value;
-    // if newValue === "" && required === false, can ignore
     setValue(newValue);
+    let newErrorMessage = validator(newValue);
 
-    // set error & error Message attributes of TextField
-    const errorMessage = validator(newValue);
-    setErrorMessage(errorMessage);
-    setError(Boolean(errorMessage));
+    if (newValue.trim() === "" && required === false) {
+      // if attribute not required, i can ignore empty values
+      onChange(formLabel, null);
+      newErrorMessage = false;
 
-    // setting formValidity State
-    if (formValidityState && formValidityStateSetter) {
-      formValidityStateSetter({
-        ...formValidityState,
-        [formLabel]: !errorMessage,
-      });
+      // setting formValidity State
+      if (formValidityState && formValidityStateSetter) {
+        formValidityStateSetter({
+          ...formValidityState,
+          [formLabel]: true,
+        });
+      }
+    } else {
+      // setting formValidity State
+      if (formValidityState && formValidityStateSetter) {
+        formValidityStateSetter({
+          ...formValidityState,
+          [formLabel]: !newErrorMessage,
+        });
+      }
+
+      // use given onChange - method from props
+      onChange(formLabel, newValue);
     }
 
-    // use given onChange - method from props
-    onChange(formLabel, newValue);
+    // set error & error Message attributes of TextField
+    setErrorMessage(newErrorMessage);
+    setError(Boolean(newErrorMessage));
   };
 
   useEffect(() => {
@@ -49,7 +62,7 @@ const ValidatedTextField = ({
         required={required}
         type={type}
         label={label}
-        value={inputValue}
+        value={inputValue ?? ""}
         onChange={handleChange}
         error={error}
         helperText={errorMessage}

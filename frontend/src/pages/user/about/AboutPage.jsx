@@ -64,7 +64,9 @@ const AboutPage = () => {
       { label: "Phone Number", value: userProfile.phoneNumber ?? "-" },
       {
         label: "Birthday",
-        value: dayjs(userProfile.birthday).format("D MMM YYYY") ?? "-",
+        value: userProfile.birthday
+          ? dayjs(userProfile.birthday).format("D MMM YYYY")
+          : "-",
       },
     ],
     [

@@ -10,6 +10,7 @@ import {
   usernameValidator,
   emailValidator,
   nameValidator,
+  phoneNumberValidator,
 } from "../../../utils/inputValidator";
 import { UserContext } from "../../../contexts/UserContext";
 import { errorUtil } from "../../../utils/errorUtil";
@@ -21,7 +22,6 @@ import dayjs from "dayjs";
 import { toast } from "react-toastify";
 
 import {
-  List,
   Select,
   TextField,
   Box,
@@ -52,24 +52,30 @@ const AboutEditProfilePage = () => {
     email: true,
   });
 
-  const handleChange = (formLabel, value) => {
+  const handleChange = (formLabel, newValue) => {
     setUserProfile({
       ...userProfile,
-      [formLabel]: value,
+      [formLabel]: newValue,
     });
   };
 
   const handleSubmit = async (event) => {
+    event.preventDefault();
+
     // need to prevent submission if any error TextFields
-    // Object.entries;
+    const isFormValid = Object.values(formValidity).every(
+      (isInputValid) => isInputValid
+    );
+    if (!isFormValid) {
+      toast.error("Cannot Submit Form. Check your inputs!");
+      return;
+    }
 
     try {
-      event.preventDefault();
       (userProfile.birthday = userProfile.birthday
         ? userProfile.birthday.toDate()
         : null),
         toast.info("Updating for you...");
-
       const { user, token } = await updateOwnerProfile(userProfile);
       setUser(user);
       saveTokenToLocalStorage(token);
@@ -126,6 +132,8 @@ const AboutEditProfilePage = () => {
                       validator={emailValidator}
                       formLabel="email"
                       onChange={handleChange}
+                      formValidityState={formValidity}
+                      formValidityStateSetter={setFormValidity}
                     />
                   </Grid>
 
@@ -136,6 +144,8 @@ const AboutEditProfilePage = () => {
                       validator={nameValidator}
                       formLabel="firstName"
                       onChange={handleChange}
+                      formValidityState={formValidity}
+                      formValidityStateSetter={setFormValidity}
                     />
                   </Grid>
                   <Grid size={4}>
@@ -145,6 +155,8 @@ const AboutEditProfilePage = () => {
                       validator={nameValidator}
                       formLabel="lastName"
                       onChange={handleChange}
+                      formValidityState={formValidity}
+                      formValidityStateSetter={setFormValidity}
                     />
                   </Grid>
                   <Grid size={4}>
@@ -152,8 +164,13 @@ const AboutEditProfilePage = () => {
                       <InputLabel>Gender</InputLabel>
                       <Select
                         label="Gender"
-                        value={userProfile.gender}
-                        onChange={(e) => handleChange("gender", e.target.value)}
+                        value={userProfile.gender ?? ""}
+                        onChange={(e) =>
+                          handleChange(
+                            "gender",
+                            e.target.value === "" ? null : e.target.value
+                          )
+                        }
                       >
                         <MenuItem value="">None</MenuItem>
                         <MenuItem value="M">M</MenuItem>
@@ -167,9 +184,11 @@ const AboutEditProfilePage = () => {
                     <ValidatedTextField
                       label="Phone Number"
                       value={userProfile.phoneNumber}
-                      validator={nameValidator}
+                      validator={phoneNumberValidator}
                       formLabel="phoneNumber"
                       onChange={handleChange}
+                      formValidityState={formValidity}
+                      formValidityStateSetter={setFormValidity}
                     />
                   </Grid>
                   <Grid size={6}>
@@ -194,9 +213,12 @@ const AboutEditProfilePage = () => {
                     <FormControl fullWidth>
                       <TextField
                         label="Default Shipping Address"
-                        value={userProfile.defaultShippingAddress}
+                        value={userProfile.defaultShippingAddress ?? ""}
                         onChange={(e) =>
-                          handleChange("defaultShippingAddress", e.target.value)
+                          handleChange(
+                            "defaultShippingAddress",
+                            e.target.value.trim() || null
+                          )
                         }
                       />
                     </FormControl>
@@ -205,9 +227,12 @@ const AboutEditProfilePage = () => {
                     <FormControl fullWidth>
                       <TextField
                         label="Profile Photo"
-                        value={userProfile.profilePhoto}
+                        value={userProfile.profilePhoto ?? ""}
                         onChange={(e) =>
-                          handleChange("profilePhoto", e.target.value)
+                          handleChange(
+                            "profilePhoto",
+                            e.target.value.trim() || null
+                          )
                         }
                       />
                     </FormControl>

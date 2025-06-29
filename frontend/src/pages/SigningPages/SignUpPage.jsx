@@ -14,7 +14,11 @@ import ValidatedTextField from "../../components/ValidatedTextField";
 
 import { saveTokenToLocalStorage } from "../../utils/tokenUtil";
 import { signUp } from "../../services/publicServices";
-import { emailValidator, usernameValidator } from "../../utils/inputValidator";
+import {
+  emailValidator,
+  passwordValidator,
+  usernameValidator,
+} from "../../utils/inputValidator";
 import { errorUtil } from "../../utils/errorUtil";
 
 const SignUpPage = () => {
@@ -25,6 +29,12 @@ const SignUpPage = () => {
     email: "",
     password: "",
     confirmPassword: "",
+  });
+  const [formValidity, setFormValidity] = useState({
+    username: false,
+    email: false,
+    password: false,
+    confirmPassword: false,
   });
 
   const confirmPasswordValidator = (newValue) => {
@@ -40,8 +50,18 @@ const SignUpPage = () => {
   };
 
   const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // need to prevent submission if any error TextFields
+    const isFormValid = Object.values(formValidity).every(
+      (isInputValid) => isInputValid
+    );
+    if (!isFormValid) {
+      toast.error("Cannot Submit Form. Check your inputs!");
+      return;
+    }
+
     try {
-      event.preventDefault();
       toast.info("Signing Up for you...");
 
       const { user, token } = await signUp(signUpProfile);
@@ -77,6 +97,8 @@ const SignUpPage = () => {
             formLabel="username"
             onChange={handleChange}
             validator={usernameValidator}
+            formValidityState={formValidity}
+            formValidityStateSetter={setFormValidity}
           />
           <ValidatedTextField
             required
@@ -85,13 +107,22 @@ const SignUpPage = () => {
             validator={emailValidator}
             formLabel="email"
             onChange={handleChange}
+            formValidityState={formValidity}
+            formValidityStateSetter={setFormValidity}
           />
-          <TextField
+          <p className={styles["link-signing-page"]}>
+            Password should be min 8 characters long, no spaces, and contain at
+            least a alphanumeric character
+          </p>
+          <ValidatedTextField
             required
             type="password"
             label="Password"
-            autoComplete="current-password"
-            onChange={(e) => handleChange("password", e.target.value)}
+            formLabel="password"
+            onChange={handleChange}
+            validator={passwordValidator}
+            formValidityState={formValidity}
+            formValidityStateSetter={setFormValidity}
           />
           <ValidatedTextField
             required
@@ -100,6 +131,8 @@ const SignUpPage = () => {
             formLabel="confirmPassword"
             onChange={handleChange}
             validator={confirmPasswordValidator}
+            formValidityState={formValidity}
+            formValidityStateSetter={setFormValidity}
           />
           <Button type="submit">CREATE AN ACCOUNT</Button>
         </Box>
