@@ -36,7 +36,7 @@ const SellAllPage = () => {
   const { userUsername } = useParams();
   const navigate = useNavigate();
 
-  const isOwner = isDomainForOwner(user, userUsername);
+  const isOwner = isDomainForOwner(user, userUsername); // boolean to check if the user is viewing their own profile
   // log("isOwner: ", isOwner);
   // log("user: ", user);
   // log("userBasicProfile", userBasicProfile);
@@ -143,6 +143,7 @@ const SellAllPage = () => {
                   category={product.productCategory}
                   photo={product.productDisplayPhoto}
                   owner={product.productOwner}
+                  isOwner={isOwner}
                 />
               </a>
             ))
