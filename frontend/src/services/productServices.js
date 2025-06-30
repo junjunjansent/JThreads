@@ -54,3 +54,5 @@ const createProduct = async (bodyData) => {
     throw new ApiError(err);
   }
 };
+
+export { createProduct };
