@@ -142,86 +142,161 @@ const indexProducts = async (req, res, next) => {
     let findQuery = {};
     let products;
 
-    if (isGlobalProductsRequest) {
-      if (search) {
-        findQuery.$or = [
-          { productName: { $regex: search, $options: "i" } },
-          { productCategory: { $regex: search, $options: "i" } },
-        ];
-      }
-
-      const allProducts = await Product.find(findQuery)
-        .populate({
-          path: "productOwner",
-          select: "username _id",
-        })
-        .lean();
-
-      // Aggregate variant stats and map them to products
-      const variantStats = await ProductVariant.aggregate([
-        {
-          $group: {
-            _id: "$mainProduct",
-            minPrice: { $min: "$productVarPrice" },
-            maxPrice: { $max: "$productVarPrice" },
-            availableQuantity: { $sum: "$productVarAvailableQty" },
-          },
-        },
-        {
-          $project: {
-            _id: 0,
-            productId: "$_id",
-            minPrice: 1,
-            maxPrice: 1,
-            availableQuantity: 1,
-          },
-        },
-      ]);
-
-      const statsMap = new Map(
-        variantStats.map((stat) => [stat.productId.toString(), stat])
-      );
-
-      products = allProducts.map((product) => {
-        const stats = statsMap.get(product._id.toString());
-        return stats
-          ? {
-              ...product,
-              variantMinPrice: stats.minPrice,
-              variantMaxPrice: stats.maxPrice,
-              availableQuantity: stats.availableQuantity,
-            }
-          : product;
-      });
-    } else {
+    // if search query is provided, add to findQuery
+    if (search) {
+      findQuery.$or = [
+        { productName: { $regex: search, $options: "i" } },
+        { productCategory: { $regex: search, $options: "i" } },
+      ];
+    }
+    // if it is not a global products request, but rather a specific seller's page request, additional filter to search by user
+    if (!isGlobalProductsRequest) {
       const { userUsername } = req.params;
       const user = await User.findOne({ username: userUsername });
-
       if (!user) {
         return res.status(404).json({ message: "User not found." });
       }
-
       findQuery.productOwner = user._id;
-
-      if (search) {
-        findQuery.$or = [
-          { productName: { $regex: search, $options: "i" } },
-          { productCategory: { $regex: search, $options: "i" } },
-        ];
-      }
-
-      products = await Product.find(findQuery).populate({
-        path: "productOwner",
-        select: "username _id",
-      });
     }
 
+    // Once all conditions are set, we can do a fetch products API call
+    const allProducts = await Product.find(findQuery)
+      .populate({
+        path: "productOwner",
+        select: "username _id",
+      })
+      .lean();
+
+    // Aggregate variant stats and map them to products
+    const variantStats = await ProductVariant.aggregate([
+      {
+        $group: {
+          _id: "$mainProduct",
+          minPrice: { $min: "$productVarPrice" },
+          maxPrice: { $max: "$productVarPrice" },
+          availableQuantity: { $sum: "$productVarAvailableQty" },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          productId: "$_id",
+          minPrice: 1,
+          maxPrice: 1,
+          availableQuantity: 1,
+        },
+      },
+    ]);
+
+    const statsMap = new Map(
+      variantStats.map((stat) => [stat.productId.toString(), stat])
+    );
+
+    products = allProducts.map((product) => {
+      const stats = statsMap.get(product._id.toString());
+      return stats
+        ? {
+            ...product,
+            variantMinPrice: stats.minPrice,
+            variantMaxPrice: stats.maxPrice,
+            availableQuantity: stats.availableQuantity,
+          }
+        : product;
+    });
     res.json({ product: products });
   } catch (err) {
     console.error("Error in indexProducts:", err);
     next(err);
   }
 };
+
+// const indexProducts = async (req, res, next) => {
+//   try {
+//     const isGlobalProductsRequest = req.url.includes("products");
+//     const { search } = req.query;
+//     let findQuery = {};
+//     let products;
+
+//     if (isGlobalProductsRequest) {
+//       if (search) {
+//         findQuery.$or = [
+//           { productName: { $regex: search, $options: "i" } },
+//           { productCategory: { $regex: search, $options: "i" } },
+//         ];
+//       }
+
+//       const allProducts = await Product.find(findQuery)
+//         .populate({
+//           path: "productOwner",
+//           select: "username _id",
+//         })
+//         .lean();
+
+//       // Aggregate variant stats and map them to products
+//       const variantStats = await ProductVariant.aggregate([
+//         {
+//           $group: {
+//             _id: "$mainProduct",
+//             minPrice: { $min: "$productVarPrice" },
+//             maxPrice: { $max: "$productVarPrice" },
+//             availableQuantity: { $sum: "$productVarAvailableQty" },
+//           },
+//         },
+//         {
+//           $project: {
+//             _id: 0,
+//             productId: "$_id",
+//             minPrice: 1,
+//             maxPrice: 1,
+//             availableQuantity: 1,
+//           },
+//         },
+//       ]);
+
+//       const statsMap = new Map(
+//         variantStats.map((stat) => [stat.productId.toString(), stat])
+//       );
+
+//       products = allProducts.map((product) => {
+//         const stats = statsMap.get(product._id.toString());
+//         return stats
+//           ? {
+//               ...product,
+//               variantMinPrice: stats.minPrice,
+//               variantMaxPrice: stats.maxPrice,
+//               availableQuantity: stats.availableQuantity,
+//             }
+//           : product;
+//       });
+//     } else {
+//       const { userUsername } = req.params;
+//       const user = await User.findOne({ username: userUsername });
+
+//       if (!user) {
+//         return res.status(404).json({ message: "User not found." });
+//       }
+
+//       findQuery.productOwner = user._id;
+
+//       if (search) {
+//         findQuery.$or = [
+//           { productName: { $regex: search, $options: "i" } },
+//           { productCategory: { $regex: search, $options: "i" } },
+//         ];
+//       }
+
+//       products = await Product.find(findQuery).populate({
+//         path: "productOwner",
+//         select: "username _id",
+//       });
+//     }
+
+//     res.json({ product: products });
+//   } catch (err) {
+//     console.error("Error in indexProducts:", err);
+//     next(err);
+//   }
+// };
 
 const showOneIndex = async (req, res, next) => {
   try {

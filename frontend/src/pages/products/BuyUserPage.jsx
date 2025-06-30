@@ -54,6 +54,7 @@ const BuyUserPage = () => {
         }
         const { product } = await getProducts(userUsername, null);
         setAllProducts(product);
+        console.log(product);
         setPageStatus(PageStatusTypes.OK);
       } catch (err) {
         setPageStatus(PageStatusTypes.ERROR);
