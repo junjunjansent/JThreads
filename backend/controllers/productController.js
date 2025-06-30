@@ -1,4 +1,5 @@
 const Product = require("../models/Product");
+const ProductVariant = require("../models/ProductVariant");
 // const { getUserFromRequest } = require("../utils/tokenHandler");
 
 // SELLER CREATING NEW PRODUCT
@@ -18,7 +19,7 @@ const editOne = async (req, res, next) => {
     const productId = req.params.productId;
     const productEdit = req.body;
     // const createProduct = await Product.findByIdAndUpdate(productId, req.body);
-    const editProduct = await Product.findByIdAndUpdate(productId, productEdit);
+    await Product.findByIdAndUpdate(productId, productEdit);
     const updatedProduct = await Product.findById(productId);
     res.status(201).json(updatedProduct);
   } catch (err) {
@@ -26,4 +27,14 @@ const editOne = async (req, res, next) => {
   }
 };
 
-module.exports = { createOne, editOne };
+const createOneVariant = async (req, res, next) => {
+  try {
+    // const mainProduct = req.params.productId;
+    const variantData = { ...req.body, mainProduct: req.params.productId };
+    const createProduct = await ProductVariant.create(variantData);
+    res.status(201).json({ product: createProduct });
+  } catch (err) {
+    next(err);
+  }
+};
+module.exports = { createOne, editOne, createOneVariant };
