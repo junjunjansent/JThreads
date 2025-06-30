@@ -24,6 +24,7 @@ const BuyOnePage = () => {
     };
     const fetchVariantIndex = async () => {
       const fetchedVariants = await getVariantIndex(productId);
+      // TODO refactor backend to get mainProduct data when obtaining variants - avoid double fetching
       console.log(fetchedVariants);
       setVariantIndex(fetchedVariants);
       setDisplayProduct(fetchedVariants[0]); // Set the first variant as the default selected variant information to render
