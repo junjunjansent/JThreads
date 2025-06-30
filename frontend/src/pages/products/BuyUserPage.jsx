@@ -8,6 +8,7 @@ import { PATHS } from "../../routes/PATHS";
 
 import { BuySearchBar } from "../../components/BuySearchBar";
 import { ProductCard } from "../../components/ProductCard/ProductCard";
+import { CreateProductForm } from "../../components/CreateProductForm/CreateProductForm";
 import Loader from "../../components/Loader";
 import ErrorPage from "../ErrorPage";
 
@@ -30,6 +31,8 @@ const BuyUserPage = () => {
   const [pageStatus, setPageStatus] = useState(PageStatusTypes.LOADING);
   const [allProducts, setAllProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
   // removed 'searchParams' state as we don't need to store search params in state
   const [, setSearchParams] = useSearchParams("");
   const { userUsername } = useParams();
@@ -54,7 +57,7 @@ const BuyUserPage = () => {
         }
         const { product } = await getProducts(userUsername, null);
         setAllProducts(product);
-        console.log(product);
+        // console.log(product);
         setPageStatus(PageStatusTypes.OK);
       } catch (err) {
         setPageStatus(PageStatusTypes.ERROR);
@@ -80,14 +83,9 @@ const BuyUserPage = () => {
     fetchAllProducts();
   };
 
-  switch (pageStatus) {
-    case PageStatusTypes.LOADING:
-      return <Loader />;
-    case PageStatusTypes.ERROR:
-      return <ErrorPage />;
-    default:
-      break;
-  }
+  const toggleDialog = () => {
+    setIsDialogOpen((prev) => !prev); // Toggles the boolean value of isDialogOpen
+  };
 
   return (
     <>
@@ -98,22 +96,27 @@ const BuyUserPage = () => {
           </h2>
           <Avatar
             alt="Profile Photo"
-            src={userBasicProfile.profilePhoto ?? ""}
+            src={userBasicProfile?.profilePhoto ?? ""}
           />
         </div>
         <div className={styles["descrpition-bar"]}>
           <p className={styles["description-text"]}>
-            Joined on {dayjs(userBasicProfile.createdAt).format("D MMM YYYY")}
+            Joined on {dayjs(userBasicProfile?.createdAt).format("D MMM YYYY")}
           </p>
           {isOwner && (
             <div className={styles["descrpition-btns"]}>
-              <button
+              <button onClick={toggleDialog}>Create New Product</button>
+              <CreateProductForm
+                isDialogOpen={isDialogOpen}
+                toggleDialog={toggleDialog}
+              />
+              {/* <button
                 onClick={() =>
                   navigate(PATHS.USER(userUsername).SELLER.PRODUCT_ALL)
                 }
               >
                 Edit Listing
-              </button>
+              </button> */}
               <button
                 onClick={() => navigate(PATHS.USER(userUsername).ABOUT.DEFAULT)}
               >
