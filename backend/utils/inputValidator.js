@@ -1,40 +1,70 @@
 // Sync in with Database & Frontend thanks
 
+const { ApiError } = require("./errorHandler");
+
 const usernameValidator = (username) => {
-  if (username.length < 3) return "Name must be at least 3 characters long";
-  if (username.length > 20) return "Name must be less than 20 characters long";
-  if (!/^[a-z0-9_-]+$/.test(username))
-    return "Username can only contain lowercase letters, numbers, hyphens, and underscores";
-  return false;
+  if (
+    username.length < 3 ||
+    username.length > 20 ||
+    !/^[a-z0-9_-]+$/.test(username)
+  ) {
+    throw new ApiError({
+      status: 400,
+      source: { pointer: "inputValidator.js" },
+      title: "Bad Request: Username Format",
+      detail:
+        "Username must be 3-20 characters long, and can only contain lowercase letters, numbers, hyphens, and underscores.",
+    });
+  }
 };
 
 const emailValidator = (email) => {
-  if (!/^[-.\w]+@[-.\w]+\.[-.\w]{2,}$/.test(email))
-    return "Email needs to be in correct format";
-  return false;
+  if (!/^[-.\w]+@[-.\w]+\.[-.\w]{2,}$/.test(email)) {
+    throw new ApiError({
+      status: 400,
+      source: { pointer: "inputValidator.js" },
+      title: "Bad Request: Email Format",
+      detail: "Email needs to be in correct format",
+    });
+  }
 };
 
 const passwordValidator = (password) => {
-  if (password.length < 8) return "Password must be at least 8 characters long";
-  if (/\s/.test(password)) {
-    return "Password should not contain spaces";
+  if (
+    password.length < 8 ||
+    /\s/.test(password) ||
+    !/[a-zA-Z0-9]/.test(password)
+  ) {
+    throw new ApiError({
+      status: 400,
+      source: { pointer: "inputValidator.js" },
+      title: "Bad Request: Password Format",
+      detail:
+        "Password must be at least characters long, not contain spaces, and have at least one letter or number.",
+    });
   }
-  if (!/[a-zA-Z0-9]/.test(password)) {
-    return "Password needs to have at least one letter or number";
-  }
-  return false;
 };
 
 const nameValidator = (name) => {
-  if (!/^[a-zA-Z\s]{2,}$/.test(name.trim()))
-    return "Name is expected to be longer than 2 characters";
-  return false;
+  if (!/^[a-zA-Z\s]{2,}$/.test(name.trim())) {
+    throw new ApiError({
+      status: 400,
+      source: { pointer: "inputValidator.js" },
+      title: "Bad Request: Name Format",
+      detail: "Name must be at least 2 characters long.",
+    });
+  }
 };
 
 const phoneNumberValidator = (phoneNumber) => {
-  if (!/^\+?[1-9](?:\s?\d){6,14}$/.test(phoneNumber))
-    return "Expected valid international phone number";
-  return false;
+  if (!/^\+?[1-9](?:\s?\d){6,14}$/.test(phoneNumber)) {
+    throw new ApiError({
+      status: 400,
+      source: { pointer: "inputValidator.js" },
+      title: "Bad Request: Phone Number Format",
+      detail: "Phone number must be in international number format.",
+    });
+  }
 };
 
 module.exports = {
