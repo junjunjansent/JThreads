@@ -19,12 +19,12 @@ const BuyOnePage = () => {
   useEffect(() => {
     const fetchOneIndex = async () => {
       const fetchedOne = await getOneIndex(productId);
-      // console.log(fetchedOne);
+      console.log(fetchedOne);
       setOneProductIndex(fetchedOne);
     };
     const fetchVariantIndex = async () => {
       const fetchedVariants = await getVariantIndex(productId);
-      console.log(fetchedVariants);
+      // console.log(fetchedVariants);
       setVariantIndex(fetchedVariants);
       setDisplayProduct(fetchedVariants[0]); // Set the first variant as the default selected variant information to render
     };
@@ -83,8 +83,8 @@ const BuyOnePage = () => {
             <InfoTextCard
               label="Sold by"
               value={
-                <Link to={PATHS.PUBLIC.USER_SHOP(productOwner.username)}>
-                  {productOwner.username}
+                <Link to={PATHS.PUBLIC.USER_SHOP(productOwner?.username)}>
+                  {productOwner?.username}
                 </Link>
               }
             />
