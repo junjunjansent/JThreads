@@ -143,6 +143,9 @@ const BuyUserPage = () => {
                   category={product.productCategory}
                   photo={product.productDisplayPhoto}
                   owner={product.productOwner}
+                  quantity={product.availableQuantity}
+                  maxprice={product.variantMaxPrice}
+                  minprice={product.variantMinPrice}
                 />
               </a>
             ))

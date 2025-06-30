@@ -144,6 +144,9 @@ const SellAllPage = () => {
                   photo={product.productDisplayPhoto}
                   owner={product.productOwner}
                   isOwner={isOwner}
+                  quantity={product.availableQuantity}
+                  maxprice={product.variantMaxPrice}
+                  minprice={product.variantMinPrice}
                 />
               </a>
             ))

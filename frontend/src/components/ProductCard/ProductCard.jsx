@@ -8,6 +8,9 @@ const ProductCard = ({
   category,
   photo,
   owner,
+  quantity,
+  maxprice,
+  minprice,
   isOwner = null,
 }) => {
   const cardRender = () => {
@@ -22,8 +25,10 @@ const ProductCard = ({
               <div className={styles.productSeller}>{owner.username}</div>
             </div>
             <div className={styles.productSubContainer}>
-              <div className={styles.productPriceRange}>S$ 15.90</div>
-              <div className={styles.productQuantity}>15 avail</div>
+              <div className={styles.productPriceRange}>
+                S${minprice} - {maxprice}
+              </div>
+              <div className={styles.productQuantity}>{quantity} avail</div>
             </div>
             <div className={styles.sellerActionButtons}>
               <button>Edit</button>
@@ -41,8 +46,10 @@ const ProductCard = ({
               <div className={styles.productSeller}>{owner.username}</div>
             </div>
             <div className={styles.productSubContainer}>
-              <div className={styles.productPriceRange}>S$ 15.90</div>
-              <div className={styles.productQuantity}>15 avail</div>
+              <div className={styles.productPriceRange}>
+                S${minprice} - {maxprice}
+              </div>
+              <div className={styles.productQuantity}>{quantity} avail</div>
             </div>
           </div>
         );

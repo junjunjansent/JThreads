@@ -14,6 +14,7 @@ const BuyAllPage = () => {
     const fetchAllProducts = async () => {
       const { product } = await getProducts();
       setAllProducts(product);
+      console.log(product);
     };
     fetchAllProducts();
   }, []);
@@ -60,6 +61,9 @@ const BuyAllPage = () => {
                   category={product.productCategory}
                   photo={product.productDisplayPhoto}
                   owner={product.productOwner}
+                  quantity={product.availableQuantity}
+                  maxprice={product.variantMaxPrice}
+                  minprice={product.variantMinPrice}
                 />
               </a>
             ))

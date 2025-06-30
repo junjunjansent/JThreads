@@ -148,32 +148,128 @@ const indexProducts = async (req, res, next) => {
           { productCategory: { $regex: search, $options: "i" } },
         ];
       }
-      const allProducts = await Product.find(findQuery).populate(
-        "productOwner"
+
+      const allProducts = await Product.find(findQuery)
+        .populate({
+          path: "productOwner",
+          select: "username _id",
+        })
+        .lean();
+      // we pull all variants and group them by mainProductId and then find the min and max variant price
+      const variantStats = await ProductVariant.aggregate([
+        {
+          $group: {
+            _id: "$mainProduct", // Group by the mainProduct ID (which is the Product's _id)
+            minPrice: { $min: "$productVarPrice" },
+            maxPrice: { $max: "$productVarPrice" },
+            availableQuantity: { $sum: "$productVarAvailableQty" },
+          },
+        },
+        {
+          $project: {
+            _id: 0, // Exclude the original _id from the output
+            productId: "$_id", // Rename it to productId for clarity
+            minPrice: 1,
+            maxPrice: 1,
+            availableQuantity: 1,
+          },
+        },
+      ]);
+
+      const statsMap = new Map(
+        variantStats.map((stat) => [
+          stat.productId.toString(), // Use productId (which is the Product's _id) as the key
+          {
+            minPrice: stat.minPrice,
+            maxPrice: stat.maxPrice,
+            availableQuantity: stat.availableQuantity,
+          },
+        ])
       );
+
+      const productsWithStats = allProducts.map((product) => {
+        // Look up the min/max prices using the current product's _id
+        const stats = statsMap.get(product._id.toString());
+        if (stats) {
+          // If stats are found, return a new object combining product data
+          // with the min/max prices
+          return {
+            ...product, // Spreads all properties from the original product
+            variantMinPrice: stats.minPrice, // Adds the new minPrice field
+            variantMaxPrice: stats.maxPrice, // Adds the new maxPrice field
+            availableQuantity: stats.availableQuantity, // Adds the available quantity field
+          };
+        }
+        return product; // If no variants or prices found, return the product as is
+      });
+
+      res.json({ product: productsWithStats });
+    } else {
+      const { userUsername } = req.params;
+      const { search } = req.query;
+      const user = await User.findOne({ username: userUsername });
+      let findQuery = {
+        productOwner: user._id,
+      };
+
+      // else, we assume that the request is for a specific user's products
+      if (search) {
+        findQuery.$or = [
+          { productName: { $regex: search, $options: "i" } },
+          { productCategory: { $regex: search, $options: "i" } },
+        ];
+      }
+      const allProducts = await Product.find(findQuery).populate({
+        path: "productOwner",
+        select: "username _id",
+      });
       res.json({ product: allProducts });
     }
-    const { userUsername } = req.params;
-    const { search } = req.query;
-    const user = await User.findOne({ username: userUsername });
-    let findQuery = {
-      productOwner: user._id,
-    };
-
-    // else, we assume that the request is for a specific user's products
-    if (search) {
-      findQuery.$or = [
-        { productName: { $regex: search, $options: "i" } },
-        { productCategory: { $regex: search, $options: "i" } },
-      ];
-    }
-    const allProducts = await Product.find(findQuery).populate("productOwner");
-    res.json({ product: allProducts });
   } catch (err) {
     console.error("Error in indexSearchProducts:", err);
     next(err);
   }
 };
+
+// const indexProducts1 = async (req, res, next) => {
+//   // checking what type of req is being sent
+//   try {
+//     // if the request URL includes "products" API fetch is for all products
+//     if (req.url.includes("products")) {
+//       const { search } = req.query;
+//       let findQuery = {};
+//       if (search) {
+//         findQuery.$or = [
+//           { productName: { $regex: search, $options: "i" } },
+//           { productCategory: { $regex: search, $options: "i" } },
+//         ];
+//       }
+//       const allProducts = await Product.find(findQuery).populate(
+//         "productOwner"
+//       );
+//       res.json({ product: allProducts });
+//     }
+//     const { userUsername } = req.params;
+//     const { search } = req.query;
+//     const user = await User.findOne({ username: userUsername });
+//     let findQuery = {
+//       productOwner: user._id,
+//     };
+
+//     // else, we assume that the request is for a specific user's products
+//     if (search) {
+//       findQuery.$or = [
+//         { productName: { $regex: search, $options: "i" } },
+//         { productCategory: { $regex: search, $options: "i" } },
+//       ];
+//     }
+//     const allProducts = await Product.find(findQuery).populate("productOwner");
+//     res.json({ product: allProducts });
+//   } catch (err) {
+//     console.error("Error in indexSearchProducts:", err);
+//     next(err);
+//   }
+// };
 
 // const indexProducts = async (req, res, next) => {
 //   const { search } = req.query;
