@@ -67,10 +67,23 @@ const phoneNumberValidator = (phoneNumber) => {
   }
 };
 
+const numberRangeValidator = (number, min = 0, max = Infinity) => {
+  const convertedNum = Number(number);
+  if (isNaN(convertedNum) || convertedNum < min || convertedNum > max) {
+    throw new ApiError({
+      status: 400,
+      source: { pointer: "inputValidator.js" },
+      title: "Bad Request: Number Range Format",
+      detail: `Number must be a valid number within ${min} and ${max}.`,
+    });
+  }
+};
+
 module.exports = {
   usernameValidator,
   emailValidator,
   passwordValidator,
   nameValidator,
   phoneNumberValidator,
+  numberRangeValidator,
 };

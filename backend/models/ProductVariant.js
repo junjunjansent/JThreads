@@ -21,6 +21,10 @@ const productVariantSchema = new mongoose.Schema(
       type: Number,
       required: [true, "Inventory Qty needs to be defined"],
       min: [0, "Inventory quantity cannot be negative quantity"],
+      validate: {
+        validator: Number.isInteger,
+        message: "Inventory Qty must be an Integer",
+      },
     },
     productVarAvailableQty: {
       type: Number,
@@ -28,9 +32,9 @@ const productVariantSchema = new mongoose.Schema(
       min: [0, "Available quantity cannot be negative quantity"],
       validate: {
         validator: function (value) {
-          return value <= this.productVarInventoryQty;
+          return value <= this.productVarInventoryQt && Number.isInteger(value);
         },
-        message: "Available quantity must be <= Inventory Qty",
+        message: "Available quantity must be an Integer <= Inventory Qty",
       },
     },
     productVarPrice: {

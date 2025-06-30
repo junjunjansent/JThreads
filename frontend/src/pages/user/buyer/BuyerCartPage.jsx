@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { PageStatusTypes } from "../../../utils/pageStatusUtil";
 import { PATHS } from "../../../routes/PATHS";
@@ -8,12 +8,11 @@ import { errorUtil } from "../../../utils/errorUtil";
 
 import styles from "./CartCheckout.module.css";
 import logoImg from "../../../assets/JThreads_logo.png";
+import dayjs from "dayjs";
 import Loader from "../../../components/Loader";
 import ErrorPage from "../../ErrorPage";
-import { UserContext } from "../../../contexts/UserContext";
 
-const BuyCartPage = () => {
-  const { user } = useContext(UserContext);
+const BuyerCartPage = () => {
   const [cart, setCart] = useState(null);
   const [pageStatus, setPageStatus] = useState(PageStatusTypes.LOADING);
   const navigate = useNavigate();
@@ -52,18 +51,31 @@ const BuyCartPage = () => {
   return (
     <main className={styles["page"]}>
       <section className={styles["section-info"]}>
-        <pre>{JSON.stringify(cart, null, 2)}</pre>
         {cart ? (
           <>
-            <h2 className={styles["title-text"]}>{user.username}'s Cart</h2>
-            <p className={styles["description-text"]}>Editing this</p>
+            <h2 className={styles["title-text"]}>
+              {cart.buyer.username}'s Cart
+            </h2>
+            <p className={styles["description-text"]}>
+              Last updated on {dayjs(cart.updatedAt).format("D MMM YYYY")}
+              <br />
+              <small>
+                Your cart will be emptied after 15 days from last edit.
+              </small>
+              <br />
+              <br />
+              <small>
+                Note we helped to remove deleted or disabled products (so blame
+                the Seller, not us)
+              </small>
+            </p>
             <div className={styles["descrpition-btns"]}>
               <button onClick={() => navigate(PATHS.PUBLIC.BUY.PRODUCT_ALL)}>
-                To More Capitalism
+                Indulge in More Capitalism
               </button>
               <button
                 onClick={() =>
-                  navigate(PATHS.USER(user.username).BUYER.CHECKOUT)
+                  navigate(PATHS.USER(cart.buyer.username).BUYER.CHECKOUT)
                 }
               >
                 Take My Money
@@ -72,7 +84,7 @@ const BuyCartPage = () => {
           </>
         ) : (
           <>
-            <h2 className={styles["title-text"]}>Nothing in your Cart</h2>
+            <h2 className={styles["title-text"]}>Empty Cart</h2>
             <p className={styles["description-text"]}>
               So weird... never buy things before ah. Go shop lah.
             </p>
@@ -81,6 +93,7 @@ const BuyCartPage = () => {
             </button>
           </>
         )}
+        <pre>{JSON.stringify(cart, null, 2)}</pre>
       </section>
       <aside className={styles["aside-img"]}>
         <img src={logoImg} alt="Logo" />
@@ -89,4 +102,4 @@ const BuyCartPage = () => {
   );
 };
 
-export default BuyCartPage;
+export default BuyerCartPage;

@@ -1,11 +1,11 @@
 meta {
-  name: Cart - createCart
+  name: Cart - destroyCart
   type: http
-  seq: 15
+  seq: 16
 }
 
 post {
-  url: http://localhost:3000/api/cart/
+  url: http://localhost:3000/api/cart/68625df6c9fb5cfe5fea030d
   body: json
   auth: bearer
 }
@@ -15,5 +15,5 @@ auth:bearer {
 }
 
 body:json {
-  {"itemId": "685faa35a59d22a929ff2be4", "qtyChange" : "0" }
+  {"itemId": "685faa35a59d22a929ff2be4", "qtyChange" : "3" }
 }
