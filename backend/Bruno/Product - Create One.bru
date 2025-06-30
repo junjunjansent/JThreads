@@ -4,8 +4,22 @@ meta {
   seq: 12
 }
 
-get {
-  url: http://localhost:3000/api/product
-  body: none
-  auth: inherit
+post {
+  url: http://localhost:3000/api/products/
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY4NWZhOWQ1ZDg4ZjY1OTlkMGRmMjgzNiIsInVzZXJuYW1lIjoidXNlcjEiLCJwcm9maWxlUGhvdG8iOiJodHRwczovL3d3dy5ncmF2YXRhci5jb20vYXZhdGFyLz9kPW1wIiwiY3JlYXRlZEF0IjoiMjAyNS0wNi0yOFQwODozNzo0MS4yMjdaIn0sImlhdCI6MTc1MTI2ODQ1NywiZXhwIjoxNzUxODczMjU3fQ.uULbpGFTL0d2vE4nHXeJxhYT9RHOTfWOiNMaaS4r0jI
+}
+
+body:json {
+  {
+    "productName": "TESTING123",
+    "productDescription": "TEST",
+    "productCategory": "Tops",
+    "productDisplayPhoto": "",
+    "productDefaultDeliveryTime": "20"
+  }
 }
