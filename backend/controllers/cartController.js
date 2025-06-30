@@ -5,7 +5,7 @@ const { getUserFromRequest } = require("../utils/tokenHandler");
 const showCart = async (req, res, next) => {
   try {
     const user = getUserFromRequest(req);
-    const cart = await Cart.find({ buyer: user._id });
+    const cart = await Cart.findOne({ buyer: user._id });
     res.status(200).json({ cart });
   } catch (err) {
     next(err);
@@ -17,7 +17,7 @@ const updateCart = async (req, res, next) => {
     // qtyChange: number | "reset"
     const { item, qtyChange } = req.body;
     const user = getUserFromRequest(req);
-    const cart = await Cart.find({ buyer: user._id });
+    const cart = await Cart.findOne({ buyer: user._id });
 
     if (item && qtyChange) {
       throw new ApiError({
