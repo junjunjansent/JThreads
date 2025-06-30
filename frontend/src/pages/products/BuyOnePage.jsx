@@ -7,6 +7,7 @@ import InfoTextCard from "../../components/InfoTextCard";
 
 import { getOneIndex, getVariantIndex } from "../../services/publicServices";
 import { UserContext } from "../../contexts/UserContext";
+import BuyOneMissingPage from "./BuyOneMissingPage";
 
 const BuyOnePage = () => {
   const { user } = useContext(UserContext);
@@ -22,12 +23,14 @@ const BuyOnePage = () => {
       // console.log(fetchedOne);
       setOneProductIndex(fetchedOne);
     };
+
     const fetchVariantIndex = async () => {
       const fetchedVariants = await getVariantIndex(productId);
       console.log(fetchedVariants);
       setVariantIndex(fetchedVariants);
       setDisplayProduct(fetchedVariants[0]); // Set the first variant as the default selected variant information to render
     };
+
     fetchOneIndex();
     fetchVariantIndex();
   }, [productId]);
@@ -60,91 +63,97 @@ const BuyOnePage = () => {
 
   return (
     <>
-      <main className={styles.buyOneArea}>
-        <aside className={styles["aside-img"]}>
-          <img
-            className={styles.productImg}
-            src={productVarDisplayPhoto}
-            alt={productName}
-          />
-        </aside>
-
-        <section className={styles.productDetails}>
-          {/* Container for Product Name and Seller */}
-          <h2>{productName}</h2>
-          <p>{productDescription}</p>
-          <div className={styles.productHeader}>
-            {/* <InfoTextCard label="Product Name" value={productName} /> */}
-            <InfoTextCard label="Category" value={productCategory} />
-            <InfoTextCard
-              label="Ave. Delivery Time (Days)"
-              value={productDefaultDeliveryTime}
+      {oneProductIndex ? (
+        <main className={styles.buyOneArea}>
+          <aside className={styles["aside-img"]}>
+            <img
+              className={styles.productImg}
+              src={productVarDisplayPhoto}
+              alt={productName}
             />
-            <InfoTextCard
-              label="Sold by"
-              value={
-                <Link to={PATHS.PUBLIC.USER_SHOP(productOwner?.username ?? "")}>
-                  {productOwner?.username ?? ""}
-                </Link>
-              }
-            />
-          </div>
+          </aside>
 
-          {/* Container for Product Designs*/}
-          <article>
-            <h6>Designs: </h6>
-            <div className={styles.designButtons}>
-              {variantIndex.map((variant) => (
-                <button
-                  key={variant._id}
-                  id={variant._id}
-                  onClick={handleSelectVariant}
-                >
-                  {variant.productVarDesign}
-                </button>
-              ))}
+          <section className={styles.productDetails}>
+            {/* Container for Product Name and Seller */}
+            <h2>{productName}</h2>
+            <p>{productDescription}</p>
+            <div className={styles.productHeader}>
+              {/* <InfoTextCard label="Product Name" value={productName} /> */}
+              <InfoTextCard label="Category" value={productCategory} />
+              <InfoTextCard
+                label="Ave. Delivery Time (Days)"
+                value={productDefaultDeliveryTime}
+              />
+              <InfoTextCard
+                label="Sold by"
+                value={
+                  <Link
+                    to={PATHS.PUBLIC.USER_SHOP(productOwner?.username ?? "")}
+                  >
+                    {productOwner?.username ?? ""}
+                  </Link>
+                }
+              />
             </div>
 
-            <div className={styles.priceQuantity}>
-              <div className={styles.productPrice}>
-                Price: ${productVarPrice}
+            {/* Container for Product Designs*/}
+            <article>
+              <h6>Designs: </h6>
+              <div className={styles.designButtons}>
+                {variantIndex.map((variant) => (
+                  <button
+                    key={variant._id}
+                    id={variant._id}
+                    onClick={handleSelectVariant}
+                  >
+                    {variant.productVarDesign}
+                  </button>
+                ))}
               </div>
-              <div className={styles.productQuantity}>
-                Qty: {productVarAvailableQty}
-              </div>
-            </div>
-          </article>
 
-          <article>
-            <h6>You know you want to buy it: </h6>
-            <div className={styles.buttonsArea}>
-              {/* <button>Quantity</button> */}
-              <form>
-                <label>Quantity</label>
-                <select>
-                  <optgroup>
-                    {renderQuantityOptions.map((quantity) => (
-                      <option key={quantity}>{quantity}</option>
-                    ))}
-                  </optgroup>
-                </select>
-              </form>
-              {user ? (
-                <button disabled={!productIsActive}>
-                  {productIsActive
-                    ? "Add to Cart"
-                    : "User has disabled purchase"}
-                </button>
-              ) : (
-                <button onClick={() => navigate(PATHS.PUBLIC.SIGN_IN)}>
-                  {" "}
-                  Login to Start Buying
-                </button>
-              )}
-            </div>
-          </article>
-        </section>
-      </main>
+              <div className={styles.priceQuantity}>
+                <div className={styles.productPrice}>
+                  Price: ${productVarPrice}
+                </div>
+                <div className={styles.productQuantity}>
+                  Qty: {productVarAvailableQty}
+                </div>
+              </div>
+            </article>
+
+            <article>
+              <h6>You know you want to buy it: </h6>
+              <div className={styles.buttonsArea}>
+                {/* <button>Quantity</button> */}
+                <form>
+                  <label>Quantity</label>
+                  <select>
+                    <optgroup>
+                      {renderQuantityOptions.map((quantity) => (
+                        <option key={quantity}>{quantity}</option>
+                      ))}
+                    </optgroup>
+                  </select>
+                </form>
+                {user ? (
+                  <button disabled={!productIsActive}>
+                    {productIsActive
+                      ? "Add to Cart"
+                      : "User has disabled purchase"}
+                  </button>
+                ) : (
+                  <button onClick={() => navigate(PATHS.PUBLIC.SIGN_IN)}>
+                    {" "}
+                    Login to Start Buying
+                  </button>
+                )}
+              </div>
+            </article>
+          </section>
+        </main>
+      ) : (
+        <BuyOneMissingPage />
+      )}
     </>
   );
 };
