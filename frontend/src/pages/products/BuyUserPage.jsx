@@ -51,6 +51,7 @@ const BuyUserPage = () => {
         if (isOwner) {
           // to prevent unnecessary fetching, jsut get from token/UserContext
           setUserBasicProfile(user);
+          console.log(user._id);
         } else {
           const fetchedUser = await showUserBasicProfile(userUsername);
           // TODO refactor backend to get user data when obtaining oneProduct - avoid double fetching
