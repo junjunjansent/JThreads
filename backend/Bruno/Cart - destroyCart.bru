@@ -1,0 +1,19 @@
+meta {
+  name: Cart - destroyCart
+  type: http
+  seq: 16
+}
+
+post {
+  url: http://localhost:3000/api/cart/68625df6c9fb5cfe5fea030d
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY4NWZhYTM0YTU5ZDIyYTkyOWZmMmI4ZiIsInVzZXJuYW1lIjoidXNlcjEiLCJwcm9maWxlUGhvdG8iOiJodHRwczovL3d3dy5ncmF2YXRhci5jb20vYXZhdGFyLz9kPW1wIiwiY3JlYXRlZEF0IjoiMjAyNS0wNi0yOFQwODozOToxNi42MDFaIn0sImlhdCI6MTc1MTE5MDk3OSwiZXhwIjoxNzUxNzk1Nzc5fQ.NRXvvDwbk8Nf2X3rQEkiAG7Ss_Kr1IbjxkP-ffl2C20
+}
+
+body:json {
+  {"itemId": "685faa35a59d22a929ff2be4", "qtyChange" : "3" }
+}

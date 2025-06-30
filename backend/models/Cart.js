@@ -9,7 +9,11 @@ const cartItemSchema = new mongoose.Schema({
   qty: {
     type: Number,
     required: [true, "Qty for Cart Item"],
-    min: [1, "Cart Item Qty cannot be negative quantity"],
+    min: [0, "Cart Item Qty cannot be negative quantity"],
+    validate: {
+      validator: Number.isInteger,
+      message: "Item Qty must be an Integer",
+    },
   },
 });
 

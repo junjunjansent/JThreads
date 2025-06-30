@@ -5,6 +5,13 @@ const {
   bcryptPassword,
   isPasswordBCryptValidated,
 } = require("../utils/bcrypt");
+const {
+  usernameValidator,
+  emailValidator,
+  passwordValidator,
+  nameValidator,
+  phoneNumberValidator,
+} = require("../utils/inputValidator");
 
 // REMOVED due users shouldnt be able to get other Users' details
 // const show = async (req, res, next) => {
@@ -44,6 +51,12 @@ const updateOwner = async (req, res, next) => {
       defaultShippingAddress,
     } = req.body;
 
+    if (username) usernameValidator(username);
+    if (email) emailValidator(email);
+    if (firstName) nameValidator(firstName);
+    if (lastName) nameValidator(lastName);
+    if (phoneNumber) phoneNumberValidator(phoneNumber);
+
     const usernamesExisting = await User.find({ username }).select("username");
     if (usernamesExisting.length > 1) {
       throw new ApiError({
@@ -79,7 +92,7 @@ const updateOwner = async (req, res, next) => {
         profilePhoto,
         defaultShippingAddress,
       },
-      { new: true }
+      { runValidators: true, new: true }
     ).select("username profilePhoto createdAt");
 
     // Ensures user details are saved in frontend - with id, username, and email, createdAt
@@ -105,8 +118,11 @@ const updateOwner = async (req, res, next) => {
 const updateOwnerPassword = async (req, res, next) => {
   try {
     const { oldPassword, newPassword } = req.body;
+    passwordValidator(newPassword);
+
+    // check existing user
     const user = getUserFromRequest(req);
-    const userFull = await User.findById(user._id);
+    const userFull = await User.findById(user._id).select("password");
 
     if (
       !userFull ||
