@@ -20,8 +20,8 @@ const AboutPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const controller = new AbortController();
     const getOwnerInfo = async () => {
-      const controller = new AbortController();
       try {
         setPageStatus(PageStatusTypes.LOADING);
         const { user } = await showOwnerProfile();

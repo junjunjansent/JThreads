@@ -41,8 +41,9 @@ const BuyUserPage = () => {
   // log("userBasicProfile", userBasicProfile);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchAllProducts = async () => {
-      const controller = new AbortController();
       try {
         if (isOwner) {
           // to prevent unnecessary fetching, jsut get from token/UserContext
