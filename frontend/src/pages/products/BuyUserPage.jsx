@@ -49,6 +49,7 @@ const BuyUserPage = () => {
           setUserBasicProfile(user);
         } else {
           const fetchedUser = await showUserBasicProfile(userUsername);
+          // TODO refactor backend to get user data when obtaining oneProduct - avoid double fetching
           setUserBasicProfile(fetchedUser.user);
         }
         const { product } = await getProducts(userUsername, null);

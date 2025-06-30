@@ -95,6 +95,7 @@ const signIn = async (req, res, next) => {
       $or: [{ username: usernameOrEmail }, { email: usernameOrEmail }],
     }).select("username password createdAt profilePhoto");
 
+    // Password Checker
     if (!oneUser || !isPasswordBCryptValidated(password, oneUser.password)) {
       throw new ApiError({
         status: 400,

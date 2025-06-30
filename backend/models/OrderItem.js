@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const {
   DELIVERY_STATUS_VARIANT,
   DELIVERY_TIMELINE,
-} = require("../../sharedConstants/delivery");
+} = require("../constants/shared/deliveryCondition");
 
 const orderItemSchema = new mongoose.Schema(
   {

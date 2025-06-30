@@ -83,8 +83,8 @@ const BuyOnePage = () => {
             <InfoTextCard
               label="Sold by"
               value={
-                <Link to={PATHS.PUBLIC.USER_SHOP(productOwner.username)}>
-                  {productOwner.username}
+                <Link to={PATHS.PUBLIC.USER_SHOP(productOwner?.username ?? "")}>
+                  {productOwner?.username ?? ""}
                 </Link>
               }
             />

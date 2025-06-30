@@ -15,7 +15,7 @@ import {
 import { UserContext } from "../../../contexts/UserContext";
 import { errorUtil } from "../../../utils/errorUtil";
 import { saveTokenToLocalStorage } from "../../../utils/tokenUtil";
-import { GENDER_TYPES } from "../../../../../sharedConstants/gender";
+import { GENDER_TYPES } from "../../../constants/shared/gender";
 
 import styles from "./AboutPage.module.css";
 import logoImg from "../../../assets/JThreads_logo.png";
