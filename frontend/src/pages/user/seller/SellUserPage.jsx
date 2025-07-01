@@ -32,16 +32,9 @@ const SellUserPage = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  // removed 'searchParams' state as we don't need to store search params in state
   const [, setSearchParams] = useSearchParams("");
   const { userUsername } = useParams();
-  // const navigate = useNavigate();
-
   const isOwner = isDomainForOwner(user, userUsername);
-  // log("isOwner: ", isOwner);
-  // log("user: ", user);
-  // log("userBasicProfile", userBasicProfile);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -49,7 +42,6 @@ const SellUserPage = () => {
     const fetchAllProducts = async () => {
       try {
         if (isOwner) {
-          // to prevent unnecessary fetching, jsut get from token/UserContext
           setUserBasicProfile(user);
           // console.log(user._id);
         } else {
@@ -131,24 +123,18 @@ const SellUserPage = () => {
                 ? `/${userUsername}/sell/${product._id}`
                 : `/buy/${product._id}`;
               return (
-                <a
-                  href={productLink}
-                  className={styles.productlink}
-                  key={product._id}
-                >
-                  <ProductCard
-                    productid={product._id}
-                    name={product.productName}
-                    category={product.productCategory}
-                    photo={product.productDisplayPhoto}
-                    owner={product.productOwner}
-                    quantity={product.availableQuantity}
-                    maxprice={product.variantMaxPrice}
-                    minprice={product.variantMinPrice}
-                    userUsername={userUsername}
-                    isOwner={isOwner}
-                  />
-                </a>
+                <ProductCard
+                  productid={product._id}
+                  name={product.productName}
+                  category={product.productCategory}
+                  photo={product.productDisplayPhoto}
+                  owner={product.productOwner}
+                  quantity={product.availableQuantity}
+                  maxprice={product.variantMaxPrice}
+                  minprice={product.variantMinPrice}
+                  userUsername={userUsername}
+                  isOwner={isOwner}
+                />
               );
             })
           ) : (
