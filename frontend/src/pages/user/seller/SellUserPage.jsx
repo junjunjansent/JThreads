@@ -140,7 +140,7 @@ const SellUserPage = () => {
           {allProducts.length > 0 ? (
             allProducts.map((product) => {
               let productLink = isOwner
-                ? `/sell/${product._id}`
+                ? `/${userUsername}/sell/${product._id}`
                 : `/buy/${product._id}`;
               return (
                 <a
