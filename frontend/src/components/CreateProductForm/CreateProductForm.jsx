@@ -1,12 +1,17 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import { PATHS } from "../../routes/PATHS";
+
 import { UserContext } from "../../contexts/UserContext";
 import { createProduct } from "../../services/productServices";
 import { Box, Button } from "@mui/material";
 import { toast } from "react-toastify";
 import { errorUtil } from "../../utils/errorUtil";
 
-const CreateProductForm = ({ isDialogOpen, toggleDialog }) => {
-  const { user } = useContext(UserContext);
+const CreateProductForm = ({ isDialogOpen, toggleDialog, userUsername }) => {
+  // const { user } = useContext(UserContext);
+  const navigate = useNavigate();
+
   const [createProductDetails, setCreateProductDetails] = useState({
     productName: "",
     productCategory: "Tops",
@@ -33,8 +38,9 @@ const CreateProductForm = ({ isDialogOpen, toggleDialog }) => {
       //   const formData = new FormData(createProductDetails);
       //   const data = Object.fromEntries(createProductDetails);
       await createProduct(createProductDetails);
-      //   navigate(PATHS.PUBLIC.USER_SHOP(user.username));
-      toast.success(`Welcome, ${user.username}`);
+      // navigate(PATHS.PUBLIC.USER_SHOP(user.username));
+      toast.success(`Product successly created! `);
+      navigate(PATHS.USER(userUsername).SELLER.PRODUCT_ONE);
     } catch (err) {
       errorUtil(err);
     }

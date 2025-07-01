@@ -17,6 +17,9 @@ const SellOnePage = () => {
   const navigate = useNavigate();
   const { productId } = useParams();
 
+  // States for editing functions
+  const [isEditing, setIsEditing] = useState(false);
+
   useEffect(() => {
     const fetchOneIndex = async () => {
       const fetchedOne = await getOneIndex(productId);
@@ -62,22 +65,74 @@ const SellOnePage = () => {
     (_, i) => i + 1
   );
 
-  return (
-    <>
-      {oneProductIndex ? (
-        <main className={styles.buyOneArea}>
-          <aside className={styles["aside-img"]}>
-            <img
-              className={styles.productImg}
-              src={productVarDisplayPhoto}
-              alt={productName}
-            />
-          </aside>
+  // editing functions go here
+  const handleEditProduct = () => {
+    setIsEditing((prev) => !prev); // Toggles the boolean value of isDialogOpen
+  };
 
-          <section className={styles.productDetails}>
-            {/* Container for Product Name and Seller */}
+  const editFieldRender = () => {
+    switch (isEditing) {
+      case true:
+        return (
+          <>
+            <button onClick={handleEditProduct}>Save Changes</button>
+            <label>
+              Product Name
+              <input
+                name="productName"
+                field="text"
+                placeholder={productName}
+              ></input>
+            </label>
+
+            <label>
+              Product Description
+              <input
+                name="productDescription"
+                field="text"
+                placeholder={productDescription}
+              ></input>
+            </label>
+
+            <div className={styles.productHeader}>
+              {/* <InfoTextCard label="Product Name" value={productName} /> */}
+              {/* <InfoTextCard label="Category" value={productCategory} /> */}
+              <label>
+                Product Category
+                <select name="productCategory" value={productCategory}>
+                  <option value="Tops">Tops</option>
+                  <option value="Bottoms">Bottoms</option>
+                  <option value="Headwear">Headwear</option>
+                  <option value="Bags">Bags</option>
+                  <option value="Accesories">Accessories</option>
+                  <option value="Misc">Misc</option>
+                </select>
+              </label>
+              <label>{`Ave. Delivery Time (Days)`}</label>
+              <input
+                name="AbveproductDefaultDeliveryTime"
+                value={productDefaultDeliveryTime}
+              ></input>
+              <InfoTextCard
+                label="Sold by"
+                value={
+                  <Link
+                    to={PATHS.PUBLIC.USER_SHOP(productOwner?.username ?? "")}
+                  >
+                    {productOwner?.username ?? ""}
+                  </Link>
+                }
+              />
+            </div>
+          </>
+        );
+      case false:
+        return (
+          <>
+            <button onClick={handleEditProduct}>Edit Product Details</button>
             <h2>{productName}</h2>
             <p>{productDescription}</p>
+
             <div className={styles.productHeader}>
               {/* <InfoTextCard label="Product Name" value={productName} /> */}
               <InfoTextCard label="Category" value={productCategory} />
@@ -96,7 +151,26 @@ const SellOnePage = () => {
                 }
               />
             </div>
+          </>
+        );
+    }
+  };
 
+  return (
+    <>
+      {oneProductIndex ? (
+        <main className={styles.buyOneArea}>
+          <aside className={styles["aside-img"]}>
+            <img
+              className={styles.productImg}
+              src={productVarDisplayPhoto}
+              alt={productName}
+            />
+          </aside>
+
+          <section className={styles.productDetails}>
+            {/* Container for Product Name and Seller */}
+            {editFieldRender()}
             {/* Container for Product Designs*/}
             <article>
               <h6>Designs: </h6>
@@ -121,7 +195,6 @@ const SellOnePage = () => {
                 </div>
               </div>
             </article>
-
             <article>
               <h6>You know you want to buy it: </h6>
               <div className={styles.buttonsArea}>

@@ -27,7 +27,7 @@ import { Avatar } from "@mui/material";
 const BuyUserPage = () => {
   const { user } = useContext(UserContext);
   const [userBasicProfile, setUserBasicProfile] = useState(null);
-  const [pageStatus, setPageStatus] = useState(PageStatusTypes.LOADING);
+  const [, setPageStatus] = useState(PageStatusTypes.LOADING);
   const [allProducts, setAllProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 

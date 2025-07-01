@@ -2,7 +2,7 @@
 // const log = debug("JThreads: BuyUserPage");
 
 import { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router";
+import { useParams, useSearchParams } from "react-router";
 import { UserContext } from "../../../contexts/UserContext";
 import { PATHS } from "../../../routes/PATHS";
 
@@ -36,7 +36,7 @@ const SellUserPage = () => {
   // removed 'searchParams' state as we don't need to store search params in state
   const [, setSearchParams] = useSearchParams("");
   const { userUsername } = useParams();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const isOwner = isDomainForOwner(user, userUsername);
   // log("isOwner: ", isOwner);
@@ -111,6 +111,7 @@ const SellUserPage = () => {
               <CreateProductForm
                 isDialogOpen={isDialogOpen}
                 toggleDialog={toggleDialog}
+                userUsername={userUsername}
               />
               {/* <button
                 onClick={() =>
@@ -139,7 +140,7 @@ const SellUserPage = () => {
           {allProducts.length > 0 ? (
             allProducts.map((product) => {
               let productLink = isOwner
-                ? `${userUsername}/sell/${product._id}`
+                ? `/sell/${product._id}`
                 : `/buy/${product._id}`;
               return (
                 <a
