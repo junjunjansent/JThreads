@@ -8,26 +8,35 @@ import { getProducts } from "../../services/publicServices";
 const BuyAllPage = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [, setSearchParams] = useSearchParams(""); // removed 'searchParams' state as we don't need to store search params in state
+  const [searchParams, setSearchParams] = useSearchParams("");
 
   useEffect(() => {
-    const fetchAllProducts = async () => {
-      const { product } = await getProducts();
-      setAllProducts(product);
-      console.log(product);
+    const fetchAndSetProducts = async () => {
+      const urlSearchParam = searchParams.get("search");
+
+      if (urlSearchParam) {
+        setSearchQuery(urlSearchParam);
+      }
+      try {
+        const { product } = await getProducts(null, urlSearchParam || "");
+        setAllProducts(product);
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
+        setAllProducts([]);
+      }
     };
-    fetchAllProducts();
-  }, []);
+
+    fetchAndSetProducts();
+  }, [searchParams]);
 
   const handleInputChange = (event) => {
     const newSearchQuery = event.target.value;
     setSearchQuery(newSearchQuery);
-    setSearchParams(`search=${newSearchQuery}`);
-    const fetchAllProducts = async () => {
-      const { product } = await getProducts(null, newSearchQuery);
-      setAllProducts(product);
-    };
-    fetchAllProducts();
+    if (newSearchQuery) {
+      setSearchParams({ search: newSearchQuery });
+    } else {
+      setSearchParams({});
+    }
   };
 
   return (
