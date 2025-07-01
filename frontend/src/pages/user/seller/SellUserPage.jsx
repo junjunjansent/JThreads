@@ -8,6 +8,7 @@ import { PATHS } from "../../../routes/PATHS";
 
 import { BuySearchBar } from "../../../components/BuySearchBar";
 import { ProductCard } from "../../../components/ProductCard/ProductCard";
+import { CreateProductForm } from "../../../components/CreateProductForm/CreateProductForm";
 import Loader from "../../../components/Loader";
 import ErrorPage from "../../ErrorPage";
 
@@ -24,36 +25,41 @@ import styles from "./SellMultiPage.module.css";
 import dayjs from "dayjs";
 import { Avatar } from "@mui/material";
 
-const SellAllPage = () => {
-  // TODO: Should this be SellUserPage for consistency with BuyUserPage?
+const SellUserPage = () => {
   const { user } = useContext(UserContext);
   const [userBasicProfile, setUserBasicProfile] = useState(null);
-  const [pageStatus, setPageStatus] = useState(PageStatusTypes.LOADING);
+  const [, setPageStatus] = useState(PageStatusTypes.LOADING);
   const [allProducts, setAllProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
   // removed 'searchParams' state as we don't need to store search params in state
   const [, setSearchParams] = useSearchParams("");
   const { userUsername } = useParams();
   const navigate = useNavigate();
 
-  const isOwner = isDomainForOwner(user, userUsername); // boolean to check if the user is viewing their own profile
+  const isOwner = isDomainForOwner(user, userUsername);
   // log("isOwner: ", isOwner);
   // log("user: ", user);
   // log("userBasicProfile", userBasicProfile);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchAllProducts = async () => {
-      const controller = new AbortController();
       try {
         if (isOwner) {
           // to prevent unnecessary fetching, jsut get from token/UserContext
           setUserBasicProfile(user);
+          // console.log(user._id);
         } else {
           const fetchedUser = await showUserBasicProfile(userUsername);
+          // TODO refactor backend to get user data when obtaining oneProduct - avoid double fetching
           setUserBasicProfile(fetchedUser.user);
         }
         const { product } = await getProducts(userUsername, null);
         setAllProducts(product);
+        // console.log(product);
         setPageStatus(PageStatusTypes.OK);
       } catch (err) {
         setPageStatus(PageStatusTypes.ERROR);
@@ -79,14 +85,9 @@ const SellAllPage = () => {
     fetchAllProducts();
   };
 
-  switch (pageStatus) {
-    case PageStatusTypes.LOADING:
-      return <Loader />;
-    case PageStatusTypes.ERROR:
-      return <ErrorPage />;
-    default:
-      break;
-  }
+  const toggleDialog = () => {
+    setIsDialogOpen((prev) => !prev); // Toggles the boolean value of isDialogOpen
+  };
 
   return (
     <>
@@ -97,22 +98,27 @@ const SellAllPage = () => {
           </h2>
           <Avatar
             alt="Profile Photo"
-            src={userBasicProfile.profilePhoto ?? ""}
+            src={userBasicProfile?.profilePhoto ?? ""}
           />
         </div>
         <div className={styles["descrpition-bar"]}>
           <p className={styles["description-text"]}>
-            Joined on {dayjs(userBasicProfile.createdAt).format("D MMM YYYY")}
+            Joined on {dayjs(userBasicProfile?.createdAt).format("D MMM YYYY")}
           </p>
           {isOwner && (
             <div className={styles["descrpition-btns"]}>
-              <button
+              <button onClick={toggleDialog}>Create New Product</button>
+              <CreateProductForm
+                isDialogOpen={isDialogOpen}
+                toggleDialog={toggleDialog}
+              />
+              {/* <button
                 onClick={() =>
-                  navigate(PATHS.USER(userUsername).SELLER.PRODUCT_ONE)
+                  navigate(PATHS.USER(userUsername).SELLER.PRODUCT_ALL)
                 }
               >
-                Create New Listing
-              </button>
+                Edit Listing
+              </button> */}
               {/* <button
                 onClick={() => navigate(PATHS.USER(userUsername).ABOUT.DEFAULT)}
               >
@@ -131,25 +137,30 @@ const SellAllPage = () => {
         </div>
         <div className={styles.searcharea}>
           {allProducts.length > 0 ? (
-            allProducts.map((product) => (
-              <a
-                href={`/sell/${product._id}`}
-                className={styles.productlink}
-                key={product._id}
-              >
-                <ProductCard
-                  productid={product._id}
-                  name={product.productName}
-                  category={product.productCategory}
-                  photo={product.productDisplayPhoto}
-                  owner={product.productOwner}
-                  isOwner={isOwner}
-                  quantity={product.availableQuantity}
-                  maxprice={product.variantMaxPrice}
-                  minprice={product.variantMinPrice}
-                />
-              </a>
-            ))
+            allProducts.map((product) => {
+              let productLink = isOwner
+                ? `${userUsername}/sell/${product._id}`
+                : `/buy/${product._id}`;
+              return (
+                <a
+                  href={productLink}
+                  className={styles.productlink}
+                  key={product._id}
+                >
+                  <ProductCard
+                    productid={product._id}
+                    name={product.productName}
+                    category={product.productCategory}
+                    photo={product.productDisplayPhoto}
+                    owner={product.productOwner}
+                    quantity={product.availableQuantity}
+                    maxprice={product.variantMaxPrice}
+                    minprice={product.variantMinPrice}
+                    isOwner={isOwner}
+                  />
+                </a>
+              );
+            })
           ) : (
             <p>No products found!</p>
           )}
@@ -159,4 +170,4 @@ const SellAllPage = () => {
   );
 };
 
-export default SellAllPage;
+export default SellUserPage;

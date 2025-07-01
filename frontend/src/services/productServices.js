@@ -1,17 +1,28 @@
 import { ApiError } from "../utils/errorUtil";
+import { getTokenFromLocalStorage } from "../utils/tokenUtil";
 
-const publicService_BASE_URL = `${
+const productService_BASE_URL = `${
   import.meta.env.VITE_BACK_END_SERVER_URL
-}/public`;
+}/products`;
 
-const publicService_HEADER = {
-  "Content-Type": "application/json",
+const productService_HEADER = () => {
+  const token = getTokenFromLocalStorage();
+  if (token) {
+    return {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    };
+  } else {
+    return {
+      "Content-Type": "application/json",
+    };
+  }
 };
 
 const fetchJson = async (url, methodStr = "GET", bodyData = null) => {
   const options = {
     method: methodStr,
-    headers: publicService_HEADER,
+    headers: productService_HEADER(),
   };
 
   if (methodStr === "POST" || methodStr === "PUT") {
@@ -20,7 +31,7 @@ const fetchJson = async (url, methodStr = "GET", bodyData = null) => {
     } else {
       throw new ApiError({
         status: 405,
-        source: { pointer: "publicServices.js" },
+        source: { pointer: "productServices.js" },
         title: "Method Not Allowed",
         detail: "Need Body Data for this method.",
       });
@@ -45,7 +56,7 @@ const fetchJson = async (url, methodStr = "GET", bodyData = null) => {
 // ----------- actual Services
 
 const createProduct = async (bodyData) => {
-  const url = `${publicService_BASE_URL}/products`;
+  const url = `${productService_BASE_URL}`;
 
   try {
     const resData = await fetchJson(url, "POST", bodyData);

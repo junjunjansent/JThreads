@@ -8,7 +8,6 @@ import { PATHS } from "../../routes/PATHS";
 
 import { BuySearchBar } from "../../components/BuySearchBar";
 import { ProductCard } from "../../components/ProductCard/ProductCard";
-import { CreateProductForm } from "../../components/CreateProductForm/CreateProductForm";
 import Loader from "../../components/Loader";
 import ErrorPage from "../ErrorPage";
 
@@ -31,7 +30,6 @@ const BuyUserPage = () => {
   const [pageStatus, setPageStatus] = useState(PageStatusTypes.LOADING);
   const [allProducts, setAllProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   // removed 'searchParams' state as we don't need to store search params in state
   const [, setSearchParams] = useSearchParams("");
@@ -85,10 +83,6 @@ const BuyUserPage = () => {
     fetchAllProducts();
   };
 
-  const toggleDialog = () => {
-    setIsDialogOpen((prev) => !prev); // Toggles the boolean value of isDialogOpen
-  };
-
   return (
     <>
       <main className={styles.page}>
@@ -107,18 +101,13 @@ const BuyUserPage = () => {
           </p>
           {isOwner && (
             <div className={styles["descrpition-btns"]}>
-              <button onClick={toggleDialog}>Create New Product</button>
-              <CreateProductForm
-                isDialogOpen={isDialogOpen}
-                toggleDialog={toggleDialog}
-              />
-              {/* <button
+              <button
                 onClick={() =>
                   navigate(PATHS.USER(userUsername).SELLER.PRODUCT_ALL)
                 }
               >
                 Edit Listing
-              </button> */}
+              </button>
               <button
                 onClick={() => navigate(PATHS.USER(userUsername).ABOUT.DEFAULT)}
               >
