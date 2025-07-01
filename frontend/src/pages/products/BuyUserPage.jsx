@@ -137,24 +137,29 @@ const BuyUserPage = () => {
         </div>
         <div className={styles.searcharea}>
           {allProducts.length > 0 ? (
-            allProducts.map((product) => (
-              <a
-                href={`/buy/${product._id}`}
-                className={styles.productlink}
-                key={product._id}
-              >
-                <ProductCard
-                  productid={product._id}
-                  name={product.productName}
-                  category={product.productCategory}
-                  photo={product.productDisplayPhoto}
-                  owner={product.productOwner}
-                  quantity={product.availableQuantity}
-                  maxprice={product.variantMaxPrice}
-                  minprice={product.variantMinPrice}
-                />
-              </a>
-            ))
+            allProducts.map((product) => {
+              let productLink = isOwner
+                ? `${userUsername}/sell/${product._id}`
+                : `/buy/${product._id}`;
+              return (
+                <a
+                  href={productLink}
+                  className={styles.productlink}
+                  key={product._id}
+                >
+                  <ProductCard
+                    productid={product._id}
+                    name={product.productName}
+                    category={product.productCategory}
+                    photo={product.productDisplayPhoto}
+                    owner={product.productOwner}
+                    quantity={product.availableQuantity}
+                    maxprice={product.variantMaxPrice}
+                    minprice={product.variantMinPrice}
+                  />
+                </a>
+              );
+            })
           ) : (
             <p>No products found!</p>
           )}

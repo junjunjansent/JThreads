@@ -133,7 +133,7 @@ const SellAllPage = () => {
           {allProducts.length > 0 ? (
             allProducts.map((product) => (
               <a
-                href={`/buy/${product._id}`}
+                href={`/sell/${product._id}`}
                 className={styles.productlink}
                 key={product._id}
               >
