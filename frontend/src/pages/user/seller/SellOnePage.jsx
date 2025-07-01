@@ -10,6 +10,7 @@ import { editProduct } from "../../../services/productServices";
 import { CreateVariantForm } from "../../../components/CreateVariantForm";
 import { UserContext } from "../../../contexts/UserContext";
 import BuyOneMissingPage from "../../products/BuyOneMissingPage";
+import { EditVariantForm } from "../../../components/EditVariantForm";
 
 const SellOnePage = () => {
   // const { user } = useContext(UserContext);
@@ -17,6 +18,8 @@ const SellOnePage = () => {
   const [displayProduct, setDisplayProduct] = useState(); // This state is for rendering product variation information
   const [variantIndex, setVariantIndex] = useState([]); // This state stores all variant information
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [editingVariantId, setEditingVariantId] = useState(null); // This state is for passing the variant Id to the edit variant form
+  const [editingVariantDetails, setEditingVariantDetails] = useState(null); // This state will store the full variant object being edited
   const [editProductDetails, setEditProductDetails] = useState({
     productName: "",
     productCategory: "",
@@ -42,7 +45,7 @@ const SellOnePage = () => {
     const fetchVariantIndex = async () => {
       const fetchedVariants = await getVariantIndex(productId);
       // TODO refactor backend to get mainProduct data when obtaining variants - avoid double fetching
-      // console.log(fetchedVariants);
+      console.log(fetchedVariants);
       setVariantIndex(fetchedVariants);
       setDisplayProduct(fetchedVariants[0]); // Set the first variant as the default selected variant information to render
     };
@@ -50,15 +53,6 @@ const SellOnePage = () => {
     fetchOneIndex();
     fetchVariantIndex();
   }, [productId]);
-
-  const handleSelectVariant = (event) => {
-    const selectedVariantId = event.target.id;
-    const index = variantIndex.findIndex(
-      (variant) => variant._id === selectedVariantId
-    );
-    setDisplayProduct(variantIndex[index]);
-    // console.log(displayProduct);
-  };
 
   const {
     _id,
@@ -79,7 +73,6 @@ const SellOnePage = () => {
 
   const handleSubmitProductEdit = (event) => {
     const { name, value } = event.target;
-    // Jacob: prev details needed here to ensure existing changes are not overriden
     setEditProductDetails((prevDetails) => ({
       ...prevDetails,
       [name]: value,
@@ -87,6 +80,7 @@ const SellOnePage = () => {
     editProduct(editProductDetails, productId);
     setOneProductIndex(editProductDetails);
   };
+
   const editFieldRender = () => {
     switch (isEditing) {
       case true:
@@ -175,8 +169,15 @@ const SellOnePage = () => {
     }
   };
 
-  const toggleDialog = () => {
+  const toggleDialog = (variantId = null) => {
     setIsDialogOpen((prev) => !prev); // Toggles the boolean value of isDialogOpen
+
+    // these portion is to filter out variant related information when editing variants which we will pass to the edit variant form
+    setEditingVariantId(variantId);
+    const variantToEdit = variantIndex.find(
+      (variant) => variant._id === variantId
+    );
+    setEditingVariantDetails(variantToEdit);
   };
 
   return (
@@ -205,13 +206,22 @@ const SellOnePage = () => {
                   productId={productId}
                 />
                 {variantIndex.map((variant) => (
-                  <button
-                    key={variant._id}
-                    id={variant._id}
-                    onClick={handleSelectVariant}
-                  >
-                    {variant.productVarDesign}
-                  </button>
+                  <>
+                    <button
+                      key={variant._id}
+                      id={variant._id}
+                      onClick={() => toggleDialog(variant._id)}
+                    >
+                      {variant.productVarDesign}
+                    </button>
+                    <EditVariantForm
+                      isDialogOpen={isDialogOpen}
+                      toggleDialog={() => toggleDialog(null)}
+                      productId={productId}
+                      variantId={editingVariantId}
+                      variantData={editingVariantDetails}
+                    />
+                  </>
                 ))}
               </div>
 

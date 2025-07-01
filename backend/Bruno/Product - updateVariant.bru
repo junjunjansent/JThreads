@@ -1,0 +1,26 @@
+meta {
+  name: Product - updateVariant
+  type: http
+  seq: 19
+}
+
+put {
+  url: http://localhost:3000/api/products/:productId/:variantId
+  body: json
+  auth: bearer
+}
+
+params:path {
+  variantId: 685fa9d5d88f6599d0df2889
+  productId: 685fa9d5d88f6599d0df284c
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY4NWZhOWQ1ZDg4ZjY1OTlkMGRmMjgzNiIsInVzZXJuYW1lIjoidXNlcjEiLCJwcm9maWxlUGhvdG8iOiJodHRwczovL3d3dy5ncmF2YXRhci5jb20vYXZhdGFyLz9kPW1wIiwiY3JlYXRlZEF0IjoiMjAyNS0wNi0yOFQwODozNzo0MS4yMjdaIn0sImlhdCI6MTc1MTI4MDM1OCwiZXhwIjoxNzUxODg1MTU4fQ.eVf_wtE7NLztKbRfzLJ3WgMdFDW2KRLKIWtkm3DSOiE
+}
+
+body:json {
+  {
+    "productVarDesign": "ChairTest"
+  }
+}

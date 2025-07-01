@@ -37,4 +37,18 @@ const createOneVariant = async (req, res, next) => {
     next(err);
   }
 };
-module.exports = { createOne, editOne, createOneVariant };
+
+const editOneVariant = async (req, res, next) => {
+  try {
+    // const productId = req.params.productId;
+    const variantId = req.params.variantId;
+    const variantEdit = req.body;
+    // const createProduct = await Product.findByIdAndUpdate(productId, req.body);
+    await ProductVariant.findByIdAndUpdate(variantId, variantEdit);
+    const updatedVariant = await ProductVariant.findById(variantId);
+    res.status(201).json(updatedVariant);
+  } catch (err) {
+    next(err);
+  }
+};
+module.exports = { createOne, editOne, createOneVariant, editOneVariant };
