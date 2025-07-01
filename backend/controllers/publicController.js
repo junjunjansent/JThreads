@@ -17,13 +17,13 @@ const signUp = async (req, res, next) => {
   try {
     const { username, password, email } = req.body;
 
-    usernameValidator(username);
-    emailValidator(email);
-    passwordValidator(password);
+    const usernameValidated = usernameValidator(username);
+    const emailValidated = emailValidator(email);
+    const passwordValidated = passwordValidator(password);
 
-    const usernameExisting = await User.findOne({ username }).select(
-      "username"
-    );
+    const usernameExisting = await User.findOne({
+      username: usernameValidated,
+    }).select("username");
     if (usernameExisting) {
       throw new ApiError({
         status: 409,
@@ -33,7 +33,9 @@ const signUp = async (req, res, next) => {
       });
     }
 
-    const emailExisting = await User.findOne({ email }).select("username");
+    const emailExisting = await User.findOne({ email: emailValidated }).select(
+      "username"
+    );
     if (emailExisting) {
       throw new ApiError({
         status: 409,
@@ -45,7 +47,7 @@ const signUp = async (req, res, next) => {
 
     const newUser = await User.create({
       username: username,
-      password: bcryptPassword(password),
+      password: bcryptPassword(passwordValidated),
       email: email,
     });
     // JANSEN COMMENTS - all these should be optional first
