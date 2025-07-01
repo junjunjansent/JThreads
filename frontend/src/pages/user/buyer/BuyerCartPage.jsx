@@ -84,7 +84,7 @@ const BuyerCartPage = () => {
           </>
         ) : (
           <>
-            <h2 className={styles["title-text"]}>Empty Cart</h2>
+            <h2 className={styles["title-text"]}>Your Cart is Empty</h2>
             <p className={styles["description-text"]}>
               So weird... never buy things before ah. Go shop lah.
             </p>

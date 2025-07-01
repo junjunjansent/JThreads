@@ -2,7 +2,8 @@
   "name": "backend",
   "private": true,
   "scripts": {
-    "dev": "bun --hot server.js"
+    "dev": "bun --hot server.js",
+    "start": "node server.js"
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",

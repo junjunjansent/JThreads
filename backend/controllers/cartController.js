@@ -121,6 +121,8 @@ const updateCart = async (req, res, next) => {
       });
     }
 
+    // TODO: need some logic to start saving Qtys as not available if it's in someone's cart (maybe in checkout?)
+
     // validate if itemId still exists and delete if it doesnt
 
     if (itemId) {
