@@ -119,9 +119,6 @@ const SellUserPage = () => {
         <div className={styles.searcharea}>
           {allProducts.length > 0 ? (
             allProducts.map((product) => {
-              let productLink = isOwner
-                ? `/${userUsername}/sell/${product._id}`
-                : `/buy/${product._id}`;
               return (
                 <ProductCard
                   productid={product._id}
