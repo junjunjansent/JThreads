@@ -77,4 +77,14 @@ const editProduct = async (bodyData, productId) => {
   }
 };
 
-export { createProduct, editProduct };
+const createVariant = async (bodyData, productId) => {
+  const url = `${productService_BASE_URL}/${productId}`;
+
+  try {
+    const resData = await fetchJson(url, "POST", bodyData);
+    return resData;
+  } catch (err) {
+    throw new ApiError(err);
+  }
+};
+export { createProduct, editProduct, createVariant };
