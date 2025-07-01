@@ -60,4 +60,27 @@ const showOwnerCart = async () => {
   }
 };
 
-export { showOwnerCart };
+const createOwnerCart = async (bodyData) => {
+  const url = `${cartService_BASE_URL}`;
+
+  try {
+    const resData = await fetchJson(url, "POST", bodyData);
+    return resData;
+  } catch (err) {
+    throw new ApiError(err);
+  }
+};
+
+const destroyOwnerCart = async (cartId) => {
+  // private Router should have protected any unauthorised getting in
+  const url = `${cartService_BASE_URL}/${cartId}`;
+
+  try {
+    const resData = await fetchJson(url, "DELETE");
+    return resData;
+  } catch (err) {
+    throw new ApiError(err);
+  }
+};
+
+export { showOwnerCart, createOwnerCart, destroyOwnerCart };
