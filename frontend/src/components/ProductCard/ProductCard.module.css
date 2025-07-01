@@ -48,3 +48,9 @@
 .productSeller {
   font-weight: bold;
 }
+
+.sellerActionButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}

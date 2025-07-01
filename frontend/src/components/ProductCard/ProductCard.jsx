@@ -13,17 +13,13 @@ const ProductCard = ({
   minprice,
   isOwner = null,
   userUsername,
-  isActive = null,
+  // isActive = null,
 }) => {
-  const borderColor = isActive ? "productCardActive" : "productCardDisabled";
   const cardRender = () => {
     switch (isOwner) {
       case true:
         return (
-          <div
-            className={`${styles.productCard} ${styles[borderColor]}`}
-            key={productid}
-          >
+          <div className={styles.productCard} key={productid}>
             <img className={styles.productImage} src={photo} />
             <div className={styles.productName}>{name}</div>
             <div className={styles.productSubContainer}>
@@ -40,7 +36,7 @@ const ProductCard = ({
               <a href={PATHS.USER(userUsername).SELLER.PRODUCT_ONE(productid)}>
                 <Button>Edit</Button>
               </a>
-              <Button>Disable</Button>
+              {/* <Button>Disable</Button> */}
             </div>
           </div>
         );
