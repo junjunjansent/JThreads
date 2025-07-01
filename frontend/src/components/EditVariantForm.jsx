@@ -54,7 +54,7 @@ const EditVariantForm = ({
           onChange={handleInputChange}
           // className={styles["form-field"]}
         >
-          Edit Design Details!
+          <h1>Edit Design Details!</h1>
           <input
             name="productVarDesign"
             type="text"

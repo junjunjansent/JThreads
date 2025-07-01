@@ -68,17 +68,18 @@ const SellOnePage = () => {
 
   // editing functions go here
   const handleEditProduct = () => {
-    setIsEditing((prev) => !prev); // Toggles the boolean value of isDialogOpen
+    setIsEditing((prev) => !prev);
   };
 
   const handleSubmitProductEdit = (event) => {
     const { name, value } = event.target;
-    setEditProductDetails((prevDetails) => ({
-      ...prevDetails,
+    const updatedDetails = {
+      ...editProductDetails,
       [name]: value,
-    }));
-    editProduct(editProductDetails, productId);
-    setOneProductIndex(editProductDetails);
+    };
+    setEditProductDetails(updatedDetails);
+    editProduct(updatedDetails, productId);
+    setOneProductIndex(updatedDetails);
   };
 
   const editFieldRender = () => {
@@ -122,7 +123,7 @@ const SellOnePage = () => {
                 </label>
                 <label>{`Ave. Delivery Time (Days)`}</label>
                 <input
-                  name="AbveproductDefaultDeliveryTime"
+                  name="productDefaultDeliveryTime"
                   placeholder={productDefaultDeliveryTime}
                 ></input>
                 <InfoTextCard

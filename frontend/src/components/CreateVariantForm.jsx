@@ -58,7 +58,7 @@ const CreateVariantForm = ({ isDialogOpen, toggleDialog, productId }) => {
           onChange={handleInputChange}
           // className={styles["form-field"]}
         >
-          Create a new variant!
+          <h1>Create a new variant!</h1>
           <input
             name="productVarDesign"
             type="text"

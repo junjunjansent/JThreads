@@ -58,7 +58,7 @@ const CreateProductForm = ({ isDialogOpen, toggleDialog, userUsername }) => {
           onChange={handleInputChange}
           // className={styles["form-field"]}
         >
-          Create a new product!
+          <h1>Create a new product!</h1>
           <input name="productName" type="text" placeholder="Product Name" />
           <select name="productCategory">
             <option value="Tops">Tops</option>
