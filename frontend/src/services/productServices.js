@@ -66,4 +66,15 @@ const createProduct = async (bodyData) => {
   }
 };
 
-export { createProduct };
+const editProduct = async (bodyData, productId) => {
+  const url = `${productService_BASE_URL}/${productId}`;
+
+  try {
+    const resData = await fetchJson(url, "PUT", bodyData);
+    return resData;
+  } catch (err) {
+    throw new ApiError(err);
+  }
+};
+
+export { createProduct, editProduct };

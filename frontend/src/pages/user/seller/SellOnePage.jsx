@@ -6,6 +6,7 @@ import styles from "./SellOnePage.module.css";
 import InfoTextCard from "../../../components/InfoTextCard";
 
 import { getOneIndex, getVariantIndex } from "../../../services/publicServices";
+import { editProduct } from "../../../services/productServices";
 import { UserContext } from "../../../contexts/UserContext";
 import BuyOneMissingPage from "../../products/BuyOneMissingPage";
 
@@ -14,6 +15,14 @@ const SellOnePage = () => {
   const [oneProductIndex, setOneProductIndex] = useState(); // This state stores base product information that will not change (seller name, product name)
   const [displayProduct, setDisplayProduct] = useState(); // This state is for rendering product variation information
   const [variantIndex, setVariantIndex] = useState([]); // This state stores all variant information
+  const [editProductDetails, setEditProductDetails] = useState({
+    productName: "",
+    productCategory: "",
+    productDescription: "",
+    productDisplayPhoto: "",
+    productDefaultDeliveryTime: "",
+    // productOwner: user._id,
+  });
   const navigate = useNavigate();
   const { productId } = useParams();
 
@@ -25,12 +34,13 @@ const SellOnePage = () => {
       const fetchedOne = await getOneIndex(productId);
       console.log(fetchedOne);
       setOneProductIndex(fetchedOne);
+      setEditProductDetails(fetchedOne);
     };
 
     const fetchVariantIndex = async () => {
       const fetchedVariants = await getVariantIndex(productId);
       // TODO refactor backend to get mainProduct data when obtaining variants - avoid double fetching
-      console.log(fetchedVariants);
+      // console.log(fetchedVariants);
       setVariantIndex(fetchedVariants);
       setDisplayProduct(fetchedVariants[0]); // Set the first variant as the default selected variant information to render
     };
@@ -70,59 +80,71 @@ const SellOnePage = () => {
     setIsEditing((prev) => !prev); // Toggles the boolean value of isDialogOpen
   };
 
+  const handleSubmitProductEdit = (event) => {
+    const { name, value } = event.target;
+    // Jacob: prev details needed here to ensure existing changes are not overriden
+    setEditProductDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: value,
+    }));
+    editProduct(editProductDetails, productId);
+    setOneProductIndex(editProductDetails);
+  };
   const editFieldRender = () => {
     switch (isEditing) {
       case true:
         return (
           <>
             <button onClick={handleEditProduct}>Save Changes</button>
-            <label>
-              Product Name
-              <input
-                name="productName"
-                field="text"
-                placeholder={productName}
-              ></input>
-            </label>
-
-            <label>
-              Product Description
-              <input
-                name="productDescription"
-                field="text"
-                placeholder={productDescription}
-              ></input>
-            </label>
-
-            <div className={styles.productHeader}>
-              {/* <InfoTextCard label="Product Name" value={productName} /> */}
-              {/* <InfoTextCard label="Category" value={productCategory} /> */}
+            <div onChange={handleSubmitProductEdit}>
               <label>
-                Product Category
-                <select name="productCategory" value={productCategory}>
-                  <option value="Tops">Tops</option>
-                  <option value="Bottoms">Bottoms</option>
-                  <option value="Headwear">Headwear</option>
-                  <option value="Bags">Bags</option>
-                  <option value="Accesories">Accessories</option>
-                  <option value="Misc">Misc</option>
-                </select>
+                Product Name
+                <input
+                  name="productName"
+                  field="text"
+                  placeholder={productName}
+                ></input>
               </label>
-              <label>{`Ave. Delivery Time (Days)`}</label>
-              <input
-                name="AbveproductDefaultDeliveryTime"
-                value={productDefaultDeliveryTime}
-              ></input>
-              <InfoTextCard
-                label="Sold by"
-                value={
-                  <Link
-                    to={PATHS.PUBLIC.USER_SHOP(productOwner?.username ?? "")}
-                  >
-                    {productOwner?.username ?? ""}
-                  </Link>
-                }
-              />
+
+              <label>
+                Product Description
+                <input
+                  name="productDescription"
+                  field="text"
+                  placeholder={productDescription}
+                ></input>
+              </label>
+
+              <div className={styles.productHeader}>
+                {/* <InfoTextCard label="Product Name" value={productName} /> */}
+                {/* <InfoTextCard label="Category" value={productCategory} /> */}
+                <label>
+                  Product Category
+                  <select name="productCategory" value={productCategory}>
+                    <option value="Tops">Tops</option>
+                    <option value="Bottoms">Bottoms</option>
+                    <option value="Headwear">Headwear</option>
+                    <option value="Bags">Bags</option>
+                    <option value="Accesories">Accessories</option>
+                    <option value="Misc">Misc</option>
+                  </select>
+                </label>
+                <label>{`Ave. Delivery Time (Days)`}</label>
+                <input
+                  name="AbveproductDefaultDeliveryTime"
+                  placeholder={productDefaultDeliveryTime}
+                ></input>
+                <InfoTextCard
+                  label="Sold by"
+                  value={
+                    <Link
+                      to={PATHS.PUBLIC.USER_SHOP(productOwner?.username ?? "")}
+                    >
+                      {productOwner?.username ?? ""}
+                    </Link>
+                  }
+                />
+              </div>
             </div>
           </>
         );
