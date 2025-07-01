@@ -1,9 +1,15 @@
+// import debug from "debug";
+// const log = debug("JThreads:BuyerCartPage");
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { PageStatusTypes } from "../../../utils/pageStatusUtil";
 import { PATHS } from "../../../routes/PATHS";
 
-import { showOwnerCart } from "../../../services/cartServices";
+import {
+  destroyOwnerCart,
+  showOwnerCart,
+} from "../../../services/cartServices";
 import { errorUtil } from "../../../utils/errorUtil";
 
 import styles from "./CartCheckout.module.css";
@@ -18,8 +24,8 @@ const BuyerCartPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const controller = new AbortController();
     const getCart = async () => {
-      const controller = new AbortController();
       try {
         setPageStatus(PageStatusTypes.LOADING);
         const { cart } = await showOwnerCart();
@@ -39,6 +45,19 @@ const BuyerCartPage = () => {
     getCart();
   }, []);
 
+  const handleClearCart = async () => {
+    const { _id } = cart;
+    try {
+      setPageStatus(PageStatusTypes.LOADING);
+      await destroyOwnerCart(_id);
+      setCart(null); // to force re render because destroyOwnerCart will return the deleted Cart
+      setPageStatus(PageStatusTypes.OK);
+    } catch (err) {
+      setPageStatus(PageStatusTypes.ERROR);
+      errorUtil(err);
+    }
+  };
+
   switch (pageStatus) {
     case PageStatusTypes.LOADING:
       return <Loader />;
@@ -53,22 +72,30 @@ const BuyerCartPage = () => {
       <section className={styles["section-info"]}>
         {cart ? (
           <>
-            <h2 className={styles["title-text"]}>
-              {cart.buyer.username}'s Cart
-            </h2>
-            <p className={styles["description-text"]}>
-              Last updated on {dayjs(cart.updatedAt).format("D MMM YYYY")}
-              <br />
-              <small>
-                Your cart will be emptied after 15 days from last edit.
-              </small>
-              <br />
-              <br />
-              <small>
-                Note we helped to remove deleted or disabled products (so blame
-                the Seller, not us)
-              </small>
-            </p>
+            <section>
+              <h2 className={styles["title-text"]}>
+                {cart.buyer.username}'s Cart
+              </h2>
+              <div className={styles["descrpition-bar"]}>
+                <p className={styles["description-text"]}>
+                  Last updated on {dayjs(cart.updatedAt).format("D MMM YYYY")}
+                  <br />
+                  <small>
+                    Your cart will be emptied after 15 days from last edit.
+                  </small>
+                  <br />
+                  <br />
+                </p>
+                <button onClick={handleClearCart}>Clear Cart</button>
+              </div>
+              <p>
+                <small>
+                  Note we helped to remove deleted or disabled products (so
+                  blame the Seller, not us)
+                </small>
+              </p>
+            </section>
+
             <div className={styles["descrpition-btns"]}>
               <button onClick={() => navigate(PATHS.PUBLIC.BUY.PRODUCT_ALL)}>
                 Indulge in More Capitalism
@@ -78,7 +105,7 @@ const BuyerCartPage = () => {
                   navigate(PATHS.USER(cart.buyer.username).BUYER.CHECKOUT)
                 }
               >
-                Take My Money
+                Ready to Give My Money
               </button>
             </div>
           </>
