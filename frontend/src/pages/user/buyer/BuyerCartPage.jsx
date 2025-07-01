@@ -67,10 +67,12 @@ const BuyerCartPage = () => {
       break;
   }
 
+  const cartItemsExist = cart && cart.cartItems.length > 0;
+
   return (
     <main className={styles["page"]}>
       <section className={styles["section-info"]}>
-        {cart ? (
+        {cartItemsExist ? (
           <>
             <section>
               <h2 className={styles["title-text"]}>
