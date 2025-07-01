@@ -1,9 +1,21 @@
-.productCard {
+.productCard,
+.productCardActive,
+.productCardDisabled {
   display: flex;
   flex-direction: column;
   height: 300px;
   width: 200px;
   margin: 0px 10px 20px 15px;
+}
+
+.productCardActive {
+  border-style: solid;
+  border-color: Green;
+}
+
+.productCardDisabled {
+  border-style: solid;
+  border-color: red;
 }
 
 .productImage {

@@ -172,7 +172,6 @@ const SellOnePage = () => {
 
   const toggleDialog = (variantId = null) => {
     setIsDialogOpen((prev) => !prev); // Toggles the boolean value of isDialogOpen
-
     // these portion is to filter out variant related information when editing variants which we will pass to the edit variant form
     setEditingVariantId(variantId);
     const variantToEdit = variantIndex.find(

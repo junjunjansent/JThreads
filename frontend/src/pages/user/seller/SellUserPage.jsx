@@ -129,6 +129,7 @@ const SellUserPage = () => {
                   quantity={product.availableQuantity}
                   maxprice={product.variantMaxPrice}
                   minprice={product.variantMinPrice}
+                  isActive={product.productIsActive}
                   userUsername={userUsername}
                   isOwner={isOwner}
                 />
