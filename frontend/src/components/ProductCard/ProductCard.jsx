@@ -1,4 +1,6 @@
 import styles from "./ProductCard.module.css";
+import { PATHS } from "../../routes/PATHS";
+import { Button } from "@mui/material";
 
 //TODO: need to add navigate functions to the EDIT/DELETE buttons
 
@@ -12,6 +14,7 @@ const ProductCard = ({
   maxprice,
   minprice,
   isOwner = null,
+  userUsername,
 }) => {
   const cardRender = () => {
     switch (isOwner) {
@@ -31,8 +34,10 @@ const ProductCard = ({
               <div className={styles.productQuantity}>{quantity} avail</div>
             </div>
             <div className={styles.sellerActionButtons}>
-              <button>Edit</button>
-              <button>Delete</button>
+              <a href={PATHS.USER(userUsername).SELLER.PRODUCT_ONE(productid)}>
+                <Button>Edit</Button>
+              </a>
+              <Button>Disable</Button>
             </div>
           </div>
         );

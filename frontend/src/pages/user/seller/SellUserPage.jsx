@@ -113,18 +113,6 @@ const SellUserPage = () => {
                 toggleDialog={toggleDialog}
                 userUsername={userUsername}
               />
-              {/* <button
-                onClick={() =>
-                  navigate(PATHS.USER(userUsername).SELLER.PRODUCT_ALL)
-                }
-              >
-                Edit Listing
-              </button> */}
-              {/* <button
-                onClick={() => navigate(PATHS.USER(userUsername).ABOUT.DEFAULT)}
-              >
-                My Profile Details
-              </button> */}
             </div>
           )}
         </div>
@@ -157,6 +145,7 @@ const SellUserPage = () => {
                     quantity={product.availableQuantity}
                     maxprice={product.variantMaxPrice}
                     minprice={product.variantMinPrice}
+                    userUsername={userUsername}
                     isOwner={isOwner}
                   />
                 </a>

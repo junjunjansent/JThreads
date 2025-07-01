@@ -144,7 +144,6 @@ const BuyOnePage = () => {
                   </button>
                 ) : (
                   <button onClick={() => navigate(PATHS.PUBLIC.SIGN_IN)}>
-                    {" "}
                     Login to Start Buying
                   </button>
                 )}
