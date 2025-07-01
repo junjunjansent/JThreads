@@ -8,7 +8,15 @@ Slay
 
 ## Nomenclature / Terminology
 
+## Screengrabs of Application
+
 ## Wireframe
+
+![Homepage](photosREADME/Homepage.png)
+![Signin](photosREADME/SignIn.png)
+![SignUp](photosREADME/SignUp.png)
+![EditProfile](photosREADME/EditProfile.png)
+![BuyAll](photosREADME/BuyAll.png)
 
 ## Planning
 
