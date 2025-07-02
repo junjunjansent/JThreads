@@ -63,8 +63,12 @@ const SellOnePage = () => {
     productDefaultDeliveryTime,
     productOwner,
   } = oneProductIndex || {};
-  const { productVarAvailableQty, productVarPrice, productVarDisplayPhoto } =
-    displayProduct || {};
+  const {
+    productVarAvailableQty,
+    productVarPrice,
+    productVarDisplayPhoto,
+    productVarInventoryQty,
+  } = displayProduct || {};
 
   // editing functions go here
   const handleEditProduct = () => {
@@ -230,7 +234,10 @@ const SellOnePage = () => {
                   Price: ${productVarPrice}
                 </div>
                 <div className={styles.productQuantity}>
-                  Qty: {productVarAvailableQty}
+                  Available: {productVarAvailableQty}
+                </div>
+                <div className={styles.productQuantity}>
+                  Inventory: {productVarInventoryQty}
                 </div>
               </div>
             </article>
