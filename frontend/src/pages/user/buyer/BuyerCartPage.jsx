@@ -68,7 +68,8 @@ const BuyerCartPage = () => {
       break;
   }
 
-  const cartItemsExist = cart && cart.cartItems.length > 0;
+  const cartItemsExist =
+    cart && (cart.cartItems ? cart.cartItems.length > 0 : false);
 
   return (
     <div>
