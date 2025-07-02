@@ -46,10 +46,11 @@ const BuyerCartPage = () => {
     getCart();
   }, []);
 
-  const handleCartChange = async (newCart) => {
+  const handleCartChange = async () => {
     try {
       setPageStatus(PageStatusTypes.LOADING);
-      setCart(newCart);
+      const newCartObj = await showOwnerCart();
+      setCart(newCartObj.cart);
       setPageStatus(PageStatusTypes.OK);
     } catch (err) {
       errorUtil(err);
@@ -78,7 +79,8 @@ const BuyerCartPage = () => {
       break;
   }
 
-  const cartItemsExist = cart && cart.cartItems.length > 0;
+  const cartItemsExist = !!cart;
+  //  && cart.cartItems.length > 0;
 
   return (
     <div>

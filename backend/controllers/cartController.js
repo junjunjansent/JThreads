@@ -228,16 +228,6 @@ const updateCart = async (req, res, next) => {
     res.status(201).json({ cart });
 
     // // TODO: need some logic to start saving Qtys as not available if it's in someone's cart (maybe in checkout?)
-
-    // await cart.save();
-
-    // // const updatedCart = await Cart.findByIdAndUpdate(
-    // //   cart._id,
-    // //   {
-    // //     // new cart items
-    // //   },
-    // //   { runValidators: true, new: true }
-    // // );
   } catch (err) {
     next(err);
   }

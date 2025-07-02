@@ -56,6 +56,24 @@ const BuyerCartTable = ({ cartItems, handleCartChange }) => {
               handleCartChange={handleCartChange}
             />
           ))}
+
+          {/* Total Qty Row */}
+          <TableRow>
+            <TableCell colSpan={5} align="right">
+              <strong>Total:</strong>
+            </TableCell>
+            <TableCell align="center">
+              <strong>
+                {cartItems
+                  .reduce(
+                    (sum, { item, qty }) => sum + qty * item.productVarPrice,
+                    0
+                  )
+                  .toFixed(2)}
+              </strong>
+            </TableCell>
+            <TableCell />
+          </TableRow>
         </TableBody>
       </Table>
     </TableContainer>

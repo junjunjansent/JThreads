@@ -27,7 +27,7 @@ Product-related
 
 Order-related
 
-- [x] Validating Add to Cart to not exceed
+- [x] Validating Add to Cart to not exceed avail qty amount
 
 ### Special Features
 
