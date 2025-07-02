@@ -78,14 +78,14 @@ const SellOnePage = () => {
     setIsEditing((prev) => !prev);
   };
 
-  const handleSubmitProductEdit = (event) => {
+  const handleSubmitProductEdit = async (event) => {
     const { name, value } = event.target;
     const updatedDetails = {
       ...editProductDetails,
       [name]: value,
     };
     setEditProductDetails(updatedDetails);
-    editProduct(updatedDetails, productId);
+    await editProduct(updatedDetails, productId);
     setOneProductIndex(updatedDetails);
   };
 
