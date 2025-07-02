@@ -12,7 +12,10 @@ Slay
 
 ## Content & Features
 
-- [x] Ability to Sign Up & Sign In with Validation
+- [x] Ability to Sign Up & Sign In with Validation Form
+- [x] Restricted NavBar based on SignIn
+- [x] See user's own profile
+- [x] Unauthorised if trying to access other's site
 
 ## Nomenclature / Terminology
 
