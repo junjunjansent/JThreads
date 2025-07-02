@@ -81,8 +81,8 @@ const SignUpPage = () => {
         </div>
         <div className={styles["descrpition-bar"]}>
           <p className={styles["description-text"]}>
-            Log in to enjoy a personalized experience and to access all our
-            services.
+            Sign up to enjoy a personalized experience and to access all our
+            exclusive services.
           </p>
         </div>
         <Box
@@ -137,7 +137,7 @@ const SignUpPage = () => {
           <Button type="submit">CREATE AN ACCOUNT</Button>
         </Box>
         <Link className={styles["link-signing-page"]} to={PATHS.PUBLIC.SIGN_IN}>
-          Already have an account, log in now!
+          Already have an account, log in here!
         </Link>
       </section>
       <aside className={styles["aside-img"]}>

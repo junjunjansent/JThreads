@@ -61,7 +61,7 @@ const SignInPage = () => {
           <button className={styles["submit-button"]}>LOG IN</button>
         </form>
         <Link className={styles["link-signing-page"]} to={PATHS.PUBLIC.SIGN_UP}>
-          Create an account lah bodoh...
+          Click here to create an account with us.
         </Link>
       </section>
 

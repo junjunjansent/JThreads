@@ -19,13 +19,13 @@ const HomePage = () => {
             Welcome fellow sigmas, to this bussin' website. For we are a page
             that will not incur you any Fanum Tax, cause we ain't like those
             other capping delulu websites.
-            <small>
+            {/* <small>
               {" "}
               (Seriously tho, the rest can just put the fries in the bag and
               touch grass, bruh.)
-            </small>
+            </small> */}
           </p>
-          <p className={styles["description-text"]}>
+          {/* <p className={styles["description-text"]}>
             As you endure their dogwater, please peruse this glorious server and
             find the best quality, very demure, products from the streets of
             Ohio, perfectly fitted for your bods and gyatts. Of course, I may be
@@ -37,7 +37,7 @@ const HomePage = () => {
             Ok, enough mogging on others and edging you, we don't wanna give you
             the ick. We'll stop this yapquest of a gooning sesh and let you
             explore this pogchamp of a site. Stay GOATED, king.
-          </p>
+          </p> */}
           <p>- Skibidi you on the server.</p>
           <div className={styles["descrpition-btns"]}>
             {user ? (
@@ -47,13 +47,13 @@ const HomePage = () => {
                     navigate(PATHS.USER(user.username).ABOUT.DEFAULT)
                   }
                 >
-                  Already Logged In, slay mama
+                  Already Logged In
                 </button>
               </>
             ) : (
               <>
                 <button onClick={() => navigate(PATHS.PUBLIC.SIGN_UP)}>
-                  Don't have an Account? what an L...
+                  Sign Up here!
                 </button>
                 <button onClick={() => navigate(PATHS.PUBLIC.SIGN_IN)}>
                   Login like a W
