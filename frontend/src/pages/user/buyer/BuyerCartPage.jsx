@@ -130,12 +130,11 @@ const BuyerCartPage = () => {
         <section>
           <BuyerCartTable
             cartItems={cart.cartItems}
-            setCart={setCart}
             handleCartChange={handleCartChange}
+            handleClearCart={handleClearCart}
           />
 
           <div className={styles["descrpition-btns"]}>
-            <button onClick={handleClearCart}>Clear Cart & Regret</button>
             <button onClick={() => navigate(PATHS.PUBLIC.BUY.PRODUCT_ALL)}>
               Indulge in More Capitalism
             </button>
