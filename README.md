@@ -53,6 +53,8 @@ Slay
 
 ##### Routes for Cart Data
 
+![Cart Routes](./photosREADME/BE_REST_CartRoutes.png)
+
 ##### Routes for Transaction Data
 
 /:userId/buy/orders --> List view of transactions made by user
@@ -61,6 +63,10 @@ Slay
 /:userId/sell/:orderId --> see view of one transaction
 
 ### Features & Splitting of Work
+
+![Splitting of Work 1](./photosREADME/WorkSplitting_1.png)
+![Splitting of Work 2](./photosREADME/WorkSplitting_2.png)
+![Splitting of Work 3](./photosREADME/WorkSplitting_3.png)
 
 ## Credits
 
