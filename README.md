@@ -5,7 +5,7 @@ Welcome to our Merch Handling Website View what merch is available and start buy
 
 Created by Jacob Tham & Jansen Tan
 
-- [Content](#content-&-features)
+- [Contents & Features](#contents--features)
 - [Application Photos](#screengrabs-of-application)
 - [Wireframes](#wireframes)
 - [Planning](#planning)
