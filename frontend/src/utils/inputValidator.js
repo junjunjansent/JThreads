@@ -24,8 +24,8 @@ export const passwordValidator = (password) => {
 };
 
 export const nameValidator = (name) => {
-  if (!/^[a-zA-Z\s]{2,}$/.test(name.trim()))
-    return "Name is expected to be longer than 2 characters";
+  if (!/^[a-zA-Z0-9\s]{2,}$/.test(name.trim()))
+    return "Name is expected to be longer than 2 alphanumeric characters";
   return false;
 };
 

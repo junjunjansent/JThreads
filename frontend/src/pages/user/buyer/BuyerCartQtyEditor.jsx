@@ -51,7 +51,7 @@ const BuyerCartQtyEditor = ({
                 )}
                 {displayQty}
 
-                {displayQty <= productVarAvailableQty && (
+                {displayQty < productVarAvailableQty && (
                   <Button onClick={() => setDisplayQty(displayQty + 1)}>
                     +
                   </Button>

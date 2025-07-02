@@ -12,10 +12,28 @@ Slay
 
 ## Content & Features
 
+User-related
+
 - [x] Ability to Sign Up & Sign In with Validation Form
 - [x] Restricted NavBar based on SignIn
 - [x] See user's own profile
 - [x] Unauthorised if trying to access other's site
+
+Product-related
+
+- [x] Public & logged in user can see all products
+- [x] Can look at other user's products they put up
+- [x] Can create & editing one's own listing and designs
+
+Order-related
+
+- [x] Validating Add to Cart to not exceed
+
+### Special Features
+
+- [x] Intense Validation everywhere (FE, BE, DB)
+- [x] Managing product availability & inventory
+- [x] Private Routing to prevent Unauthorised access
 
 ## Nomenclature / Terminology
 
