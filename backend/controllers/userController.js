@@ -51,13 +51,19 @@ const updateOwner = async (req, res, next) => {
       defaultShippingAddress,
     } = req.body;
 
-    if (username) usernameValidator(username);
-    if (email) emailValidator(email);
-    if (firstName) nameValidator(firstName);
-    if (lastName) nameValidator(lastName);
-    if (phoneNumber) phoneNumberValidator(phoneNumber);
+    const usernameValidated = username
+      ? usernameValidator(username)
+      : undefined;
+    const emailValidated = email ? emailValidator(email) : undefined;
+    const firstNameValidated = firstName ? nameValidator(firstName) : undefined;
+    const lastNameValidated = lastName ? nameValidator(lastName) : undefined;
+    const phoneNumberValidated = phoneNumber
+      ? phoneNumberValidator(phoneNumber)
+      : undefined;
 
-    const usernamesExisting = await User.find({ username }).select("username");
+    const usernamesExisting = await User.find({
+      username: usernameValidated,
+    }).select("username");
     if (usernamesExisting.length > 1) {
       throw new ApiError({
         status: 409,
@@ -67,7 +73,9 @@ const updateOwner = async (req, res, next) => {
       });
     }
 
-    const emailsExisting = await User.find({ email }).select("username");
+    const emailsExisting = await User.find({ email: emailValidated }).select(
+      "username"
+    );
     if (emailsExisting.length > 1) {
       throw new ApiError({
         status: 409,
@@ -82,13 +90,13 @@ const updateOwner = async (req, res, next) => {
     const updatedUser = await User.findByIdAndUpdate(
       user._id,
       {
-        username,
-        email,
-        firstName,
-        lastName,
+        username: usernameValidated,
+        email: emailValidated,
+        firstName: firstNameValidated,
+        lastName: lastNameValidated,
         birthday,
         gender,
-        phoneNumber,
+        phoneNumber: phoneNumberValidated,
         profilePhoto,
         defaultShippingAddress,
       },
@@ -118,7 +126,7 @@ const updateOwner = async (req, res, next) => {
 const updateOwnerPassword = async (req, res, next) => {
   try {
     const { oldPassword, newPassword } = req.body;
-    passwordValidator(newPassword);
+    const newPasswordValidated = passwordValidator(newPassword);
 
     // check existing user
     const user = getUserFromRequest(req);
@@ -144,7 +152,7 @@ const updateOwnerPassword = async (req, res, next) => {
     const updatedUser = await User.findByIdAndUpdate(
       user._id,
       {
-        password: bcryptPassword(newPassword),
+        password: bcryptPassword(newPasswordValidated),
       },
       { new: true }
     );

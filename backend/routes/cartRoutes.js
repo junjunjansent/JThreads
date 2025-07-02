@@ -10,7 +10,7 @@ const {
 // specific routes
 router.get("/", showCart);
 router.post("/", createCart);
-router.put("/:cartId", updateCart); //would be great to use patch
-router.delete("/:cartId", destroyCart);
+router.put("/", updateCart); //would be great to use patch
+router.delete("/", destroyCart);
 
 module.exports = router;

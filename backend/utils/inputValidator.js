@@ -5,31 +5,33 @@ const { ApiError } = require("./errorHandler");
 const usernameValidator = (username) => {
   if (username.length < 3 || username.length > 20) {
     throw new ApiError({
-      status: 400,
+      status: 422,
       source: { pointer: "inputValidator.js" },
-      title: "Bad Request: Username Format",
+      title: "Unprocessable Content: Username Format",
       detail: "Username must be 3-20 characters long.",
     });
   } else if (!/^[a-z0-9_-]+$/.test(username)) {
     throw new ApiError({
-      status: 400,
+      status: 422,
       source: { pointer: "inputValidator.js" },
-      title: "Bad Request: Username Format",
+      title: "Unprocessable Content: Username Format",
       detail:
         "Username must only contain lowercase letters, numbers, hyphens, and underscores.",
     });
   }
+  return username.trim();
 };
 
 const emailValidator = (email) => {
   if (!/^[-.\w]+@[-.\w]+\.[-.\w]{2,}$/.test(email)) {
     throw new ApiError({
-      status: 400,
+      status: 422,
       source: { pointer: "inputValidator.js" },
-      title: "Bad Request: Email Format",
+      title: "Unprocessable Content: Email Format",
       detail: "Email needs to be in correct format",
     });
   }
+  return email.trim();
 };
 
 const passwordValidator = (password) => {
@@ -39,35 +41,38 @@ const passwordValidator = (password) => {
     !/[a-zA-Z0-9]/.test(password)
   ) {
     throw new ApiError({
-      status: 400,
+      status: 422,
       source: { pointer: "inputValidator.js" },
-      title: "Bad Request: Password Format",
+      title: "Unprocessable Content: Password Format",
       detail:
         "Password must be at least characters long, not contain spaces, and have at least one letter or number.",
     });
   }
+  return password;
 };
 
 const nameValidator = (name) => {
   if (!/^[a-zA-Z\s]{2,}$/.test(name.trim())) {
     throw new ApiError({
-      status: 400,
+      status: 422,
       source: { pointer: "inputValidator.js" },
-      title: "Bad Request: Name Format",
+      title: "Unprocessable Content: Name Format",
       detail: "Name must be at least 2 characters long.",
     });
   }
+  return name.trim();
 };
 
 const phoneNumberValidator = (phoneNumber) => {
   if (!/^\+?[1-9](?:\s?\d){6,14}$/.test(phoneNumber)) {
     throw new ApiError({
-      status: 400,
+      status: 422,
       source: { pointer: "inputValidator.js" },
-      title: "Bad Request: Phone Number Format",
+      title: "Unprocessable Content: Phone Number Format",
       detail: "Phone number must be in international number format.",
     });
   }
+  return phoneNumber;
 };
 
 /**
@@ -86,17 +91,17 @@ const numberRangeValidator = (
   const convertedNum = Number(number);
   if (isNaN(convertedNum) || convertedNum < min || convertedNum > max) {
     throw new ApiError({
-      status: 400,
+      status: 422,
       source: { pointer: "inputValidator.js" },
-      title: "Bad Request: Number Range Format",
+      title: "Unprocessable Content: Number Range Format",
       detail: `Number must be a valid number within ${min} and ${max}.`,
     });
   }
   if (type === "integer" && !Number.isInteger(convertedNum)) {
     throw new ApiError({
-      status: 400,
+      status: 422,
       source: { pointer: "inputValidator.js" },
-      title: "Bad Request: Number Type",
+      title: "Unprocessable Content: Number Type",
       detail: `Number is not the same type as indicated: expected ${type}.`,
     });
   } else if (
@@ -104,12 +109,13 @@ const numberRangeValidator = (
     (convertedNum < 0 || !/^\d+(\.\d{1,2})?$/.test(convertedNum.toString()))
   ) {
     throw new ApiError({
-      status: 400,
+      status: 422,
       source: { pointer: "inputValidator.js" },
-      title: "Bad Request: Number Type",
+      title: "Unprocessable Content: Number Type",
       detail: `Number is not the same type as indicated: expected ${type}.`,
     });
   }
+  return convertedNum;
 };
 
 module.exports = {
