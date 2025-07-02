@@ -1,3 +1,6 @@
+// import debug from "debug";
+// const log = debug("JThreads:SellOnePage");
+
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import { PATHS } from "../../../routes/PATHS";
