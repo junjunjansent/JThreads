@@ -21,19 +21,37 @@
 //     "qty": 64,
 //     "_id": "68642814f64c0ccd236e9f6d"
 
+import { useState } from "react";
+
+import { errorUtil } from "../../../utils/errorUtil";
+import { updateOwnerCart } from "../../../services/cartServices";
+
 import { Avatar, Button, TableCell, TableRow, Typography } from "@mui/material";
+import BuyerCartQtyEditor from "./BuyerCartQtyEditor";
 import InfoTextCard from "../../../components/InfoTextCard";
+import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import BuyerCartQtyEditor from "./BuyerCartQtyEditor";
+import Loader from "../../../components/Loader";
 
 //   },
 const BuyerCartTableRow = ({ cartItem, setCart }) => {
+  const [isClearingCart, setIsClearingCart] = useState(false);
   const { item, qty } = cartItem;
 
-  // const handleChange = () => {};
-
-  // const handleClear = () => {};
+  const handleClearCartQty = async (itemId) => {
+    try {
+      setIsClearingCart(true);
+      const updatedCart = await updateOwnerCart({ itemId, qtySet: 0 });
+      setCart(updatedCart);
+      toast.success("Cleared Cart Qty");
+    } catch (err) {
+      toast.error("Erroring Clearing Cart Item");
+      errorUtil(err);
+    } finally {
+      setIsClearingCart(false);
+    }
+  };
 
   // const renderQuantityOptions = Array.from(
   //   { length: productVarAvailableQty },
@@ -83,9 +101,13 @@ const BuyerCartTableRow = ({ cartItem, setCart }) => {
           ${(qty * item.productVarPrice).toFixed(2)}
         </TableCell>
         <TableCell align="center">
-          <Button>
-            Clear <FontAwesomeIcon icon={faTrash} />
-          </Button>
+          {isClearingCart ? (
+            <Loader />
+          ) : (
+            <Button onClick={() => handleClearCartQty(item._id)}>
+              Clear <FontAwesomeIcon icon={faTrash} />
+            </Button>
+          )}
         </TableCell>
       </TableRow>
     </>
