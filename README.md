@@ -2,13 +2,19 @@
 
 Welcome to our Merch Handling Website View what merch is available and start buying once you create an account with us ;)
 
+- [Content](#content-&-features)
+- [Application Photos](#screengrabs-of-application)
+- [Wireframes](#wireframes)
+- [Planning](#planning)
+- [Credits](#credits)
+
 Slay
 
-## Content
+## Content & Features
+
+- [x] Ability to Sign Up & Sign In with Validation
 
 ## Nomenclature / Terminology
-
-![SignIn](photosREADME/wireframeSignIn.png)
 
 ## Screengrabs of Application
 
@@ -19,7 +25,7 @@ Slay
 ![BuyAll](photosREADME/BuyAll.png)
 ![SellUserPage](photosREADME/SellUserPage.png)
 
-## Wireframe
+## Wireframes
 
 ![Wireframe Sign Up](photosREADME/wireframeSignUp.png)
 ![Wireframe Sign In](photosREADME/wireframeSignIn.png)
