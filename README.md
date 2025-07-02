@@ -38,6 +38,8 @@ Slay
 /:userId/sell --> list view of items that user has put up to sell
 /:userId/sell/:productId --> see One Product that use has put up (with all subproducts - colour, size, design)
 
+##### Routes for Cart Data
+
 ##### Routes for Transaction Data
 
 /:userId/buy/orders --> List view of transactions made by user
