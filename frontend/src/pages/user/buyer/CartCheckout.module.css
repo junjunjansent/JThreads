@@ -84,7 +84,7 @@
   }
 
   .section-info {
-    width: 60%;
+    width: 75%;
   }
 
   .form-field {
@@ -93,7 +93,7 @@
 
   .aside-img {
     display: block;
-    width: 40%;
+    width: 25%;
     max-width: 20rem;
     max-height: 20rem;
     object-fit: contain;
