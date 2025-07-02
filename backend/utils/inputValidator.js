@@ -52,12 +52,12 @@ const passwordValidator = (password) => {
 };
 
 const nameValidator = (name) => {
-  if (!/^[a-zA-Z\s]{2,}$/.test(name.trim())) {
+  if (!/^[a-zA-Z0-9\s]{2,}$/.test(name.trim())) {
     throw new ApiError({
       status: 422,
       source: { pointer: "inputValidator.js" },
       title: "Unprocessable Content: Name Format",
-      detail: "Name must be at least 2 characters long.",
+      detail: "Name must be at least 2 alphanumeric characters long.",
     });
   }
   return name.trim();

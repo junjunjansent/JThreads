@@ -23,6 +23,7 @@
 //   },
 
 import {
+  Button,
   Table,
   TableBody,
   TableCell,
@@ -32,7 +33,7 @@ import {
 } from "@mui/material";
 import BuyerCartTableRow from "./BuyerCartTableRow";
 
-const BuyerCartTable = ({ cartItems, handleCartChange }) => {
+const BuyerCartTable = ({ cartItems, handleCartChange, handleClearCart }) => {
   return (
     <TableContainer>
       <Table stickyHeader aria-label="Table of Cart Items">
@@ -56,6 +57,26 @@ const BuyerCartTable = ({ cartItems, handleCartChange }) => {
               handleCartChange={handleCartChange}
             />
           ))}
+
+          {/* Total Qty Row */}
+          <TableRow>
+            <TableCell colSpan={5} align="right">
+              <strong>Total:</strong>
+            </TableCell>
+            <TableCell align="center">
+              <strong>
+                {cartItems
+                  .reduce(
+                    (sum, { item, qty }) => sum + qty * item.productVarPrice,
+                    0
+                  )
+                  .toFixed(2)}
+              </strong>
+            </TableCell>
+            <TableCell>
+              <Button onClick={handleClearCart}>Clear Cart & Regret</Button>
+            </TableCell>
+          </TableRow>
         </TableBody>
       </Table>
     </TableContainer>

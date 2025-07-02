@@ -1,3 +1,6 @@
+import debug from "debug";
+const log = debug("JThreads:EditVariantForm");
+
 import { useState } from "react";
 // import { useNavigate } from "react-router";
 // import { PATHS } from "../../routes/PATHS";
@@ -34,6 +37,7 @@ const EditVariantForm = ({
     try {
       event.preventDefault();
       toast.info("Editing design details...");
+      log(variantId);
       await editVariant(createVariantDetails, productId, variantId);
       toast.success(`Design details edited successfully! `);
       //   navigate(PATHS.USER(userUsername).SELLER.PRODUCT_ONE);

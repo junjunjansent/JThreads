@@ -1,3 +1,6 @@
+// import debug from "debug";
+// const log = debug("JThreads:SellOnePage");
+
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import { PATHS } from "../../../routes/PATHS";
@@ -75,14 +78,14 @@ const SellOnePage = () => {
     setIsEditing((prev) => !prev);
   };
 
-  const handleSubmitProductEdit = (event) => {
+  const handleSubmitProductEdit = async (event) => {
     const { name, value } = event.target;
     const updatedDetails = {
       ...editProductDetails,
       [name]: value,
     };
     setEditProductDetails(updatedDetails);
-    editProduct(updatedDetails, productId);
+    await editProduct(updatedDetails, productId);
     setOneProductIndex(updatedDetails);
   };
 

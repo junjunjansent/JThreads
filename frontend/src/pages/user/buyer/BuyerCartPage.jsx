@@ -46,10 +46,11 @@ const BuyerCartPage = () => {
     getCart();
   }, []);
 
-  const handleCartChange = async (newCart) => {
+  const handleCartChange = async () => {
     try {
       setPageStatus(PageStatusTypes.LOADING);
-      setCart(newCart);
+      const newCartObj = await showOwnerCart();
+      setCart(newCartObj.cart);
       setPageStatus(PageStatusTypes.OK);
     } catch (err) {
       errorUtil(err);
@@ -128,12 +129,11 @@ const BuyerCartPage = () => {
         <section>
           <BuyerCartTable
             cartItems={cart.cartItems}
-            setCart={setCart}
             handleCartChange={handleCartChange}
+            handleClearCart={handleClearCart}
           />
 
           <div className={styles["descrpition-btns"]}>
-            <button onClick={handleClearCart}>Clear Cart & Regret</button>
             <button onClick={() => navigate(PATHS.PUBLIC.BUY.PRODUCT_ALL)}>
               Indulge in More Capitalism
             </button>

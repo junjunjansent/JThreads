@@ -26,8 +26,8 @@ const BuyerCartQtyEditor = ({
   const handleEditCartQty = async (itemId, qtySet) => {
     try {
       setAddingToCart(true);
-      const updatedCart = await updateOwnerCart({ itemId, qtySet });
-      await handleCartChange(updatedCart);
+      await updateOwnerCart({ itemId, qtySet });
+      await handleCartChange();
       toast.success("Edited Cart Qty");
     } catch (err) {
       toast.error("Erroring Adding Item To Cart");
@@ -51,7 +51,7 @@ const BuyerCartQtyEditor = ({
                 )}
                 {displayQty}
 
-                {displayQty <= productVarAvailableQty && (
+                {displayQty < productVarAvailableQty && (
                   <Button onClick={() => setDisplayQty(displayQty + 1)}>
                     +
                   </Button>
