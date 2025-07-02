@@ -8,15 +8,28 @@ Slay
 
 ## Nomenclature / Terminology
 
-## Screengrabs of Application
+![SignIn](photosREADME/wireframeSignIn.png)
 
-## Wireframe
+## Screengrabs of Application
 
 ![Homepage](photosREADME/Homepage.png)
 ![Signin](photosREADME/SignIn.png)
 ![SignUp](photosREADME/SignUp.png)
 ![EditProfile](photosREADME/EditProfile.png)
 ![BuyAll](photosREADME/BuyAll.png)
+![SellUserPage](photosREADME/SellUserPage.png)
+
+## Wireframe
+
+![Wireframe Sign Up](photosREADME/wireframeSignUp.png)
+![Wireframe Sign In](photosREADME/wireframeSignIn.png)
+![Wireframe Account Edit](photosREADME/wireframeAccountEdit.png)
+![Wireframe Buy All](photosREADME/wireframeBuyAll.png)
+![Wireframe Buy One](photosREADME/wireframeBuyOne.png)
+![Wireframe Sell All](photosREADME/wireframeSellAll.png)
+![Wireframe Sell User](photosREADME/wireframeSellUser.png)
+![Wireframe Sell One](photosREADME/wireframeSellOne.png)
+![Wireframe Cart](photosREADME/wireframeCart.png)
 
 ## Planning
 
