@@ -8,7 +8,12 @@ import Loader from "../../../components/Loader";
 import { updateOwnerCart } from "../../../services/cartServices";
 import { errorUtil } from "../../../utils/errorUtil";
 
-const BuyerCartQtyEditor = ({ id, qty, productVarAvailableQty, setCart }) => {
+const BuyerCartQtyEditor = ({
+  id,
+  qty,
+  productVarAvailableQty,
+  handleCartChange,
+}) => {
   const [displayQty, setDisplayQty] = useState(qty);
   const [isAddingToCart, setAddingToCart] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -22,7 +27,7 @@ const BuyerCartQtyEditor = ({ id, qty, productVarAvailableQty, setCart }) => {
     try {
       setAddingToCart(true);
       const updatedCart = await updateOwnerCart({ itemId, qtySet });
-      setCart(updatedCart);
+      await handleCartChange(updatedCart);
       toast.success("Edited Cart Qty");
     } catch (err) {
       toast.error("Erroring Adding Item To Cart");

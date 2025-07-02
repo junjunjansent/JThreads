@@ -32,7 +32,7 @@ import {
 } from "@mui/material";
 import BuyerCartTableRow from "./BuyerCartTableRow";
 
-const BuyerCartTable = ({ cartItems, setCart }) => {
+const BuyerCartTable = ({ cartItems, handleCartChange }) => {
   return (
     <TableContainer>
       <Table stickyHeader aria-label="Table of Cart Items">
@@ -53,7 +53,7 @@ const BuyerCartTable = ({ cartItems, setCart }) => {
             <BuyerCartTableRow
               key={cartItem._id}
               cartItem={cartItem}
-              setCart={setCart}
+              handleCartChange={handleCartChange}
             />
           ))}
         </TableBody>

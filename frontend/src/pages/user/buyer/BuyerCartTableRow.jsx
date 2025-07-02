@@ -35,7 +35,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import Loader from "../../../components/Loader";
 
 //   },
-const BuyerCartTableRow = ({ cartItem, setCart }) => {
+const BuyerCartTableRow = ({ cartItem, handleCartChange }) => {
   const [isClearingCart, setIsClearingCart] = useState(false);
   const { item, qty } = cartItem;
 
@@ -43,7 +43,7 @@ const BuyerCartTableRow = ({ cartItem, setCart }) => {
     try {
       setIsClearingCart(true);
       const updatedCart = await updateOwnerCart({ itemId, qtySet: 0 });
-      setCart(updatedCart);
+      await handleCartChange(updatedCart);
       toast.success("Cleared Cart Qty");
     } catch (err) {
       toast.error("Erroring Clearing Cart Item");
@@ -93,7 +93,7 @@ const BuyerCartTableRow = ({ cartItem, setCart }) => {
             id={item._id}
             qty={qty}
             productVarAvailableQty={item.productVarAvailableQty}
-            setCart={setCart}
+            handleCartChange={handleCartChange}
           />
         </TableCell>
         <TableCell align="center">${item.productVarPrice.toFixed(2)}</TableCell>

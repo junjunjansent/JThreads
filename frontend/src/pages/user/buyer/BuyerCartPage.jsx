@@ -46,6 +46,16 @@ const BuyerCartPage = () => {
     getCart();
   }, []);
 
+  const handleCartChange = async (newCart) => {
+    try {
+      setPageStatus(PageStatusTypes.LOADING);
+      setCart(newCart);
+      setPageStatus(PageStatusTypes.OK);
+    } catch (err) {
+      errorUtil(err);
+    }
+  };
+
   const handleClearCart = async () => {
     const { _id } = cart;
     try {
@@ -68,8 +78,7 @@ const BuyerCartPage = () => {
       break;
   }
 
-  const cartItemsExist =
-    cart && (cart.cartItems ? cart.cartItems.length > 0 : false);
+  const cartItemsExist = cart && cart.cartItems.length > 0;
 
   return (
     <div>
@@ -117,7 +126,11 @@ const BuyerCartPage = () => {
       </main>
       {cartItemsExist && (
         <section>
-          <BuyerCartTable cartItems={cart.cartItems} setCart={setCart} />
+          <BuyerCartTable
+            cartItems={cart.cartItems}
+            setCart={setCart}
+            handleCartChange={handleCartChange}
+          />
 
           <div className={styles["descrpition-btns"]}>
             <button onClick={handleClearCart}>Clear Cart & Regret</button>
