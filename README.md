@@ -101,6 +101,8 @@ Order-related
 Backend Techniques from:
 
 - [eCommerce Model Definitions](https://dev.to/ezzdinatef/ecommerce-database-design-1ggc)
+- [Error Handler Basics](https://expressjs.com/en/guide/error-handling.html)
+- [Global Error Handling](https://medium.com/@mubashir_ejaz/an-overview-of-error-handling-implementing-a-global-error-handling-middleware-in-node-js-0db8d256434f)
 
 Frontend Techniques from:
 
