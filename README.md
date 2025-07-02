@@ -3,6 +3,8 @@
 Welcome to our Merch Handling Website View what merch is available and start buying once you create an account with us ;)
 [Use this link to try](https://jthreads.netlify.app/)
 
+Created by Jacob Tham & Jansen Tan
+
 - [Content](#content-&-features)
 - [Application Photos](#screengrabs-of-application)
 - [Wireframes](#wireframes)
