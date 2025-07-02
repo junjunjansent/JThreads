@@ -12,12 +12,12 @@ const registerUsersForDeveloper = async () => {
       email: "user1@test.com",
       password: bcryptPassword("12345678"),
     },
-    ...Array.from({ length: 4 }, () => ({
+    ...Array.from({ length: 14 }, () => ({
       username: faker.internet.username().toLowerCase().replaceAll(".", ""),
       email: faker.internet.email(),
       password: bcryptPassword("12345678"),
     })),
-    ...Array.from({ length: 5 }, () => ({
+    ...Array.from({ length: 15 }, () => ({
       username: faker.internet.username().toLowerCase().replaceAll(".", ""),
       email: faker.internet.email(),
       password: bcryptPassword("12345678"),
@@ -58,7 +58,7 @@ const inputTestProducts = async (users) => {
       productDisplayPhoto: faker.image.urlPicsumPhotos(),
       productDefaultDeliveryTime: 30,
     })),
-    ...Array.from({ length: 20 }, () => ({
+    ...Array.from({ length: 100 }, () => ({
       productName: faker.commerce.product(),
       productIsActive: true,
       productDescription: faker.commerce.productDescription(),
@@ -88,7 +88,7 @@ const inputTestProducts = async (users) => {
 const inputTestProductVariants = async (products) => {
   const maxInventoryQty = faker.number.int({ min: 1, max: 100 });
   const productVariationData = [
-    ...Array.from({ length: 5 }, () => ({
+    ...Array.from({ length: 4 }, () => ({
       mainProduct: products[0]._id,
 
       productVarDesign: faker.commerce.product(),
@@ -100,7 +100,7 @@ const inputTestProductVariants = async (products) => {
       productVarPrice: faker.number.float({ fractionDigits: 2, min: 0 }),
       productVarDisplayPhoto: faker.image.urlPicsumPhotos(),
     })),
-    ...Array.from({ length: 50 }, () => ({
+    ...Array.from({ length: 500 }, () => ({
       mainProduct: faker.helpers.arrayElement(products)._id,
 
       productVarDesign: faker.commerce.product(),

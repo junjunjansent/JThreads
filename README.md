@@ -1,6 +1,7 @@
 # JThreads
 
 Welcome to our Merch Handling Website View what merch is available and start buying once you create an account with us ;)
+[Use this link to try](https://jthreads.netlify.app/)
 
 - [Content](#content-&-features)
 - [Application Photos](#screengrabs-of-application)
